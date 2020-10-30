@@ -1,0 +1,66 @@
+d=33  a=(1+sqrt(33))/2  eps=19+8*a
+======================================================================
+Minimal models: 
+
+E1: [ 0, -a, 1, -5*a - 10, -6*a - 14 ]
+    j = -32768 = -32^3
+    D=-eps^3
+    rank=0
+    torsion=3
+
+E2: [ 0, a - 1, 1, 5*a - 15, 6*a - 20 ]
+    j = -32768 = -32^3
+    D=-eps^-3
+    rank=0
+    torsion=3
+
+E3: [ 0, -a, 1, 25*a + 60, -72*a - 171 ]
+    j = 6548115718144*a - 22082088337408
+    D=-eps^5
+    rank=0
+    torsion=3
+
+E4: [ 0, a - 1, 1, 435*a - 1465, 7890*a - 26607 ]
+    j = 6548115718144*a - 22082088337408
+    D=-eps^-1
+    rank=0
+    torsion=1
+
+E5: [ 0, a - 1, 1, -25*a + 85, 72*a - 243 ]
+    j = -6548115718144*a - 15533972619264
+    D=-eps^-5
+    rank=0
+    torsion=3
+
+E6: [ 0, -a, 1, -435*a - 1030, -7890*a - 18717 ]
+    j = -6548115718144*a - 15533972619264
+    D=-eps
+    rank=0
+    torsion=1
+
+
+Conjugate pairs: [1,2], [3,4], [5,6]
+
+Twists by -eps: [1,2], [3,4], [5,6]
+
+3-isogenies:  E3-E1-E6, E5-E2-E4
+11-isogenies:  E1-E2, E3-E5, E4-E6
+
+1 Isogeny Class:  
+               E3 -<3>- E1 -<3>- E6
+	       |        |        |
+	     <11>     <11>     <11>
+	       |        |	 |
+	       E5 -<3>- E2 -<3>- E4
+
+Magma definitions:
+
+Q:=RationalField();
+Qx<x>:=PolynomialRing(Q);
+K<a>:=NumberField(x^2-x-8);
+E1:=EllipticCurve( [ 0, -a, 1, -5*a - 10, -6*a - 14 ]);
+E2:=EllipticCurve( [ 0, a - 1, 1, 5*a - 15, 6*a - 20 ]);
+E3:=EllipticCurve( [ 0, -a, 1, 25*a + 60, -72*a - 171 ]);
+E4:=EllipticCurve( [ 0, a - 1, 1, 435*a - 1465, 7890*a - 26607 ]);
+E5:=EllipticCurve( [ 0, a - 1, 1, -25*a + 85, 72*a - 243 ]);
+E6:=EllipticCurve( [ 0, -a, 1, -435*a - 1030, -7890*a - 18717 ]);

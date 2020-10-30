@@ -1,0 +1,69 @@
+Real quadratic fields K=Q(sqrt(d)), 1<d<100
+
+Existence/nonexistence of elliptic curves /K with e.g.r 
+
+d		       
+
+2		       no  (Kida 1999)
+3		       no  (Kida 1999)
+5		       no  (Kida 1997)
+6		       yes (JEC, Comalada 1990)		       
+7		       yes (JEC, Comalada 1990)
+10		       no  (Kida 2001)
+11		       
+13		       no  (Kida 1997)
+14		       yes (JEC, Comalada 1990)
+15		       no  (Kida 2001)
+17		       no  (Kida 1997)
+19		       
+21		       no  (Kida 1997)
+22		       yes (Kida 2001)
+23		       
+26		       yes (JEC, Kida 2001)
+29		       yes (JEC, Kida 1996, Tate)
+30		       no  (Kida 2001)
+31		       no  (Kida 2001)
+33		       yes (JEC, Kida 1997)
+34		       no  (Kida 2001)
+35		       no  (Kida 2001)
+37		       yes (JEC, Kida 1996)
+38		       yes (JEC)
+39		       no  (Kida 2001)
+41		       yes (JEC, Comalada 1990)
+42		       no  (Kida 2001)
+43		       
+46		       
+47		       no  (Kida 1999)
+51		       
+53		       
+55		       
+57		       
+58		       no  (Kida 2001)
+59		       
+61		       
+62		       
+65		       yes (JEC, Comalada 1990)
+66		       no  (Kida 2001)
+67		       
+69		       
+70		       no  (Kida 2001)
+71		       
+73		       no  (Kida 1997)
+74		       no  (Kida 2001)
+77		       yes (JEC, Kida 2001)
+78		       
+79		       yes (JEC, Kida 2001)
+82		       no  (Kida 2001)
+83		       
+85		       no  (Kida 2001)
+86		       yes (Kida 2001)
+87		       
+89		       
+91		       
+93		       
+94		       no  (Kida 1999)
+95		       
+97		       no  (Kida 1997)
+
+Unknown:  11, 19, 23, 43, 46, 51, 53, 55, 57, 59, 61, 62, 67, 69, 71,
+	  78, 83, 87, 89, 91, 93, 95

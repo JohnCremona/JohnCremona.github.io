@@ -1,0 +1,157 @@
+%
+% ERRATA TO  ALGORITHMS FOR MODULAR ELLIPTIC CURVES (TEXT, 2nd edition)
+%
+\def\lastupdate{26 September 2003}  % (DATE OF LAST UPDATE)
+%
+% (process with plain tex but uses some AmSTeX symbols)
+%
+\magnification=\magstep1
+\parskip=2pt
+\parindent=0pt
+%\nopagenumbers
+
+\input amssym.def
+\input amssym.tex
+\def\Z{{\Bbb Z}}
+\def\N{{\Bbb N}}
+\def\R{{\Bbb R}}
+\def\Q{{\Bbb Q}}
+\def\C{{\Bbb C}}
+\def\RP{\Omega}
+\def\frac#1#2{{{#1}\over{#2}}}
+\def\eps{\varepsilon}
+
+\def\err#1;#2:#3\par{\hangindent 60pt \leavevmode%
+                         \hbox to 10pt{\hss#1\quad}%
+                         \hbox to 50pt{\hss$#2$\quad\quad\ignorespaces}%
+                         #3\par}
+
+
+\centerline{\bf ALGORITHMS FOR MODULAR ELLIPTIC CURVES}
+\medskip
+\centerline{\bf  Errata list to the Second (1997) Edition text, last
+                         updated \lastupdate} 
+\bigskip
+
+\err{{\it Page}};\hbox{{\it Line}}:{{\it Correction}}\par
+%
+%Chapter 1
+%
+\err6;13:For ``$17583$'' read ``$17598$'', and for ``$31570$'' read
+``$31586$''.\par 
+\err6;16:Delete ``most of'', and after ``$5077$'' insert ``(and beyond, as they become available)''.\par
+\err6;\hbox{18--25}:Delete this whole paragraph, since the computations are
+now complete to 8000.\par
+%
+%Chapter 2
+%
+\err26;-10:For ``of $\beta+1$ forms $g_i(z)=g(q^iz)$'' read ``of dimension $\beta+1$,
+spanned by the forms $g_i(z)=q^i g(q^iz)$''.  [Then we have
+$g_i=g\left|\left(\matrix{q^i&0\cr0&1}\right)\right.$; otherwise there
+would be many missing powers of $q$ in the proof.]\par
+\err36;-10:For ``$(e^{2\pi ib/d}-\eps e^{2\pi ic/d})$'' 
+read ``$(e^{2\pi inb/d}-\eps e^{2\pi inc/d})$''.\par
+%
+%Chapter 2 Appendix (examples)
+%
+%
+%Chapter 3
+%
+\err64;-17:For ``$\frac12p<a\le\frac12p$'' 
+read ``$-\frac12p<a\le\frac12p$''.\par
+\err90;-3:For ``these are elliptic curves, which are twists of $E$''
+read ``these are also elliptic curves, isomorphic to~$E$
+over~$\Q$''.\par
+\err95;23:Denominator of $d$ should be $8a^2$, not $8a$.\par
+%
+%Chapter 4
+%
+\err108;23:Delete the sentence starting ``At present'', since the
+computations are now complete to 5077 (and almost complete to 6000, in
+fact).\par 
+\err108;\hbox{Table}:The line for 3001--4000 should read: $\phantom{0}3837\ 1665\
+2006\ 166\ 0$.\par
+\err;:The line for 4001--5000 should read: $\phantom{0}3962\ 1690\
+2092\ 180\ 0$.\par
+\err;:The line for \phantom{000}1--5077 should read: $17598\ 8035\
+8959\ 603\ 1$.\par
+%
+%Table 1
+%
+%
+%Table 2
+%
+%
+%Table 3
+%
+%
+%Table 4
+%
+%
+%Table 5
+%
+\err363--373;:Running head should say ``TABLE 5'' and not ``TABLE 2''.\par
+\err372;:All entries for $N=912$ are wrong; replace as in table below.\par
+%
+% If this looks over-complicated that is because it is extracted from
+% the fancier macros neede to set the full Table 5 with three columns etc.
+%
+\newdimen\tabwidth
+\tabwidth\hsize
+\divide\tabwidth by3
+\advance\tabwidth by-5pt
+\def\gap{\omit&height2pt&&&&&&&\cr}
+\def\entry#1#2#3#4{&&#1&&#2&#3&#4&&\cr}
+\def\topline{\noalign{\hrule}\gap}
+\def\hline{\gap\noalign{\hrule}\gap}
+\def\botline{\gap\noalign{\hrule}}
+\newbox\atab
+\newbox\btab
+\def\settable#1{\offinterlineskip
+\halign to\tabwidth{
+\strut##&\vrule##\tabskip3pt plus1fil minus 2.5pt &     % left border
+##\hfil&##\vrule&                                       % curve
+\hfil$##$&$##$&$##$\hfil&##\hfil&                       % degree
+\vrule\tabskip0pt##&##\cr                               % right border
+\noalign{\hrule}
+\gap
+&&{\hfil curve}&&\multispan3\hfill\hbox{degree}\hfill&&\cr
+\gap         
+\noalign{\hrule}
+\gap   
+#1                % body of table
+\botline
+}                 % end of \halign
+}                 % end of \def\settable
+%
+\def\setatab#1{\setbox\atab\vtop{\settable{#1}}}
+\def\setbtab#1{\setbox\btab\vtop{\settable{#1}}}
+\setatab{
+\entry{912A1}{192}{=}{2^6\cdot3}
+\entry{912B1}{96}{=}{2^5\cdot3}
+\entry{912C1}{192}{=}{2^6\cdot3}
+\entry{912D1}{160}{=}{2^5\cdot5}
+\entry{912E1}{288}{=}{2^5\cdot3^2}
+\entry{912F1}{480}{=}{2^5\cdot3\cdot5}
+}
+\setbtab{
+\entry{912G1}{96}{=}{2^5\cdot3}
+\entry{912H1}{480}{=}{2^5\cdot3\cdot5}
+\entry{912I1}{96}{=}{2^5\cdot3}
+\entry{912J1}{72}{=}{2^3\cdot3^2}
+\entry{912K1}{1440}{=}{2^5\cdot3^2\cdot5}
+\entry{912L1}{160}{=}{2^5\cdot5}
+}
+\line{\hfill\box\atab\qquad\box\btab\hfill}
+%
+%Bibliography
+%
+
+\bigskip
+\noindent{\it\noindent Thanks to:} Jeremy Bygott, Ian Connell, Michael
+Young, Blair Kelly III, Jeroen Spandaw, Larry Washington$\ldots$.
+\bigskip
+\rightline{JEC}
+\rightline{\lastupdate}
+
+\bye

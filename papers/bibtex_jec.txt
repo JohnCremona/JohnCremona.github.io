@@ -1,0 +1,832 @@
+@article {MR3579716,
+    AUTHOR = {Cremona, John},
+     TITLE = {The {L}-functions and modular forms database project},
+   JOURNAL = {Found. Comput. Math.},
+  FJOURNAL = {Foundations of Computational Mathematics. The Journal of the
+              Society for the Foundations of Computational Mathematics},
+    VOLUME = {16},
+      YEAR = {2016},
+    NUMBER = {6},
+     PAGES = {1541--1553},
+      ISSN = {1615-3375},
+   MRCLASS = {11M06 (01A60 11-04)},
+  MRNUMBER = {3579716},
+MRREVIEWER = {Steven Joel Miller},
+       URL = {https://0-doi-org.pugwash.lib.warwick.ac.uk/10.1007/s10208-016-9306-z},
+}
+		
+@article {MR3544620,
+    AUTHOR = {Bhargava, Manjul and Cremona, John E. and Fisher, Tom and
+              Jones, Nick G. and Keating, Jonathan P.},
+     TITLE = {What is the probability that a random integral quadratic form
+              in {$n$} variables has an integral zero?},
+   JOURNAL = {Int. Math. Res. Not. IMRN},
+  FJOURNAL = {International Mathematics Research Notices. IMRN},
+      YEAR = {2016},
+    NUMBER = {12},
+     PAGES = {3828--3848},
+      ISSN = {1073-7928},
+   MRCLASS = {11E12 (11E08 11E20 11N45 60B20)},
+  MRNUMBER = {3544620},
+MRREVIEWER = {Detlev W. Hoffmann},
+       URL = {https://0-doi-org.pugwash.lib.warwick.ac.uk/10.1093/imrn/rnv251},
+}
+		
+@incollection {MR3381450,
+    AUTHOR = {Cremona, J. E. and Aran\'es, M. T.},
+     TITLE = {Congruence subgroups, cusps and {M}anin symbols over number
+              fields},
+ BOOKTITLE = {Computations with modular forms},
+    SERIES = {Contrib. Math. Comput. Sci.},
+    VOLUME = {6},
+     PAGES = {109--127},
+ PUBLISHER = {Springer, Cham},
+      YEAR = {2014},
+   MRCLASS = {11F55},
+  MRNUMBER = {3381450},
+MRREVIEWER = {Francesc Castell\`a},
+       URL = {https://0-doi-org.pugwash.lib.warwick.ac.uk/10.1007/978-3-319-03847-6_4},
+}
+		
+@article {MR3263141,
+    AUTHOR = {Banwait, Barinder S. and Cremona, John E.},
+     TITLE = {Tetrahedral elliptic curves and the local-global principle for
+              isogenies},
+   JOURNAL = {Algebra Number Theory},
+  FJOURNAL = {Algebra \& Number Theory},
+    VOLUME = {8},
+      YEAR = {2014},
+    NUMBER = {5},
+     PAGES = {1201--1229},
+      ISSN = {1937-0652},
+   MRCLASS = {11G05 (11G18 14K15)},
+  MRNUMBER = {3263141},
+MRREVIEWER = {Yong Zhang},
+       URL = {https://0-doi-org.pugwash.lib.warwick.ac.uk/10.2140/ant.2014.8.1201},
+}
+		
+@article {MR3045217,
+    AUTHOR = {Cremona, John E. and Thongjunthug, Thotsaphon},
+     TITLE = {The complex {AGM}, periods of elliptic curves over {$\Bbb{C}$}
+              and complex elliptic logarithms},
+   JOURNAL = {J. Number Theory},
+  FJOURNAL = {Journal of Number Theory},
+    VOLUME = {133},
+      YEAR = {2013},
+    NUMBER = {8},
+     PAGES = {2813--2841},
+      ISSN = {0022-314X},
+   MRCLASS = {11G05 (11Y40)},
+  MRNUMBER = {3045217},
+MRREVIEWER = {Andrei Mart\'\i nez Finkelshtein},
+       URL = {https://0-doi-org.pugwash.lib.warwick.ac.uk/10.1016/j.jnt.2013.02.002},
+}
+
+@article {MR2728489,
+    AUTHOR = {Cremona, John E. and Fisher, Tom A. and Stoll, Michael},
+     TITLE = {Minimisation and reduction of 2-, 3- and 4-coverings of
+              elliptic curves},
+   JOURNAL = {Algebra Number Theory},
+  FJOURNAL = {Algebra \& Number Theory},
+    VOLUME = {4},
+      YEAR = {2010},
+    NUMBER = {6},
+     PAGES = {763--820},
+      ISSN = {1937-0652},
+   MRCLASS = {14G25 (14H52)},
+  MRNUMBER = {2728489},
+       DOI = {10.2140/ant.2010.4.763},
+       URL = {http://dx.doi.org/10.2140/ant.2010.4.763},
+}
+		
+
+@article {MR2658419,
+    AUTHOR = {Cremona, J. E. and Edjvet, M.},
+     TITLE = {Cyclically presented groups and resultants},
+   JOURNAL = {Internat. J. Algebra Comput.},
+  FJOURNAL = {International Journal of Algebra and Computation},
+    VOLUME = {20},
+      YEAR = {2010},
+    NUMBER = {3},
+     PAGES = {417--435},
+      ISSN = {0218-1967},
+   MRCLASS = {20F05},
+  MRNUMBER = {2658419},
+       DOI = {10.1142/S0218196710005777},
+       URL = {http://dx.doi.org/10.1142/S0218196710005777},
+}
+		
+
+@article {MR2544143,
+    AUTHOR = {Cremona, J. E. and Fisher, T. A. and O'Neil, C. and Simon, D.
+              and Stoll, M.},
+     TITLE = {Explicit {$n$}-descent on elliptic curves. {II}. {G}eometry},
+   JOURNAL = {J. Reine Angew. Math.},
+  FJOURNAL = {Journal f\"ur die Reine und Angewandte Mathematik. [Crelle's
+              Journal]},
+    VOLUME = {632},
+      YEAR = {2009},
+     PAGES = {63--84},
+      ISSN = {0075-4102},
+     CODEN = {JRMAA8},
+   MRCLASS = {11G05 (11R34 11Y50 14G25)},
+  MRNUMBER = {2544143},
+       DOI = {10.1515/CRELLE.2009.050},
+       URL = {http://dx.doi.org/10.1515/CRELLE.2009.050},
+}
+		
+
+@article {MR2509048,
+    AUTHOR = {Cremona, J. E. and Fisher, T. A.},
+     TITLE = {On the equivalence of binary quartics},
+   JOURNAL = {J. Symbolic Comput.},
+  FJOURNAL = {Journal of Symbolic Computation},
+    VOLUME = {44},
+      YEAR = {2009},
+    NUMBER = {6},
+     PAGES = {673--682},
+      ISSN = {0747-7171},
+   MRCLASS = {11E76 (11G05)},
+  MRNUMBER = {2509048 (2010c:11049)},
+MRREVIEWER = {Konstantinos Draziotis},
+       DOI = {10.1016/j.jsc.2008.09.004},
+       URL = {http://dx.doi.org/10.1016/j.jsc.2008.09.004},
+}
+		
+
+@incollection {MR2467842,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {Computing in component groups of elliptic curves},
+ BOOKTITLE = {Algorithmic number theory},
+    SERIES = {Lecture Notes in Comput. Sci.},
+    VOLUME = {5011},
+     PAGES = {118--124},
+ PUBLISHER = {Springer},
+   ADDRESS = {Berlin},
+      YEAR = {2008},
+   MRCLASS = {11G07},
+  MRNUMBER = {2467842 (2009k:11099)},
+MRREVIEWER = {Abderrahmane Nitaj},
+       DOI = {10.1007/978-3-540-79456-1_7},
+       URL = {http://dx.doi.org/10.1007/978-3-540-79456-1_7},
+}
+		
+
+@article {MR2398785,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {Unimodular integer circulants},
+   JOURNAL = {Math. Comp.},
+  FJOURNAL = {Mathematics of Computation},
+    VOLUME = {77},
+      YEAR = {2008},
+    NUMBER = {263},
+     PAGES = {1639--1652},
+      ISSN = {0025-5718},
+     CODEN = {MCMPAF},
+   MRCLASS = {11C08 (11C20 15A36)},
+  MRNUMBER = {2398785 (2009c:11042)},
+MRREVIEWER = {Christopher Smyth},
+       DOI = {10.1090/S0025-5718-08-02089-9},
+       URL = {http://dx.doi.org/10.1090/S0025-5718-08-02089-9},
+}
+		
+
+@article {MR2384334,
+    AUTHOR = {Cremona, J. E. and Fisher, T. A. and O'Neil, C. and Simon, D.
+              and Stoll, M.},
+     TITLE = {Explicit {$n$}-descent on elliptic curves. {I}. {A}lgebra},
+   JOURNAL = {J. Reine Angew. Math.},
+  FJOURNAL = {Journal f\"ur die Reine und Angewandte Mathematik. [Crelle's
+              Journal]},
+    VOLUME = {615},
+      YEAR = {2008},
+     PAGES = {121--155},
+      ISSN = {0075-4102},
+     CODEN = {JRMAA8},
+   MRCLASS = {11G05 (11R34 11Y50 14G25)},
+  MRNUMBER = {2384334 (2009g:11067)},
+MRREVIEWER = {Imin Chen},
+       DOI = {10.1515/CRELLE.2008.012},
+       URL = {http://dx.doi.org/10.1515/CRELLE.2008.012},
+}
+		
+
+@article {MR2367320,
+    AUTHOR = {Cremona, J. E. and Lingham, M. P.},
+     TITLE = {Finding all elliptic curves with good reduction outside a
+              given set of primes},
+   JOURNAL = {Experiment. Math.},
+  FJOURNAL = {Experimental Mathematics},
+    VOLUME = {16},
+      YEAR = {2007},
+    NUMBER = {3},
+     PAGES = {303--312},
+      ISSN = {1058-6458},
+   MRCLASS = {11G05 (11Y50)},
+  MRNUMBER = {2367320 (2008k:11057)},
+MRREVIEWER = {Christophe Delaunay},
+       URL = {http://projecteuclid.org/getRecord?id=euclid.em/1204928531},
+}
+		
+
+@article {MR2330429,
+    AUTHOR = {van Hoeij, Mark and Cremona, John},
+     TITLE = {Solving conics over function fields},
+   JOURNAL = {J. Th\'eor. Nombres Bordeaux},
+  FJOURNAL = {Journal de Th\'eorie des Nombres de Bordeaux},
+    VOLUME = {18},
+      YEAR = {2006},
+    NUMBER = {3},
+     PAGES = {595--606},
+      ISSN = {1246-7405},
+   MRCLASS = {11R58 (11Y50 68W30)},
+  MRNUMBER = {2330429 (2008f:11133)},
+MRREVIEWER = {Martha Rzedowski-Calder{\'o}n},
+       URL = {http://jtnb.cedram.org/item?id=JTNB_2006__18_3_595_0},
+}
+		
+
+@incollection {MR2282930,
+    AUTHOR = {Cremona, John and Siksek, Samir},
+     TITLE = {Computing a lower bound for the canonical height on elliptic
+              curves over {$\Bbb Q$}},
+ BOOKTITLE = {Algorithmic number theory},
+    SERIES = {Lecture Notes in Comput. Sci.},
+    VOLUME = {4076},
+     PAGES = {275--286},
+ PUBLISHER = {Springer},
+   ADDRESS = {Berlin},
+      YEAR = {2006},
+   MRCLASS = {11G50 (11G05)},
+  MRNUMBER = {2282930 (2008d:11066)},
+MRREVIEWER = {Hui Xue},
+       DOI = {10.1007/11792086_20},
+       URL = {http://dx.doi.org/10.1007/11792086_20},
+}
+		
+
+@incollection {MR2282912,
+    AUTHOR = {Cremona, John},
+     TITLE = {The elliptic curve database for conductors to 130000},
+ BOOKTITLE = {Algorithmic number theory},
+    SERIES = {Lecture Notes in Comput. Sci.},
+    VOLUME = {4076},
+     PAGES = {11--29},
+ PUBLISHER = {Springer},
+   ADDRESS = {Berlin},
+      YEAR = {2006},
+   MRCLASS = {11G05 (11-03 11Y70)},
+  MRNUMBER = {2282912 (2007k:11087)},
+MRREVIEWER = {A. Peth{\H{o}}},
+       DOI = {10.1007/11792086_2},
+       URL = {http://dx.doi.org/10.1007/11792086_2},
+}
+		
+
+@article {MR2197860,
+    AUTHOR = {Cremona, J. E. and Prickett, M. and Siksek, Samir},
+     TITLE = {Height difference bounds for elliptic curves over number
+              fields},
+   JOURNAL = {J. Number Theory},
+  FJOURNAL = {Journal of Number Theory},
+    VOLUME = {116},
+      YEAR = {2006},
+    NUMBER = {1},
+     PAGES = {42--68},
+      ISSN = {0022-314X},
+     CODEN = {JNUTA9},
+   MRCLASS = {11G50 (11G05)},
+  MRNUMBER = {2197860 (2006k:11121)},
+MRREVIEWER = {Clayton Petsche},
+}
+		
+
+@article {MR2085902,
+    AUTHOR = {Agashe, Amod and Stein, William},
+     TITLE = {Visible evidence for the {B}irch and {S}winnerton-{D}yer
+              conjecture for modular abelian varieties of analytic rank
+              zero},
+      NOTE = {With an appendix by J. Cremona and B. Mazur},
+   JOURNAL = {Math. Comp.},
+  FJOURNAL = {Mathematics of Computation},
+    VOLUME = {74},
+      YEAR = {2005},
+    NUMBER = {249},
+     PAGES = {455--484},
+      ISSN = {0025-5718},
+     CODEN = {MCMPAF},
+   MRCLASS = {11G40 (11G10)},
+  MRNUMBER = {2085902 (2005g:11119)},
+MRREVIEWER = {Chandan Singh Dalawat},
+       DOI = {10.1090/S0025-5718-04-01644-8},
+       URL = {http://dx.doi.org/10.1090/S0025-5718-04-01644-8},
+}
+		
+
+@book {MR2058638,
+     TITLE = {Modular curves and abelian varieties},
+    SERIES = {Progress in Mathematics},
+    VOLUME = {224},
+    EDITOR = {Cremona, John and Lario, Joan-Carles and Quer, Jordi and
+              Ribet, Kenneth},
+      NOTE = {Papers from the conference held in Bellaterra, July 15--18,
+              2002},
+ PUBLISHER = {Birkh\"auser Verlag},
+   ADDRESS = {Basel},
+      YEAR = {2004},
+     PAGES = {viii+289},
+      ISBN = {3-7643-6586-2},
+   MRCLASS = {11-06 (11Gxx)},
+  MRNUMBER = {2058638 (2004k:11004)},
+}
+		
+
+@article {MR2024647,
+    AUTHOR = {Stoll, Michael and Cremona, John E.},
+     TITLE = {On the reduction theory of binary forms},
+   JOURNAL = {J. Reine Angew. Math.},
+  FJOURNAL = {Journal f\"ur die Reine und Angewandte Mathematik},
+    VOLUME = {565},
+      YEAR = {2003},
+     PAGES = {79--99},
+      ISSN = {0075-4102},
+     CODEN = {JRMAA8},
+   MRCLASS = {11H55 (11E76)},
+  MRNUMBER = {2024647 (2005e:11091)},
+MRREVIEWER = {Christine Bachoc},
+       DOI = {10.1515/crll.2003.106},
+       URL = {http://dx.doi.org/10.1515/crll.2003.106},
+}
+		
+
+@article {MR1980642,
+    AUTHOR = {Siksek, Samir and Cremona, John E.},
+     TITLE = {On the {D}iophantine equation {$x^2+7=y^m$}},
+   JOURNAL = {Acta Arith.},
+  FJOURNAL = {Acta Arithmetica},
+    VOLUME = {109},
+      YEAR = {2003},
+    NUMBER = {2},
+     PAGES = {143--149},
+      ISSN = {0065-1036},
+     CODEN = {AARIA9},
+   MRCLASS = {11G30 (11D41)},
+  MRNUMBER = {1980642 (2004c:11109)},
+MRREVIEWER = {Dimitrios Poulakis},
+       DOI = {10.4064/aa109-2-3},
+       URL = {http://dx.doi.org/10.4064/aa109-2-3},
+}
+		
+
+@article {MR1972744,
+    AUTHOR = {Cremona, J. E. and Rusin, D.},
+     TITLE = {Efficient solution of rational conics},
+   JOURNAL = {Math. Comp.},
+  FJOURNAL = {Mathematics of Computation},
+    VOLUME = {72},
+      YEAR = {2003},
+    NUMBER = {243},
+     PAGES = {1417--1441 (electronic)},
+      ISSN = {0025-5718},
+     CODEN = {MCMPAF},
+   MRCLASS = {11Y50 (11D09)},
+  MRNUMBER = {1972744 (2004a:11137)},
+MRREVIEWER = {Joseph H. Silverman},
+       DOI = {10.1090/S0025-5718-02-01480-1},
+       URL = {http://dx.doi.org/10.1090/S0025-5718-02-01480-1},
+}
+		
+
+@article {MR1951757,
+    AUTHOR = {Stoll, Michael and Cremona, John E.},
+     TITLE = {Minimal models for 2-coverings of elliptic curves},
+   JOURNAL = {LMS J. Comput. Math.},
+  FJOURNAL = {LMS Journal of Computation and Mathematics},
+    VOLUME = {5},
+      YEAR = {2002},
+     PAGES = {220--243 (electronic)},
+      ISSN = {1461-1570},
+   MRCLASS = {11G05 (11G07 14Q05)},
+  MRNUMBER = {1951757 (2003j:11062)},
+MRREVIEWER = {Ivica Gusi{\'c}},
+}
+		
+
+@article {MR1941121,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {On the computation of {M}ordell-{W}eil and 2-{S}elmer groups
+              of elliptic curves},
+   JOURNAL = {Rocky Mountain J. Math.},
+  FJOURNAL = {The Rocky Mountain Journal of Mathematics},
+    VOLUME = {32},
+      YEAR = {2002},
+    NUMBER = {3},
+     PAGES = {953--967},
+      ISSN = {0035-7596},
+     CODEN = {RMJMAE},
+   MRCLASS = {11G05},
+  MRNUMBER = {1941121 (2003h:11060)},
+MRREVIEWER = {Ivica Gusi{\'c}},
+       DOI = {10.1216/rmjm/1034968425},
+       URL = {http://dx.doi.org/10.1216/rmjm/1034968425},
+}
+		
+
+@article {MR1835853,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {Corrigendum: ``{R}eduction of binary cubic and quartic forms''
+              [{LMS} {J}. {C}omput. {M}ath. {\bf 2} (1999), 64--94
+              (electronic); {MR}1693411 (2000f:11040)]},
+   JOURNAL = {LMS J. Comput. Math.},
+  FJOURNAL = {LMS Journal of Computation and Mathematics},
+    VOLUME = {4},
+      YEAR = {2001},
+     PAGES = {73 (electronic)},
+      ISSN = {1461-1570},
+   MRCLASS = {11E76 (11H55)},
+  MRNUMBER = {1835853},
+}
+		
+
+@article {MR1806207,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {Classical invariants and 2-descent on elliptic curves},
+      NOTE = {Computational algebra and number theory (Milwaukee, WI, 1996)},
+   JOURNAL = {J. Symbolic Comput.},
+  FJOURNAL = {Journal of Symbolic Computation},
+    VOLUME = {31},
+      YEAR = {2001},
+    NUMBER = {1-2},
+     PAGES = {71--87},
+      ISSN = {0747-7171},
+   MRCLASS = {11G05 (11Y50)},
+  MRNUMBER = {1806207 (2002a:11055)},
+MRREVIEWER = {Ivica Gusi{\'c}},
+       DOI = {10.1006/jsco.1998.1004},
+       URL = {http://dx.doi.org/10.1006/jsco.1998.1004},
+}
+		
+
+@article {MR1758797,
+    AUTHOR = {Cremona, John E. and Mazur, Barry},
+     TITLE = {Visualizing elements in the {S}hafarevich-{T}ate group},
+   JOURNAL = {Experiment. Math.},
+  FJOURNAL = {Experimental Mathematics},
+    VOLUME = {9},
+      YEAR = {2000},
+    NUMBER = {1},
+     PAGES = {13--28},
+      ISSN = {1058-6458},
+   MRCLASS = {11G05 (11G40 14G05)},
+  MRNUMBER = {1758797 (2001g:11083)},
+MRREVIEWER = {Amod Agash{\'e}},
+       URL = {http://projecteuclid.org/getRecord?id=euclid.em/1046889588},
+}
+		
+
+@article {MR1693411,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {Reduction of binary cubic and quartic forms},
+   JOURNAL = {LMS J. Comput. Math.},
+  FJOURNAL = {LMS Journal of Computation and Mathematics},
+    VOLUME = {2},
+      YEAR = {1999},
+     PAGES = {64--94 (electronic)},
+      ISSN = {1461-1570},
+   MRCLASS = {11E76 (11H55)},
+  MRNUMBER = {1693411 (2000f:11040)},
+MRREVIEWER = {Renaud Coulangeon},
+}
+		
+
+@article {MR1627777,
+    AUTHOR = {Cremona, J. E. and Serf, P.},
+     TITLE = {Computing the rank of elliptic curves over real quadratic
+              number fields of class number {$1$}},
+   JOURNAL = {Math. Comp.},
+  FJOURNAL = {Mathematics of Computation},
+    VOLUME = {68},
+      YEAR = {1999},
+    NUMBER = {227},
+     PAGES = {1187--1200},
+      ISSN = {0025-5718},
+     CODEN = {MCMPAF},
+   MRCLASS = {11G05 (11Y50)},
+  MRNUMBER = {1627777 (99j:11060)},
+MRREVIEWER = {Kenneth Kramer},
+       DOI = {10.1090/S0025-5718-99-01055-8},
+       URL = {http://dx.doi.org/10.1090/S0025-5718-99-01055-8},
+}
+		
+
+@book {MR1628193,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {Algorithms for modular elliptic curves},
+   EDITION = {Second},
+ PUBLISHER = {Cambridge University Press},
+   ADDRESS = {Cambridge},
+      YEAR = {1997},
+     PAGES = {vi+376},
+      ISBN = {0-521-59820-6},
+   MRCLASS = {11G05 (11F11 11F25 11G40 14G25)},
+  MRNUMBER = {1628193 (99e:11068)},
+MRREVIEWER = {Joseph H. Silverman},
+}
+		
+
+@article {MR1474571,
+    AUTHOR = {Cremona, John E.},
+     TITLE = {Computing periods of cusp forms and modular elliptic curves},
+   JOURNAL = {Experiment. Math.},
+  FJOURNAL = {Experimental Mathematics},
+    VOLUME = {6},
+      YEAR = {1997},
+    NUMBER = {2},
+     PAGES = {97--107},
+      ISSN = {1058-6458},
+   MRCLASS = {11F67 (11F11 11G05 11Y35)},
+  MRNUMBER = {1474571 (98h:11058)},
+MRREVIEWER = {V. Kumar Murty},
+       URL = {http://projecteuclid.org/getRecord?id=euclid.em/1047649997},
+}
+		
+
+@article {MR1297466,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {Computing the degree of the modular parametrization of a
+              modular elliptic curve},
+   JOURNAL = {Math. Comp.},
+  FJOURNAL = {Mathematics of Computation},
+    VOLUME = {64},
+      YEAR = {1995},
+    NUMBER = {211},
+     PAGES = {1235--1250},
+      ISSN = {0025-5718},
+     CODEN = {MCMPAF},
+   MRCLASS = {11G05 (11F30 11F66 11G40)},
+  MRNUMBER = {1297466 (95j:11047)},
+MRREVIEWER = {Henri Darmon},
+       DOI = {10.2307/2153493},
+       URL = {http://dx.doi.org/10.2307/2153493},
+}
+		
+
+@incollection {MR1322718,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {Computing the degree of a modular parametrization},
+ BOOKTITLE = {Algorithmic number theory ({I}thaca, {NY}, 1994)},
+    SERIES = {Lecture Notes in Comput. Sci.},
+    VOLUME = {877},
+     PAGES = {134--142},
+ PUBLISHER = {Springer},
+   ADDRESS = {Berlin},
+      YEAR = {1994},
+   MRCLASS = {11G18 (11F11 11G05)},
+  MRNUMBER = {1322718 (96b:11075)},
+MRREVIEWER = {Andrea Mori},
+}
+		
+
+@incollection {MR1260953,
+    AUTHOR = {Cremona, John E.},
+     TITLE = {Periods of cusp forms and elliptic curves over imaginary
+              quadratic fields},
+ BOOKTITLE = {Elliptic curves and related topics},
+    SERIES = {CRM Proc. Lecture Notes},
+    VOLUME = {4},
+     PAGES = {29--44},
+ PUBLISHER = {Amer. Math. Soc.},
+   ADDRESS = {Providence, RI},
+      YEAR = {1994},
+   MRCLASS = {11F67 (11G05 11G40)},
+  MRNUMBER = {1260953 (95i:11046)},
+MRREVIEWER = {Glenn Stevens},
+}
+		
+
+@article {MR1185241,
+    AUTHOR = {Cremona, J. E. and Whitley, E.},
+     TITLE = {Periods of cusp forms and elliptic curves over imaginary
+              quadratic fields},
+   JOURNAL = {Math. Comp.},
+  FJOURNAL = {Mathematics of Computation},
+    VOLUME = {62},
+      YEAR = {1994},
+    NUMBER = {205},
+     PAGES = {407--429},
+      ISSN = {0025-5718},
+     CODEN = {MCMPAF},
+   MRCLASS = {11F67 (11F66 11G05 11G40)},
+  MRNUMBER = {1185241 (94c:11046)},
+MRREVIEWER = {Henri Darmon},
+       DOI = {10.2307/2153419},
+       URL = {http://dx.doi.org/10.2307/2153419},
+}
+		
+
+@article {MR1251236,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {The analytic order of {S}h for modular elliptic curves},
+   JOURNAL = {J. Th\'eor. Nombres Bordeaux},
+  FJOURNAL = {Journal de Th\'eorie des Nombres de Bordeaux},
+    VOLUME = {5},
+      YEAR = {1993},
+    NUMBER = {1},
+     PAGES = {179--184},
+      ISSN = {1246-7405},
+   MRCLASS = {11G40 (11F30 11F66 11G05)},
+  MRNUMBER = {1251236 (94i:11041)},
+MRREVIEWER = {Henri Darmon},
+       URL = {http://jtnb.cedram.org/item?id=JTNB_1993__5_1_179_0},
+}
+		
+
+@book {MR1201151,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {Algorithms for modular elliptic curves},
+ PUBLISHER = {Cambridge University Press},
+   ADDRESS = {Cambridge},
+      YEAR = {1992},
+     PAGES = {vi+343},
+      ISBN = {0-521-41813-5},
+   MRCLASS = {11G40 (11G05 11Y16 11Y35)},
+  MRNUMBER = {1201151 (93m:11053)},
+MRREVIEWER = {Philippe Satg{\'e}},
+}
+		
+
+@article {MR1180252,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {Abelian varieties with extra twist, cusp forms, and elliptic
+              curves over imaginary quadratic fields},
+   JOURNAL = {J. London Math. Soc. (2)},
+  FJOURNAL = {Journal of the London Mathematical Society. Second Series},
+    VOLUME = {45},
+      YEAR = {1992},
+    NUMBER = {3},
+     PAGES = {404--416},
+      ISSN = {0024-6107},
+     CODEN = {JLMSAK},
+   MRCLASS = {11G10 (11F12 11F30 11F66 11G05)},
+  MRNUMBER = {1180252 (93h:11056)},
+MRREVIEWER = {Henri Darmon},
+       DOI = {10.1112/jlms/s2-45.3.404},
+       URL = {http://dx.doi.org/10.1112/jlms/s2-45.3.404},
+}
+		
+
+@article {MR1142740,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {Modular symbols for {$\Gamma_1(N)$} and elliptic curves
+              with everywhere good reduction},
+   JOURNAL = {Math. Proc. Cambridge Philos. Soc.},
+  FJOURNAL = {Mathematical Proceedings of the Cambridge Philosophical
+              Society},
+    VOLUME = {111},
+      YEAR = {1992},
+    NUMBER = {2},
+     PAGES = {199--218},
+      ISSN = {0305-0041},
+     CODEN = {MPCPCO},
+   MRCLASS = {11F67 (11G05)},
+  MRNUMBER = {1142740 (93e:11065)},
+MRREVIEWER = {Philippe Satg{\'e}},
+       DOI = {10.1017/S0305004100075307},
+       URL = {http://dx.doi.org/10.1017/S0305004100075307},
+}
+		
+
+@article {MR1061974,
+    AUTHOR = {Cremona, John and Landau, Susan},
+     TITLE = {Shrinking lattice polyhedra},
+   JOURNAL = {SIAM J. Discrete Math.},
+  FJOURNAL = {SIAM Journal on Discrete Mathematics},
+    VOLUME = {3},
+      YEAR = {1990},
+    NUMBER = {3},
+     PAGES = {338--348},
+      ISSN = {0895-4801},
+     CODEN = {SJDMEC},
+   MRCLASS = {52C07 (11H06 52B20)},
+  MRNUMBER = {1061974 (91i:52011)},
+MRREVIEWER = {Robert M. Erdahl},
+       DOI = {10.1137/0403029},
+       URL = {http://dx.doi.org/10.1137/0403029},
+}
+		
+
+@article {MR1021868,
+    AUTHOR = {Cremona, J. E. and Odoni, R. W. K.},
+     TITLE = {A generalization of a result of {I}wasawa on the capitulation
+              problem},
+   JOURNAL = {Math. Proc. Cambridge Philos. Soc.},
+  FJOURNAL = {Mathematical Proceedings of the Cambridge Philosophical
+              Society},
+    VOLUME = {107},
+      YEAR = {1990},
+    NUMBER = {1},
+     PAGES = {1--3},
+      ISSN = {0305-0041},
+     CODEN = {MPCPCO},
+   MRCLASS = {11R11 (11R37)},
+  MRNUMBER = {1021868 (90m:11152)},
+MRREVIEWER = {F. Diaz y Diaz},
+       DOI = {10.1017/S0305004100068316},
+       URL = {http://dx.doi.org/10.1017/S0305004100068316},
+}
+		
+
+@article {MR1045787,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {On the {G}alois groups of the iterates of {$x^2+1$}},
+   JOURNAL = {Mathematika},
+  FJOURNAL = {Mathematika. A Journal of Pure and Applied Mathematics},
+    VOLUME = {36},
+      YEAR = {1989},
+    NUMBER = {2},
+     PAGES = {259--261 (1990)},
+      ISSN = {0025-5793},
+     CODEN = {MTKAAB},
+   MRCLASS = {12F10},
+  MRNUMBER = {1045787 (91b:12003)},
+MRREVIEWER = {Yu Wang},
+       DOI = {10.1112/S0025579300013127},
+       URL = {http://dx.doi.org/10.1112/S0025579300013127},
+}
+		
+
+@article {MR989916,
+    AUTHOR = {Cremona, J. E. and Odoni, R. W. K.},
+     TITLE = {Some density results for negative {P}ell equations; an
+              application of graph theory},
+   JOURNAL = {J. London Math. Soc. (2)},
+  FJOURNAL = {Journal of the London Mathematical Society. Second Series},
+    VOLUME = {39},
+      YEAR = {1989},
+    NUMBER = {1},
+     PAGES = {16--28},
+      ISSN = {0024-6107},
+     CODEN = {JLMSAK},
+   MRCLASS = {11D09 (05C30)},
+  MRNUMBER = {989916 (90b:11019)},
+MRREVIEWER = {B. M. M. de Weger},
+       DOI = {10.1112/jlms/s2-39.1.16},
+       URL = {http://dx.doi.org/10.1112/jlms/s2-39.1.16},
+}
+		
+
+@article {MR975907,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {On {${\rm GL}(n)$} of a {D}edekind domain},
+   JOURNAL = {Quart. J. Math. Oxford Ser. (2)},
+  FJOURNAL = {The Quarterly Journal of Mathematics. Oxford. Second Series},
+    VOLUME = {39},
+      YEAR = {1988},
+    NUMBER = {156},
+     PAGES = {423--426},
+      ISSN = {0033-5606},
+     CODEN = {QJMAAT},
+   MRCLASS = {20G35 (11E57)},
+  MRNUMBER = {975907 (89k:20061)},
+MRREVIEWER = {Alexander J. Hahn},
+}
+		
+
+@article {MR906375,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {Addendum and errata: ``{H}yperbolic tessellations, modular
+              symbols, and elliptic curves over complex quadratic fields''
+              [{C}ompositio {M}ath.\ {\bf 51} (1984), no.\ 3, 275--324;
+              {MR}0743014 (85j:11063)]},
+   JOURNAL = {Compositio Math.},
+  FJOURNAL = {Compositio Mathematica},
+    VOLUME = {63},
+      YEAR = {1987},
+    NUMBER = {2},
+     PAGES = {271--272},
+      ISSN = {0010-437X},
+     CODEN = {CMPMAF},
+   MRCLASS = {11G05 (11F67 14G25 14K07)},
+  MRNUMBER = {906375 (89a:11058)},
+MRREVIEWER = {Reinhard B{\"o}lling},
+       URL = {http://www.numdam.org/item?id=CM_1987__63_2_271_0},
+}
+		
+
+@article {MR743014,
+    AUTHOR = {Cremona, J. E.},
+     TITLE = {Hyperbolic tessellations, modular symbols, and elliptic curves
+              over complex quadratic fields},
+   JOURNAL = {Compositio Math.},
+  FJOURNAL = {Compositio Mathematica},
+    VOLUME = {51},
+      YEAR = {1984},
+    NUMBER = {3},
+     PAGES = {275--324},
+      ISSN = {0010-437X},
+     CODEN = {CMPMAF},
+   MRCLASS = {11G05 (11F67 14G25 14K07)},
+  MRNUMBER = {743014 (85j:11063)},
+MRREVIEWER = {Reinhard B{\"o}lling},
+       URL = {http://www.numdam.org/item?id=CM_1984__51_3_275_0},
+}

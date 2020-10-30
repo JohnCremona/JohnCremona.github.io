@@ -1,0 +1,97 @@
+%
+%  TABLE 5
+%
+\input book.def
+\advance\pageno by\chaponepages
+\advance\pageno by\chaptwopages
+\advance\pageno by\appendixpages
+\advance\pageno by\chapthreepages
+\advance\pageno by\chapfourpages
+\advance\pageno by\tabonepages
+\advance\pageno by\tabtwopages
+\advance\pageno by\tabthreepages
+\advance\pageno by\tabfourpages
+%
+\topmatter
+\title\chapter\nofrills{Table 5} Parametrization degrees\endtitle
+\endtopmatter
+\document
+%\openup2pt
+\raggedbottom
+
+This table shows, for each newform $f$, the degree of the modular
+parametrization $$\varphi\colon X_0(N)\to E_f.$$  The corresponding
+curve in each case is the ``strong Weil'' curve in its isogeny class,
+which is the first curve in its class\footnote{except class 990H as
+before, where it is the curve 990H3.}.  In each case the prime
+factorization of the degree is also shown.
+
+\vfill\eject
+\eightpoint
+\advance\vsize by 13pt
+\advance\voffset by -0.5 truein
+\catcode`\@=11
+\def\rightheadline{\hfill TABLE 5: DEGREES
+\firstc--\lastc\hfill \llap{\folio}} 
+\def\leftheadline{\rlap{\folio} \hfill TABLE 5: DEGREES \firstc--\lastc
+\hfill}
+\headline={\def\chapter#1{}%\chapterno@. }%
+  \def\\{\unskip\space\ignorespaces}\headlinefont@
+  \ifodd\pageno \rightheadline \else \leftheadline\fi}
+\catcode`\@=\active
+
+%
+%  MACROS FOR THE TABLE
+%
+\newdimen\tabwidth
+\tabwidth\hsize
+\divide\tabwidth by4
+\advance\tabwidth by-5pt
+
+\def\gap{\omit&height2pt&&&&&&&\cr}
+\def\entry#1#2#3#4{&&#1&&#2&#3&#4&&\cr}
+
+\def\topline{\noalign{\hrule}\gap}
+\def\hline{\gap\noalign{\hrule}\gap}
+\def\botline{\gap\noalign{\hrule}}
+%
+\newbox\atab
+\newbox\btab
+\newbox\ctab
+\newbox\dtab
+%
+\def\settable#1{\offinterlineskip
+\halign to\tabwidth{
+\strut##&\vrule##\tabskip3pt plus1fil minus 2.5pt &     % left border
+##\hfil&##\vrule&                                       % curve
+\hfil$##$&$##$&$##$\hfil&##\hfil&                       % degree
+\vrule\tabskip0pt##&##\cr                               % right border
+\noalign{\hrule}
+\gap
+&&{\hfil curve}&&\multispan3\hfill\hbox{degree}\hfill&&\cr
+\gap         
+\noalign{\hrule}
+\gap   
+#1                % body of table
+\botline
+}                 % end of \halign
+}                 % end of \def\settable
+%
+\def\setatab#1{\setbox\atab\vtop{\settable{#1}}}
+\def\setbtab#1{\setbox\btab\vtop{\settable{#1}}}
+\def\setctab#1{\setbox\ctab\vtop{\settable{#1}}}
+\def\setdtab#1{\setbox\dtab\vtop{\settable{#1}}}
+%
+\def\tablepage#1,#2-#3.{
+                        \vfill
+                 \line{\box\atab\hfill\box\btab\hfill\box\ctab\hfill\box\dtab}
+                        \def\firstc{#2}\def\lastc{#3}
+                        \vfill
+                        \eject
+                       }
+%
+%
+%  END OF TABLE 5 DEFS
+%
+\input table5.dat
+\enddocument

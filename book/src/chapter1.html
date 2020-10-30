@@ -1,0 +1,550 @@
+<HTML>
+<HEAD><TITLE>ALGORITHMS FOR MODULAR ELLIPTIC CURVES: INTRODUCTION</TITLE>
+</HEAD>
+<BODY><BODY BGCOLOR="#FFFFFF">
+<center>
+<H1>Algorithms for Modular Elliptic Curves</H1>
+<H2>J. E. Cremona</H2>
+<H2>Chapter One: Introduction</H2>
+</center>
+
+<A NAME="IntroFirst">
+<H3> Introduction to the First (1992) Edition </H3>
+</A>
+
+This book is in three sections.  First, we describe in detail an
+algorithm based on modular symbols for computing modular elliptic
+curves: that is, one-dimensional factors of the Jacobian of the
+modular curve <I>$X_0(N)$</I>, which are attached to certain cusp forms for
+the congruence subgroup <I>$\Gamma_0(N)$</I>.  In the second section, various
+algorithms for studying the arithmetic of elliptic curves (defined
+over the rationals) are described.  These are for the most part not
+new, but they have not all appeared in book form, and it seemed
+appropriate to include them here. Lastly, we report on the results
+obtained when the modular symbols algorithm was carried out for all
+<I>$N\le1000$</I>.  In a comprehensive set of tables we give details of the
+curves found, together with all isogenous curves (5113 curves in all,
+in 2463 isogeny classes.  [In the first edition, these numbers were
+given as 5089 and 2447 respectively, as the curves of conductor 702
+were inadvertently omitted.]  Specifically, we give for each curve the
+rank and generators for the points of infinite order, the number of
+torsion points, the regulator, the traces of Frobenius for primes less
+than 100, and the leading coefficient of the <I>$L$</I>-series at <I>$s=1$</I>; we
+also give the reduction data (Kodaira symbols, and local constants)
+for all primes of bad reduction, and information about isogenies.
+
+<P>
+
+For <I>$N\le200$</I> these curves can be found in the well-known
+tables usually referred to as ``Antwerp IV'' [Antwerp], as computed by
+Tingley [Tingley], who in turn extended earlier tables of curves found
+by systematic search; our calculations agree with that list in all 281
+cases.  For values of <I>$N$</I> in the range <I>$200&lt;N\le320$</I>
+Tingley computed the modular curves attached to newforms for
+<I>$\Gamma_0(N)$</I> only when there was no known curve of conductor
+<I>$N$</I> corresponding to the newform: these appear in his thesis
+[Tingley] but are unpublished. As in [Antwerp], the curves <I>$E$</I>
+we list for each <I>$N$</I> have the following properties.  <OL>
+
+<LI>They have conductor <I>$N$</I>, as determined by Tate's algorithm [Tate].
+
+<LI> The coefficients given are those of a global minimal model for
+<I>$E$</I>, and these coefficients (or, more precisely, the <I>$c_4$</I> and <I>$c_6$</I>
+invariants) agree with the numerical values obtained from the modular
+calculation to several decimal places: in most cases, depending on the
+accuracy obtained---see below---differing by no more than
+<I>$10^{-30}$</I>. 
+
+<LI> Their traces of Frobenius agree with those of the modular curves
+for all primes <I>$p<1000$</I>.
+</OL>
+
+<P>
+
+We have also investigated, for each curve, certain numbers related to
+the Birch--Swinnerton-Dyer conjecture.  Let <I>$f(z)$</I> be a newform for
+<I>$\Gamma_0(N)$</I> with rational Fourier coefficients, and <I>$E$</I> the elliptic
+curve defined over <I>$\Q$</I> attached to <I>$f$</I>.  The value of <I>$L(f,1)$</I> is a
+rational multiple of a period of <I>$f$</I>, and may be computed easily using
+modular symbols (see [Manin] and Section 2.8 below). We have computed
+this rational number in each case, and find that it is always
+consistent with the Birch--Swinnerton-Dyer conjecture for <I>$E$</I>.  More
+specifically, let <I>$\rp(f)$</I> be the least positive real period of <I>$F$</I>
+and <I>$\RP(f)=2\rp(f)$</I> or <I>$\rp(f)$</I> according as the period lattice of
+<I>$f$</I> is or is not rectangular. Then we find that <I>$L(f,1)/\RP(f)=0$</I> if
+(and only if) the Mordell-Weil group <I>$E(\Q)$</I> has positive rank, and
+when <I>$E(\Q)$</I> is finite we find in each case that 
+<BR><center>
+<I>$$
+   L(f,1)/\RP(f) = \prod_{p|N}c_p\cdot|E(\Q)|^{-2}\cdot S 
+$$</I> 
+<BR></center>
+with <I>$S\in\N$</I> (in fact <I>$S=1$</I> in all but four cases: <I>$S=4$</I> in three
+cases and <I>$S=9$</I> in one case). This is consistent with the
+Birch--Swinnerton-Dyer conjecture if the Tate--Shafarevitch group
+<I>$\Sha$</I> is finite of order <I>$S$</I>.  (Here <I>$c_p$</I> is the local index
+<I>$[E(\Q_p) : E_0(\Q_p)]$</I>; see [Silverman 1986, p.362].)  When <I>$L(f,1)=0$</I>, we
+compute the sign <I>$w$</I> of the functional equation for <I>$L(f,s)$</I>, and
+verify that <I>$w=+1$</I> if and only if the curve has even rank.  More
+precisely, we also compute the value of <I>$L^{(r)}(f,1)$</I>, where <I>$r$</I> is
+the rank, the regulator <I>$R$</I>, and the quotient 
+<BR><center>
+<I>$$
+   S = \frac {L^{(r)}(f,1)}  {r!\;\RP(f)} \left/ 
+       \frac {(\prod c_p)\; R} {\left|E(\Q)_{\tor}\right|^2}  \right. . 
+$$</I> 
+<BR></center>
+In all but the four cases mentioned above we find that <I>$S=1$</I> to within the 
+accuracy of the computation.
+
+<P>
+
+Our algorithm uses modular symbols to compute the 1-homology of 
+<I>$\Gamma_0(N)\backslash\H^*$</I>  where <I>$\H^*$</I> is the extended upper 
+half-plane <I>$\{z\in\C : \hbox{Im}(z)>0\}\cup\{\infty\}\cup\Q$</I>.   While 
+similar in some respects to Tingley's original algorithm described in 
+[Tingley], it also uses ideas from [Manin] together with 
+some new ideas which will be described in detail below.   One important 
+advantage of our method, compared with Tingley's, is that we do not need 
+to consider explicitly the exact geometric shape of a fundamental region 
+for the action of <I>$\Gamma_0(N)$</I> on <I>$\H^*$</I>: this means that highly 
+composite <I>$N$</I> can be dealt with in exactly the same way as, say, prime 
+<I>$N$</I>.   Of course, for prime <I>$N$</I> there are other methods, such as that of 
+Mestre [Mestre], which are probably faster in that case, though 
+not apparently yielding the values of the ``Birch--Swinnerton-Dyer numbers''
+<I>$L(f,1)/\RP(f)$</I>.   There is also a strong similarity between the 
+algorithms described here and those developed by the author in his 
+investigation of cusp forms of weight two over imaginary quadratic 
+fields [Cremona 1984], [Cremona 1987], [Cremona 1994].   A variant of this 
+algorithm has also been used successfully to study modular forms for 
+<I>$\Gamma_0(N)$</I> with quadratic character, thus answering some questions 
+raised by Pinch (see [Pinch]) concerning elliptic 
+curves of everywhere good reduction over real quadratic fields.   See 
+[Cremona 1992] for details of this, and for a generalisation to 
+<I>$\Gamma_1(N)$</I>: one could find cusp forms of weight two with arbitrary 
+character using this extension of the modular symbol method, though at 
+present it  has only been implemented for quadratic characters, as
+described in [Cremona 1992].
+
+<P>
+
+It is not our intention in this book to discuss the theory of modular 
+forms in any detail, though we will summarize the facts that we need,
+and give references to suitable texts.  The theoretical construction and 
+properties of the modular elliptic curves will also be excluded, except 
+for a brief summary.  Likewise, we will assume that the reader has some 
+knowledge of the theory of elliptic curves, such as can be obtained from 
+one of the growing number of excellent books on the subject.  Instead we
+will be concentrating on computational aspects, and hope thus to 
+complement other, more theoretical, treatments.
+
+<P>
+
+In Chapter 2 we describe the various steps in the modular symbol algorithm 
+in detail. At each step we give the theoretical foundations of the method 
+used, with proofs or references to the literature.  Included here are some
+remarks on our implementation of the algorithms, which might be useful 
+to those wishing to write their own programs.   At the end of this stage
+we have equations for the curves, together with certain other data for
+the associated cusp form: Hecke eigenvalues, sign of the functional 
+equation, and the ratio <I>$L(f,1)/\RP(f)$</I>.
+
+<P>
+
+Following Chapter 2, we give some worked examples to illustrate the
+various methods.
+
+<P>
+
+In Chapter 3 we describe the algorithms we used to study the elliptic
+curves we found using modular symbols, including the finding of all
+curves isogenous to those in the original list.  These algorithms are
+more generally applicable to arbitrary elliptic curves over <I>$\Q$</I>,
+although we do not consider questions which might arise with curves
+having bad reduction at very large primes.  (For example, we do not
+consider how to factorize the discriminant in order to find the bad
+primes, as in all cases in the tables this is trivially achieved by
+trial division). Here we compute minimal equations, local reduction
+types, rank and torsion, generators for the Mordell--Weil group, the
+regulator, and traces of Frobenius.  This includes all the information
+published in the earlier Antwerp IV tables. The final calculations,
+relating to the Birch--Swinnerton-Dyer conjecture, are also described here; these
+combine values obtained from the cusp forms (specifically, the leading
+coefficient of the expansion of the <I>$L$</I>-series at <I>$s=1$</I>, and the real
+period) with the regulator and local factors obtained directly from
+the curves.  Thus we can compute in each case the conjectural value
+<I>$S$</I> of the order of <I>$\Sha$</I>, the Tate--Shafarevitch group.
+
+<P>
+
+Finally, in Chapter 4 we discuss the results of the computations for 
+<I>$N\le1000$</I>, and introduce the tables which follow.
+
+<P>
+
+All the computer programs used were written in Algol68 (amounting to
+over 10000 lines of code in all) and run on the ICL3980 computer at
+the South West Universities Regional Computing Centre at Bath, U.K..
+The author would like to express his thanks to the staff of SWURCC for
+their friendly help and cooperation, and also to Richard Pinch for the
+use of his Algol68 multiple-length arithmetic package.  At present,
+our programs are not easily portable, mainly because of the choice of
+Algol68 as programming language, which is not very generally
+available.  However we are currently working on a new version of the
+programs, written in a standard version of the object-oriented
+language C++, which would be easily portable.  The elliptic curve
+algorithms themselves are currently (1991) available more readily, in
+a number of computer packages.  [See the end of the
+introduction for more on obtaining these packages.]  In particular,
+the package <tt>apecs</tt>, written in Maple and available free via
+anonymous file transfer from Ian Connell of McGill University, will
+compute all the data we have included for each curve. (A slightly
+limited version of <tt>apecs</tt>, known as <tt>upecs</tt>, runs under
+UBASIC on MS-DOS machines).  There are also elliptic curve functions
+available for Mathematica (Silverman's Elliptic Curve Calculator) and
+in the PARI/GP package.  These packages are all in the process of
+rapid development.
+
+<P>
+
+An earlier version of Chapter 2 of this book, with the tables, has
+been fairly widely circulated, and several people have pointed out
+errors which somehow crept in to the original tables.  We have made
+every effort to eliminate typographical errors in the tables, which
+were typeset directly from data files produced by the programs which
+did the calculations.  Where possible, the data for each curve has
+been checked independently using other programs.  Amongst those who
+have spotted earlier errors or have helped with checking, I would like
+to mention Richard Pinch, Harvey Rose, Ian Connell, Noam Elkies, and
+Wah Keung Chan; obviously there may still be some incorrect entries,
+but these remain solely my responsibility.
+
+<A NAME="IntroSecond">
+<H3> Introduction to the Second (1996) Edition </H3>
+</A>
+
+Since the first edition of this book appeared in 1992, some
+significant advances have been made in the algorithms described and in
+their implementation.  The second edition contains an account of
+these advances, as well as correcting many errors and omissions in the
+original text and tables.  We give here a summary of the more
+substantial changes to the text and tables.
+
+<P>
+
+Of course, the most significant theoretical advance of the last four
+years is the proof by Wiles, Taylor--Wiles and others of most cases of
+the Shimura--Taniyama--Weil conjecture, which almost makes the word
+``modular'' in the title of this book redundant.  However, the only
+effect the new results have on this work are to guarantee that every
+elliptic curve defined over the rationals and of conductor less
+than 1000 is isomorphic to one of those in our Table 1.
+
+<H4> Chapter 2 </H4>
+Section 2.1 has been completely rewritten and expanded to give a much
+more coherent, self-contained, and (we hope) correct account of the
+theoretical background to the modular symbol method.  The text here is
+based closely on some unpublished lecture notes of the author for a
+series of lectures he gave in Bordeaux in 1995 at the meeting ``&#201;tat
+de la Recherche en Algorithmique Arithm&#233;tique'' organized by the
+Soci&#233;t&#233; Math&#233;matique de France.
+
+<P>
+
+In Section 2.4, we give a self-contained treatment of the method of
+Heilbronn matrices for computing Hecke operators, similar to the
+treatment by Merel in [Merel], as this now forms part of our
+implementation.
+
+<P>
+
+In Section 2.10, we give a new method of computing periods of cusp
+forms, as described in [Cremona 1996a], which is as efficient as the
+``indirect'' method; this largely makes the indirect method redundant,
+but we still include it in Section 2.11.  Also in Section 2.11, we
+include some tricks and shortcuts which we have developed as we pushed
+the computations to higher levels, which can greatly reduce the
+computation time needed to find equations for the curves of
+conductor <I>$N$</I>, at the expense of not necessarily knowing which is the
+so-called ``strong Weil'' curve in its isogeny class.
+
+<P>
+
+Section 2.14 has been rewritten to take into account the results of
+Edixhoven on the Manin constant (see [Edixhoven]), which imply
+that the values of <I>$c_4$</I> and <I>$c_6$</I> which we compute for each curve are
+known <I>a priori</I> to be integral.  This means that the values we
+compute are guaranteed to be correct, and eliminates the
+uncertainty previously existing as to whether the curves we obtain by
+rounding the computed values are the modular elliptic curves
+they are supposed to be.
+
+<P>
+
+Section 2.15 is entirely new: we show how to compute the degree of the
+modular parametrization map <I>$\varphi: X_0(N)\to E$</I> for a modular
+elliptic curve of conductor <I>$N$</I>, using our version (see
+[Cremona 1995]) of a method of Zagier [Zagier].  This method is
+easy to implement within the modular symbol framework, and we have
+added it to our programs, so that we now compute the degree
+automatically for each curve we find.
+
+<P>
+
+The appendix to Chapter 2, containing worked examples, now includes
+the Heilbronn matrix method, and also illustrates some of the tricks
+mentioned in Section 2.11.
+
+<H4> Implementation changes </H4>
+The implementations of all the algorithms described here have been
+completely rewritten in C++, to be easily portable.  We use the GNU
+compiler <tt>gcc</tt> for this.  For multiprecision arithmetic we use
+either the GNU package <tt>libg++</tt> or the package <tt>LiDIA</tt>.  For
+solving the systems of linear equations giving the relations between
+M-symbols, we use sparse matrix routines which not only reduce memory
+requirements, but also speed up that part of the computations
+considerably.  These routines were written by L. Figueiredo
+specifically for his work on imaginary quadratic fields (see
+[Figueiredo]) which in turn built on the author's work in [Cremona 1984]
+and [Cremona 1987].
+
+<H4> Chapter 3 </H4>
+In Section 3.1 we give simpler formulae for recovering the Weierstrass
+coefficients of a curve from the invariants <I>$c_4$</I> and <I>$c_6$</I>; this
+enables us to simplify the Kraus--Laska--Connell algorithm slightly.
+In Section 3.4 we give a slightly improved formula for the global
+canonical height, and include this as a separate algorithm.
+Section 3.5 now contains references to other bounds between the naive
+and canonical heights, and other methods for the infinite descent
+step, but without details.
+
+<P>
+
+The main changes in this chapter are to Section 3.6 on two-descent
+algorithms.  On the one hand, we give a better explanation of the
+theoretical basis for these algorithms, making the account more
+self-contained (though we do not include all proofs).  We have also
+moved the discussion on testing homogeneous spaces for local and
+global solubility forward, as this is common to the two main
+algorithms (general two-descent and two-descent via <I>$2$</I>-isogeny).  On
+the other hand, several parts of the algorithm have been subject to
+major improvements over the last few years, thanks to collaboration
+with P. Serf, S. Siksek and N. P. Smart, and these are now included.
+Notable here are the syzygy sieve in the search for quartics, the
+systematic use of group structure in the <I>$2$</I>-isogeny case, and the use
+of quadratic sieving in searching for rational points on homogeneous
+spaces.  We also simplify the test for equivalence of quartics and the
+process of recovering rational points on the curve from points on the
+homogeneous spaces.  Many of these improvements are from the author's
+paper [Cremona 1996c], which contains some proofs omitted here.
+
+<H4> Implementation changes </H4>
+As with the modular symbol algorithms, we have rewritten all the
+elliptic curve algorithms in C++.  In the case of the program to find
+isogenies, which is very sensitive to the precision used, we have
+written an independent implementation in PARI/GP; using this we have a
+check on the isogeny computations which gave the isogenous curves
+listed in Table 1.  (The standard precision version of this program,
+while much faster, does miss several of the isogenies, for reasons
+given in Section 3.8.)
+
+<P>
+
+Versions of our algorithms will shortly become generally available in
+two forms.  First, the package <tt>LiDIA</tt> (a library of C++ classes
+for computational number theory, developed by the LiDIA group at the
+Universit&#228;t des Saarlandes in Germany) will include them in a
+coming release.  Secondly, the package <tt>Magma</tt> is also in the
+process of implementing the algorithms.
+
+<P>
+
+In addition to these packages and those mentioned in the original
+Introduction, we should also mention the package <tt>Simath</tt>,
+developed by H. G. Zimmer's research group in Saarbr&#252;cken, which
+also has a large collection of very efficient elliptic curve
+algorithms.
+
+<P>
+
+See the end of this Introduction for how to obtain more information on
+these packages.
+
+<H4> Chapter 4 and Tables </H4>
+The two main changes in the tables are to include all the data for
+<I>$N=702$</I> in Tables 1--4 and include the new Table 5 giving the degree
+of the modular parametrization for each strong Weil curve.  The
+omission of level <I>$702$</I> in the first edition is hard to explain; in
+our original implementation and file structure, it was not possible to
+distinguish between a level which had run successfully, but with no
+rational newforms found, and a level which had not yet run.  The
+original runs were done as batch jobs on a remote mainframe computer,
+with manual record-keeping to keep track of which levels had run
+successfully.  Our current implementation is much more robust in this
+respect.  We are grateful to Henri Cohen who first discovered this
+error on comparing our data with his own tables (of modular forms of
+varying weight and level, computed by him together with Skoruppa and
+Zagier).  The omission was also noted by Jacques Basmaji of Essen, who
+recomputed Table 3 independently.
+
+<P>
+
+The new implementation finds the newforms at each level in a
+consistent order.  In the original runs, the order in which the
+newforms were found changed as the program developed.  Unfortunately,
+we did not recompute the earlier levels with the final version of the
+program before publishing the first edition of the tables, and the
+identifying letter for each newform given in the tables has now become
+standard.  Hence our current implementation reorders the newforms
+during output to agree with the order as originally published (this is
+necessary for 147 levels in all, the largest being 450).
+
+<P>
+
+Also concerning the order and naming of the curves: the convention we
+normally use is that in each isogeny class the first curve is the
+strong Weil curve whose period lattice is exactly that of the
+corresponding newform for <I>$\Gamma_0(N)$</I>, such as 11A1 for example.  In
+precisely one case, an error caused the first curve listed in class
+990H to be not the strong Weil curve but a curve isogenous to it.
+The strong Weil curve in this class is in fact 990H3 and not 990H1.
+In the notation of Section 2.11, the correct values of <I>$l^+$</I>
+and <I>$m^+$</I> to obtain the strong Weil curve 990H3 are 13 and 8, but for
+some reason we had used the value <I>$m^+=24$</I> which leads to the
+3-isogenous curve 990H1.
+
+<P>
+
+In Table 1, the other corrections are: <I>$N=160$</I> has the Antwerp codes
+corrected, and 916B1 has a spurious indication of a non-existent
+3-isogeny removed. 
+
+<P>
+
+In Table 2, we include the generators for the curves of conductor 702
+and positive rank, and again correct the Antwerp code for curve 160A1.
+We also give the generator of 427C1 correctly as <I>$(-3,1)$</I> rather than
+<I>$(-3,0)$</I> as previously, and for 990H we give the generator <I>$(-35,97)$</I>
+of the strong Weil curve 990H3 rather than a generator of 990H1 as
+before.
+
+<P>
+
+In Table 3, as well as inserting the data for <I>$N=702$</I>, we correct the
+eigenvalues for <I>$N=100$</I> which had been given incorrectly.
+
+<P>
+
+In Table 4, we insert the data for <I>$N=702$</I> and also for 600E--600I
+which had been omitted by mistake.  Moreover, for <I>$N=990$</I> we give the
+data for 990H3 instead of 990H1 as before, as this is the strong Weil
+curve (the only difference being that <I>$\Omega$</I> has been multiplied
+by 3 and <I>$R$</I> divided by 3).
+
+<P>
+
+<H4> Extension of the Tables </H4> Using our new implementation of the
+algorithms of Chapter 2, we have extended the computations of all
+modular elliptic curves up to conductor 5077 (chosen as the smallest
+conductor of a curve of rank 3).  We have also computed in each case
+the other data tabulated here for conductors up to 1000.  For reasons
+of space, we cannot print extended versions of the tables: as there
+are 17598 newforms (or isogeny classes) and a total of 31586 curves up
+to 5077, this would have made this book approximately six times as
+thick as it is at present!
+
+<P>
+
+Instead, most of the data for curves whose conductors lie in the range
+from 1001 to 5077 (and beyond, as they become available) may be
+obtained by anonymous file transfer from <A
+HREF="http://www.maths.nott.ac.uk/personal/jec/ftp/data">
+http://www.maths.nott.ac.uk/personal/jec/ftp/data</A>.
+
+<P>
+
+<!-- Following paragraph deleted Sept 1998:
+
+In this extended data, it is important to note one thing concerning the
+numbering of the curves.  For levels over 4500, in most cases we have
+not carried out in full the second phase of the computation (see the
+description of the algorithm in Chapter 2 for details of this) to
+determine the strong Weil curve.  So in this range, whenever there is
+more than one curve in the isogeny class, we do not know which is the
+strong Weil curve.  For this reason, anyone referring to a specific
+curve in one of these classes should regard its identifying number as
+only provisional.  For the same reason, the extended table of the
+degrees of the modular parametrizations is only complete to
+level 4500.
+
+<P>
+ ... deleted to here -->
+<P>
+
+Finally, many thanks to those who have told me of misprints and other
+errors in the First Edition, including J. Basmaji, G. Bailey,
+B. Brock, F. Calegari, J. W. S. Cassels, T. Kagawa, B. Kaskel,
+P. Serf, S. Siksek, and N. Smart.  Apologies to any whose names have
+been omitted.  Extra thanks are also due to Nigel Smart, who read a
+draft of Chapter 3 of the Second Edition, and made useful suggestions.
+
+<A NAME="WEBFTP">
+<H3> web and ftp sites </H3>
+
+More information on the packages mentioned above, and in most cases
+the packages themselves, can be obtained from the following web and
+ftp sites.  Apart from <tt>Magma</tt> they are all free.
+
+<UL> 
+
+<LI><tt>apecs</tt> (for Maple): 
+<UL>
+<LI><A HREF="ftp://ftp.math.mcgill.ca/pub/apecs">ftp://ftp.math.mcgill.ca/pub/apecs</A>
+</UL>
+
+<LI>Elliptic Curve Calculator (for Mathematica) -- no longer available:
+<UL>
+<LI><A HREF="ftp://gauss.math.brown.edu/dist/EllipticCurve">ftp://gauss.math.brown.edu/dist/EllipticCurve</A>
+</UL>
+
+<LI><tt>LiDIA</tt>: 
+<UL>
+<LI><A HREF="http://www.informatik.th-darmstadt.de/TI">http://www.informatik.th-darmstadt.de/TI</A>
+<LI><A HREF="ftp://ftp.informatik.th-darmstadt.de/pub/TI/systems/LiDIA">ftp://ftp.informatik.th-darmstadt.de/pub/TI/systems/LiDIA</A>
+</UL>
+
+<LI><tt>Magma</tt>: 
+<UL>
+<LI><A HREF="http://magma.maths.usyd.edu.au/magma/">http://magma.maths.usyd.edu.au/magma/</A>
+</UL>
+
+<LI><tt>mwrank</tt>: <UL> <LI><A
+HREF="http://www.maths.nott.ac.uk/personal/jec/ftp/progs">http://www.maths.nott.ac.uk/personal/jec/ftp/progs</A>
+</UL>
+
+<LI>PARI/GP: 
+<UL>
+<LI><A HREF="http://www.parigp-home.de/">http://www.parigp-home.de/</A>
+</UL>
+
+<LI><tt>Simath</tt>: 
+<UL>
+<LI><A HREF="http://tnt.math.metro-u.ac.jp/simath/">http://tnt.math.metro-u.ac.jp/simath/</A>
+</UL>
+
+<LI><tt>upecs</tt> (for UBASIC):
+<UL>
+<LI><A HREF="ftp://math.mcgill.ca/pub/upecs">ftp://math.mcgill.ca/pub/upecs</A>
+</UL>
+
+</UL>
+
+Links to all of these can be found at 
+
+<A HREF="http://www.maths.nott.ac.uk/personal/jec/packages.html">http://www.maths.nott.ac.uk/personal/jec/packages.html</A>.
+
+<P>
+<HR>
+<A HREF="amec.html">Back</A> to Algorithms for Modular Elliptic Curves home page.
+</BODY>
+</HTML>

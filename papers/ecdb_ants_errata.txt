@@ -1,0 +1,34 @@
+Addenda and Errata to ANTS 7 article 
+
+	 The elliptic curve database for conductors to 130000
+
+as of 31 July 2006
+
+Page numbers refer to the printed edition which starts on page 11.
+
+1. Page 20, under Magma: Version 2.13 (late July 2006) has all the
+   curves of conductors up to 130000 so LargestConductor(ECDB) now
+   returns 130000 and NumberOfCurves(ECDB) gives 845960.
+
+2. Page 23, Fig.1: The percentages in the pie chart are correct to
+   120000, but to 130000 should be replaced by:
+
+   rank 0: 38.22%   rank 1: 50.75%   rank 2: 10.87%   rank 3:  0.16%
+
+   These were given correctly at the conference.
+
+3. Page 25: the penultimate paragraph of section 3.4 should read
+
+   At the other extreme, the minimal height of a generator is for
+   curve $3990v1=[1,1,1,-125615,61201397]$, whose generator
+   $(7107,-602054)$ has canonical height~$0.0089$.
+
+4. Page 26, Table 4: for C_16 read C_2 x C_8.  Same for slide #26.
+
+5. Page 27, Table 5: OK in the proceedings but on slide #29 the
+   figures were given as for N<120000 (approximately).
+
+6. Page 27, Theorem 1: Everything from "except for the following
+   cases" can be deleted, as reported at the conference.
+
+

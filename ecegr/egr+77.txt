@@ -1,0 +1,52 @@
+d=77  a=(1+sqrt(77))/2  eps=4+a
+======================================================================
+Minimal models: 
+
+E1: [ a + 1, 1, a + 1, 7*a - 21, -6*a + 52 ]
+    j = 16581375 = 255^3
+    D=eps^-3
+    rank=0
+    torsion=2
+
+E2: [ a, -a - 1, 0, -7*a - 13, 13*a + 60 ]
+    j = 16581375 = 255^3
+    D=eps^3
+    rank=0
+    torsion=2
+
+E3: [ a, -a - 1, 0, -2*a + 7, -a + 7 ]
+    j = -3375 = -15^3
+    D=-eps^3
+    rank=0
+    torsion=2
+
+E4: [ a + 1, 1, a + 1, 2*a + 4, 3*a + 10 ]
+    j = -3375 = -15^3
+    D=-eps^-3
+    rank=0
+    torsion=2
+
+
+Conjugate pairs:  [1,2], [3,4]
+Twists by -eps:   [1,2], [3,4]
+
+2-isogenies: [1,4], [2,3]
+7-isogenies: [1,2], [3,4]
+
+1 Isogeny Class:
+
+               E1 -<7>- E2
+	       |        |
+	      <2>      <2>
+	       |        |
+	       E4 -<7>- E3
+
+Magma definitions:
+
+Q:=RationalField();
+Qx<x>:=PolynomialRing(Q);
+K<a>:=NumberField(x^2-x-19);
+E1:=EllipticCurve( [ a + 1, 1, a + 1, 7*a - 21, -6*a + 52 ]);
+E2:=EllipticCurve( [ a, -a - 1, 0, -7*a - 13, 13*a + 60 ]);
+E3:=EllipticCurve( [ a, -a - 1, 0, -2*a + 7, -a + 7 ]);
+E4:=EllipticCurve( [ a + 1, 1, a + 1, 2*a + 4, 3*a + 10 ]);

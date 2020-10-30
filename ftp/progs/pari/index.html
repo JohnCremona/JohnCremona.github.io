@@ -1,0 +1,159 @@
+<HTML>
+<HEAD><TITLE>Pari/GP scripts</TITLE>
+</HEAD>
+<BODY bgcolor=#ffffff>
+<center><H2>Pari/GP scripts</center></H2>
+
+Last updated on 2007-02-21
+
+<UL>
+<LI>Scripts for general elliptic curve related functions.<BR>
+(1) there are dependencies between some of the following files!
+<BR>
+(2) Tested under version 2.4.1 of pari/gp <BR>
+(3) Fuller documentation and examples are contained in each file
+
+<UL>
+
+<LI><A HREF="ell_utils.gp">ell_utils.gp</A>  General utilities: 
+<tt>
+<UL>
+<li>ellneg(e,p)                 // negation of a point
+<li>e.ai                        // extract [a1,a2,a3,a4,a6]
+<li>ellinvert(urst)             // invert a change of variables
+<li>ellcompose(urst1,urst2)     // compose two changes of variables
+<li>polratroots(pol)            // roots of a polynomial
+<li>elliso(e1,e2)               // Isomorphism test (char not 2,3)
+<li>compsq(e)                   // complete the square to make e1=e3=0
+<li>ellcomb(E,pts,v)            // form sum v[i]*pts[i] on E
+<li>ellbadprimes(e)             // list of bad primes (over Q)
+<li>ellpointsfromx(e,xi,flag=0) // list of points from list of
+x-coords
+<li>ell2torsion(e)              // list of 2-torsion points
+<li>ell3torsion(e)              // list of 3-torsion points
+</UL>
+</tt>
+
+<LI><A HREF="ell_models.gp">ell_models.gp</A>: Integral and minimal
+  models (local and global, over Q)
+<tt>
+<UL>
+<li>ellisintegral(e)
+<li>ellislocallyintegral(e,p)
+<li>elllocalintegralmodel(e,p)
+<li>ellintegralmodel(e)
+<li>ellvalidc4c6(c4,c6)
+<li>ellislocallyminimal(e,p)
+<li>ellisminimal(e)
+<li>ellinitfromc4c6(c4,c6)
+<li>ellminimisec4c6(c4,c6)
+<li>ellminimalmodel2(e)  // like ellminimalmodel(e) but not using Tate
+</UL>
+</tt>
+
+<LI><A HREF="ell_divpol.gp">ell_divpol.gp</A>: Division polynomials
+<tt>
+<UL>
+<li>elldivpol(e,n) // n'th division polynomial of e
+<li>elltorsionpoints(e,m) // all m-torsion points of e using division poly
+</UL>
+</tt>
+
+<LI><A HREF="ell_baby.gp">ell_baby.gp</A>: Baby-step-giant-step with
+  applications to elliptic discrete log and point order
+<tt>
+<UL>
+<li>hasse_bounds(q) // Hasse bounds for curves over F_q
+<li>order_point_from_fact(e,P,fact) // order of P given factorization
+  of a multiple of the order
+<li>order_point_from_mult(e,P, m) // order of P given a multiple of the order
+<li>order_point_from_bounds(e,P, lower, upper)  // order of P given
+  Hasse bounds on group order (over finite fields)
+<li>order_point(e,P) // order of P over a finite field
+<li>bg_algorithm(e, PP, QQ, lower, upper, info) // Discrete log,
+  solving i*P=Q with lower&le;i&le;upper
+</UL>
+</tt>
+
+<LI><A HREF="ell_ff.gp">ell_ff.gp</A>: Function field functions,
+  including construction of a functions with certain divisors
+  (e.g. m(T)-m(O) where T has order m) and division of points (given a
+  point q and an integer m returns all points p such that m*p=q)
+<tt>
+<UL>
+<li>ellffeqn(e) // the affine eqation of e (in global variables ellffV,ellffU)
+<li>ellffgenpt(e) // generic point on e
+<li>ellffeval(h,p) // value of rational function h at p (if not a pole)
+<li>ellffeval2(h,p1,p2) // value of rational function h at divisor (p1)-(p2)
+<li>ellffvert(e,t) // function with divisor (t)+(-t)-2(0)
+<li>ellfftang(e,t) // function with divisor 2(t)+(-2t)-3(0)
+<li>ellffchord(e,t) // function with divisor (t)+(s)+(-s-t)-3(0)
+<li>ellffaddpol(e,t,s) // function with divisor (t)+(s)-(s+t)-(0)
+<li>ellffmultpol(e,t,m) // function with divisor m(t)-(m*t)-(m-1)(0)
+<li>ellffweilpol(e,t,m) // function whose divisor is m(t)-m(0),
+  assuming m*t=0 and m>0
+<li>elldivpoint(e,q,m) // returns a list of points p such that m*p=q
+</UL>
+</tt>
+
+<LI><A HREF="ell_weil.gp">ell_weil.gp</A>: Functions for computing
+   Weil Pairing and related things -- mostly over an arbitrary ground
+   field k, but at present we need to be able to generate random
+   points on the curves which is only implemented for k=Z/pZ
+<tt>
+<UL>
+<li>ellffweilpairing(e,s,t,m) // provided m*t=m*s=0,
+ returns e_m(s,t) = Weil Pairing of s,t, an m'th root of unity
+</UL>
+</tt>
+
+<LI><A HREF="ell_zp.gp">ell_zp.gp</A>: Functions for elliptic curves
+over the finite field Z/pZ, including group structure and generators
+<tt>
+<UL>
+<li>ellzprandompoint(ep) // a random point on ep (defined over Z/pZ)
+<li>ellreducepoint(P,p) // reduction of P mod p
+<li>ellzpinit(ai,p)  // enhancement of ellinit for curves over Z/pZ,
+returning group order and structure and generators in fields 14-17
+<li>ellzp.grouporder  // utilities for the above...
+<li>ellzp.factoredgrouporder
+<li>ellzp.groupstr
+<li>ellzp.iscyclic
+<li>ellzp.isotype
+<li>ellzp.generators
+<li>ellzppointorder(ellzp,t) // Order of a point (using the factored group order)
+</UL>
+</tt>
+
+</ul>
+<BR>
+<LI>Scripts for analytic rank and Heegner point computation
+<ol>
+<li><A HREF="bgc.gp">bgc.gp</A>: functions for computing L-series
+derivatives and analytic ranks for elliptic curves over Q
+</li>
+<li><A HREF="lambda.gp">lambda.gp</A>: utility functions used in
+implementing the "Silverman-Cremona trick" for computing Heegner
+points on (rank 1) elliptic curves over Q
+</li>
+<li><A HREF="forms.gp">forms.gp</A>: quadratic form utility functions
+used in computing Heegner points on (rank 1) elliptic curves over Q
+</li>
+<li><A HREF="heegner.gp">heegner.gp</A>:  functions to compute
+Heegner points on (rank 1) elliptic curves over Q.
+<br>
+This file includes the preceding three files.
+<br>
+Sample use: <tt>H_auto([0,0,1,-1,0]);</tt> finds the point [0,0] on
+the first rank 1 curve.
+<br> <tt>H_auto([1,1,0,-3233812,-2240095280],1)</tt> find the point
+<tt>[6895338740919600657/1732529155042921,
+15647805808301267927173594042/72114206222122984153781]</tt> of height
+43.6 on curve 20382A1
+
+</li>
+</ol>
+</UL>
+
+</BODY>
+</HTML>

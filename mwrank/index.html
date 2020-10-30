@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<title>mwrank</title>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<CENTER>
+<h1>
+<tt><big>eclib</big></tt> (including <tt><big>mwrank</big></tt> and related
+programs for elliptic curves over <b>Q</b>)</h1> 
+<h3>by J. E. Cremona, University of Warwick, U.K.</h3>
+<P>
+<I>Updated 2019-02-26</I>
+</CENTER>
+
+<h2><tt>mwrank</tt> and <tt>eclib</tt></h2> 
+
+<p>
+<tt>mwrank</tt> is a program written in <tt>C++</tt> for computing
+Mordell-Weil groups of elliptic curves over <b>Q</b> via 2-descent.
+It is available as source code in the <tt>eclib</tt> package, which
+may be distributed under the <a href="gpl-2.0.txt">GNU General Public
+  License, version 2</a>, or any later version.
+</p>
+<p>
+<tt>mwrank</tt> is now only distributed as part
+of <tt>eclib</tt>.   <tt>eclib</tt> is also included in 
+Sage, and for most potential users the 
+easiest way to run <tt>mwrank</tt> is to install Sage  (which also of course
+gives 
+you much much more).  I no longer provide a source code distribution
+of <tt>mwrank</tt> 
+by itself: use <tt>eclib</tt> instead.
+</p>
+<p>
+Full source code for <tt>eclib</tt> is
+available from <a
+href="https://github.com/JohnCremona/eclib">github</a>
+<!--including
+a <a href="https://github.com/JohnCremona/eclib/releases/tag/v20190226">
+  full tarball</a> (updated 2019-02-26)-->.
+Also archived at
+<a href="https://doi.org/10.5281/zenodo.2577868"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.2577868.svg" alt="DOI"></a>
+</p>
+<p>
+Documentation for <tt>eclib</tt>, including
+<tt>mwrank</tt> and modular symbol programs, is included in the
+distribution.  Installation should be as easy as unpacking followed by
+"./configure; make; make check; make install".
+</p>
+
+
+
+<h3> Dependencies </h3>
+<p>
+To build <tt>eclib</tt> from the source code you must
+have Shoup's <A HREF="http://www.shoup.net/ntl/">NTL</A>
+library installed on your computer, and
+the <a href="http://pari.math.u-bordeaux.fr/">PARI library</a>.
+The PARI library is only used for integer factorization.
+</p>
+<p>
+Some eclib linear algebra functions will benefit from
+having <A HREF="http://www.flintlib.org/">FLINT</A> installed, but at present
+using FLINT is optional.  It is not relevant for <tt>mwrank</tt> itself.
+</p>
+<p>
+Neither <a href="http://gmplib.org/">gmp</a>
+nor <a href="http://www.mpir.org/">mpir</a> is a dependency of eclib, though
+most installations of NTL and PARI will use one of these.
+</p>
+<p>
+Since April
+2012, <tt>eclib</tt> uses the GNU autotools build system which should allow it
+to be configured, built and installed on a wide variety of architectures
+(including all those on which Sage is supported).
+</p>
+
+<!--
+<h2><a
+href="http://magma.maths.usyd.edu.au/magma/">Magma</a> programs</h2>
+
+Various <a
+href="http://www.warwick.ac.uk/~masgaj/ftp/progs/magma/index.html">Magma
+programs</a>, many of which are now redundant having been incorporated
+into recent Magma releases.
+
+<h2><a href="http://pari.math.u-bordeaux.fr/">Pari/GP</a> programs</h2>
+
+Various <a
+href="http://www.warwick.ac.uk/~masgaj/ftp/progs/pari/index.html">GP
+scripts</a> for elliptic curves including Heegner points.  Almost all of this
+is now available in the standard Pari/GP distribution since version 2.5
+(version 2.6 in the case of Heegner points).
+-->
+
+<hr>
+<p>
+      <a href="http://validator.w3.org/check?uri=referer"><img border="0"
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="31" width="88"></a>
+    </p>
+
+</BODY>
+</HTML>
+
+<!--  LocalWords:  HTML html charset iso
+ -->

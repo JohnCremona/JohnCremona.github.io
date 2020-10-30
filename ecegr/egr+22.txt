@@ -1,0 +1,39 @@
+d=22  a=sqrt(22) eps=42*a + 197
+======================================================================
+Minimal models: 
+
+E1: [ a, 1, a + 1, 17*a - 79, -39*a + 185 ]
+    j = 8000 = 20^3
+    D=-eps^2
+    rank=0
+    torsion=2
+
+E2: [ a, 1, a + 1, -18*a - 79, 38*a + 185 ]
+    j = 8000 = 20^3
+    D=eps^2
+    rank=0
+    torsion=2
+
+
+Conjugate pairs: [1,2]
+
+Twists by -eps: [1,2]
+
+Isogeny Classes:  [1,2]
+
+             E1 -<2>- E2
+ 
+
+Magma definitions:
+
+Q:=RationalField();
+Qx<x>:=PolynomialRing(Q);
+K<a>:=NumberField(x^2-22);
+E1:=EllipticCurve( [ a, 1, a + 1, 17*a - 79, -39*a + 185 ]);
+E2:=EllipticCurve( [ a, 1, a + 1, -18*a - 79, 38*a + 185 ]);
+
+Sage definitions:
+
+K.<a> = QuadraticField(22)
+E1=EllipticCurve( [ a, 1, a + 1, 17*a - 79, -39*a + 185 ])
+E2=EllipticCurve( [ a, 1, a + 1, -18*a - 79, 38*a + 185 ])

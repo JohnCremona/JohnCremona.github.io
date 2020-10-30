@@ -1,0 +1,103 @@
+%
+%  TABLE 4
+%
+\input book.def
+\advance\pageno by\chaponepages
+\advance\pageno by\chaptwopages
+\advance\pageno by\appendixpages
+\advance\pageno by\chapthreepages
+\advance\pageno by\chapfourpages
+\advance\pageno by\tabonepages
+\advance\pageno by\tabtwopages
+\advance\pageno by\tabthreepages
+%
+\topmatter
+\title\chapter\nofrills{Table 4} Birch--Swinnerton-Dyer data \endtitle
+\endtopmatter
+\document
+%\openup2pt
+%\raggedbottom
+
+In Table~4 we give the numbers relating to the \BSD\ conjecture, for
+each ``strong Weil'' curve $E_f$.  Each curve is identified as before
+with a single letter X after the conductor, and is
+\footnote{As remarked earlier, for class 990H the ``strong'' curve is
+990H3 and not 990H1, and so the data here is for the curve 990H3.}  
+the curve $N$X1 of Table~1.
+
+For each curve we first give the rank $r$ , and then list (to 10
+decimal places): the real period $\RP(f)$, the value of
+$L^{(r)}(f,1)/r!$, the regulator $R$ of $E_f$, and the ratio
+$L^{(r)}(f,1)/r!R\RP$.  For curves of rank~0 we obviously have $R=1$
+exactly; also the ratio $L(f,1)/\RP(f)$ is known exactly in these
+cases, so we give it as an exact rational rather than as a decimal.
+Finally we give the value of
+$$
+   S = \frac {L^{(r)}(f,1)}  {r!\;\RP(f)} \left/ 
+       \frac {(\prod c_p)\; R} {\left|T\right|^2}  \right. ,
+$$ 
+which according to the \BSD\ conjecture should equal the order of the
+\TS\ group $\Sha(E_f/\Q)$.  The value $S$ is known exactly in case $r=0$ and
+approximately in case $r>0$; in each case it is a positive integer to
+within 10 decimal places, and is (to this precision) equal to 1 in all
+but 4 cases.  The exceptions are
+$$ \align
+    S=4        &\qquad\text{for 571A, 960D, and 960N;}\\
+    S=9        &\qquad\text{for 681B.}
+   \endalign
+$$
+These are all curves of rank~0, so that the value of $S$ is exact.
+
+We have also computed the corresponding data for all the curves in
+each isogeny class, but this extra data is not included here for
+reasons of space.  For a summary of the results obtained, see
+\cite\JCsha.  As well as $S=1$, 4 and~9, the values $S=16$, 25
+and~49 were also obtained, all for curves of rank~0.
+
+\vfill\eject
+\catcode`\@=11
+\def\rightheadline{\hfill TABLE 4: BIRCH--SWINNERTON-DYER DATA
+\firstc--\lastc\hfill \llap{\folio}} 
+\def\leftheadline{\rlap{\folio} \hfill TABLE 4: BIRCH--SWINNERTON-DYER DATA \firstc--\lastc
+\hfill}
+\headline={\def\chapter#1{}%\chapterno@. }%
+  \def\\{\unskip\space\ignorespaces}\headlinefont@
+  \ifodd\pageno \rightheadline \else \leftheadline\fi}
+\catcode`\@=\active
+\vsize=10.7truein
+%
+% MACRO DEFINITIONS
+%
+\def\gap#1{\omit&height #1pt &&&&&&&&&&&&&&&&\cr}
+\def\fivegap{\gap3} % gap between groups of  lines
+\def\topline{\noalign{\hrule}\gap3}
+\def\hline{\gap3\noalign{\hrule}\gap3}
+\def\botline{\gap3\noalign{\hrule}}
+%
+\def\headings{&&\multispan3Curve&&\hfill r&&\hfill \RP&&%
+              \hfill L^{(r)}(1)/r!&&\hfill R&&\hfill L^{(r)}(1)/r!\RP R&&%
+              \hfill S&\cr}
+\def\begintable#1\endtable#2#3{
+% \line{}\vfill
+  \vbox{\offinterlineskip
+  \halign to \hsize{
+  ##\mathstrut&\tabskip0pt\vrule##\tabskip 5pt plus 1fil &\hfill##\tabskip1pt&%
+  \hfill##\hfill&\hfill##\hfill\tabskip 5pt plus 1fil &%
+  \vrule##&$##$\hfill&\vrule##&$##$\hfill&\vrule##&$##$\hfill&%
+  \vrule##&$##$\hfill&\vrule##&$##$\hfill&\vrule##&$##$\hfill&%
+  \tabskip0pt\vrule##\cr
+  \topline
+  \headings
+  \hline
+  #1
+  \botline
+  }}
+  \vfill\line{}
+  \def\firstc{#2}\def\lastc{#3}
+  \eject
+}
+
+
+\input table4.dat
+
+\enddocument

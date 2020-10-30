@@ -1,0 +1,130 @@
+<HTML>
+<HEAD><TITLE>Elliptic Curve Database and Software</TITLE>
+</HEAD>
+<BODY bgcolor=#ffffff>
+<P>
+This page was prepared for a workshop at the Workshop on <A
+href="http://www.pims.math.ca/birs/birspages.php?task=displayevent&amp;event_id=07w5065">Modular
+Forms: Arithmetic and Computation</A>, BIRS (Banff, Canada) 3-8 June
+2007.
+</P>
+<H2 align=center>Elliptic Curve Database</H2>
+
+<ul>
+<li><a href="ftp/data/INDEX.html">Elliptic curve data</a> for
+conductors up to 130000 (last major update 2006-09-24) -- and some <a
+href="ftp/data/extra.html">supplementary data</a>  
+<br>
+<a href=
+"http://www.math.utexas.edu/users/tornaria/cnt/cremona.html">Interactive
+front-end</a> to the data (for conductors up to
+130000) by from Gonzalo Tornaria </li> 
+<li><a href="womack.html">Tom Womack's lists</a></li>
+<li>
+<A HREF="http://www.math.hr/~duje/tors/tors.html">
+Dujella's tables of High rank elliptic curves with prescribed
+torsion</A>
+
+<li><a href=
+"http://modular.fas.harvard.edu/Tables/">William
+Stein's modular forms database</a></li>
+</ul>
+
+<H2 align=center>Software packages useful for elliptic curve investigations</H2>
+
+<UL>
+<LI><A NAME="mwrank"></A> <H3>mwrank and related programs:</H3> <UL>
+<LI><A HREF="http://www.maths.nott.ac.uk/personal/jec/mwrank/">mwrank
+home page</a> </UL>
+
+<BR>
+
+<LI><A NAME="magma"></A>
+<H3>Magma:</H3>
+<P>
+Magma has a huge amount of functionality for working with elliptic
+curves over <b>Q</b>, number fields, finite fields, and general fields.
+</P>
+<P>
+It includes the database of all elliptic curves over <b>Q</b> with
+conductor less than 130000 (but none of the data in the database is
+made available apart from the curves themselves).
+</P>
+
+<BR>
+
+<LI><A NAME="pari"></A>
+<H3>Pari/GP:</H3>
+<P>
+Pari/GP has a many functions for working with elliptic curves over
+<b>Q</b>, and a few fir general fields.  There are also some add-on
+packages (e.g. mine for group structure over
+<b>F</b><sub><i>p</i></sub> and for analytic rank).
+</P>
+<P>
+An optional extra database has all elliptic curves of conductor up to
+130000, together with ranks and generators mod torsion.
+</P>
+
+<BR>
+
+<LI><A NAME="sage"></A>
+<H3>SAGE:</H3>
+<P>
+Has all Pari/GP functionality and access to mwrank and my other
+elliptic curve programs, but currently there is a lot not yet
+available (unless you also have Magma installed)
+</P>
+</A>
+</UL>
+
+<HR>
+
+<H2 align=center>Elliptic Curve functionality</H2>
+
+<H3 align=left>Elliptic Curves over <b>Q</b></H3>
+
+All the following are available, sometimes requiring the use of an
+add-on external program:
+<UL>
+<li>basic invariants, conductors, torsion points
+<li>point operations, heights and height pairing
+<li>ranks, generators
+<li>division polynomials
+<li>L-series and analytic rank
+<li>isogenies
+</UL>
+
+<H3 align=left>Associated modular forms</H3>
+<ul>
+
+<li>Magma can construct elliptic curves from (suitable!) modular
+forms, and vice versa.  
+
+<li>None of the other packages have (yet?).  
+
+<li>My programs for computing
+modular elliptic curves are not suitable for general use...
+
+</ul>
+
+<H3 align=left>Elliptic Curves over other fields</H3> 
+<UL> 
+
+<li>Over finite fields: Magma can do everything (order, structure,
+discrete log, Weil pairing).  Pari/gp can by default only find group
+order but add-ons can do the rest.  SAGE?  
+
+<li>Over local fields: Magma, Pari/gp and SAGE can find Tate
+parameters.  mwrank has some functionality for working in component
+groups.  
+
+<li> Number fields other than <b>Q</b>: Magma can find conductors,
+local (and global when class number=1) minimal models, heights of
+points, and ranks via 2-descent.
+
+</UL>
+
+
+</BODY>
+</HTML>

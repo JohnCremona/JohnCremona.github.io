@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="icon" href="http://www.warwick.ac.uk/staff/J.E.Cremona/ECM1.ico">
+<link rel="stylesheet" href="styles.css" type="text/css">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<style type="text/css"></style>
+<title>Imaginary quadratic field data</title>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+</script>
+<script type="text/javascript"
+  src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</head>
+<body bgcolor="#FFFFFF">
+<h1 align="center">Imaginary quadratic field data (2013 updates)</h1>
+
+<h2>Numbers of newforms (rational, cuspidal, weight 2)</h2>
+These counts are expected to equal the number of isogeny classes of elliptic
+curves defined over the field $K$ in question with conductor equal to the level of
+the newform, with two provisos: 
+<ol>
+<li>Elliptic curves with CM by an order in $K$ will not be counted.  These are
+  characterised as those curves having specific $j$-invariants, as listed.
+  (These $j$-invariants my be listed using the Sage command
+<tt>cm_j_invariants_and_orders(QQ)</tt>)
+<li>Newforms which are base-changes of newforms over Q with extra twist may
+  not have associated elliptic curves defined over $K$: see <i>Abelian Varieties with Extra Twist, Cusp Forms, and Elliptic Curves Over Imaginary Quadratic Fields</i>
+<br><a
+href="http://jlms.oxfordjournals.org/cgi/content/abstract/s2-45/3/404?maxtoshow=&HITS=10&hits=10&RESULTFORMAT=&fulltext=Cremona&searchid=1&FIRSTINDEX=0&resourcetype=HWCIT">Journal
+of the London Mathematical Society 45 (1992) 402-416</a>
+</ol>
+
+<p>For each field (currently just the five Euclidean fields) we give
+<ol>
+<li> basic data about the field, specifically the primes of norm ${}<1000$ in
+standard order  (norm, label, characteristic, degree, ramification
+  degree);
+<li> a list giving the number of rational weight 2 newforms at each level in
+  some range;
+<li> a list of these newforms $F$ (label, level, sign of functional equation of
+$L(F,s)$, ratio $L(F,1)/\Omega\in\mathbb{Q}$ showing whether or not $L(F,1)=0$,
+  Atkin-Lehner
+eigenvalues,  first 25 Fourier coefficients $a_{\mathfrak{p}}$ indexed by all
+  prime ideals in standard order).
+</ol>
+</p>
+
+<ul>
+<li>$\mathbb{Q}(\sqrt{-1})$: field <a href="data/fieldinfo-1">data</a>;
+  exceptional CM $j$-invariants: 1728, 287496.
+<br>
+   <a href="data/nfcounts.1.1-10000">counts</a> for levels of norm ${}<10^4$,
+   <a href="data/nflist.1.1-10000">rational newforms</a> of levels of norm
+   ${}<10^4$.
+</li>
+<li>$\mathbb{Q}(\sqrt{-2})$:  field <a href="data/fieldinfo-2">data</a>;
+   exceptional CM $j$-invariant: 8000.
+<br>
+   <a href="data/nfcounts.2.1-10000">counts</a> for levels of norm ${}<10^4$,
+   <a href="data/nflist.2.1-10000">rational newforms</a> of levels of norm
+   ${}<10^4$.
+</li>
+<li>$\mathbb{Q}(\sqrt{-3})$:  field <a href="data/fieldinfo-3">data</a>;
+   exceptional CM $j$-invariants: 0, 54000, -12288000.
+<br>
+   <a href="data/nfcounts.3.1-10000">counts</a> for levels of norm ${}<10^4$,
+   <a href="data/nflist.3.1-10000">rational newforms</a> of levels of norm
+   ${}<10^4$.
+</li>
+<li>$\mathbb{Q}(\sqrt{-7})$:  field <a href="data/fieldinfo-7">data</a>;
+   exceptional CM $j$-invariants: -3375, 16581375.
+<br>
+   <a href="data/nfcounts.7.1-10000">counts</a> for levels of norm ${}<10^4$,
+   <a href="data/nflist.7.1-10000">rational newforms</a> of levels of norm
+   ${}<10^4$.
+</li>
+<li>$\mathbb{Q}(\sqrt{-11})$:  field <a href="data/fieldinfo-11">data</a>;
+   exceptional CM $j$-invariant: -32768.
+<br>
+   <a href="data/nfcounts.11.1-10000">counts</a> for levels of norm ${}<10^4$,
+   <a href="data/nflist.11.1-10000">rational newforms</a> of levels of norm
+   ${}<10^4$.
+</li>
+</ul>
+
+<hr>
+<p>
+Plain text <a href="index.txt">index</a> of ancient data
+</p>
+
+</body>
+</html>

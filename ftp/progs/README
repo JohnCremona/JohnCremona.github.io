@@ -1,0 +1,10 @@
+eclib.tar.bz2 contains the complete source code for eclib
+(which includes mwrank).  Download, unzip, untar and run ./configure;
+make to build.  See the README file in the package for more details.
+
+The subdirectories used to contain binaries (executables) for various
+architectures, but I no longer distribute these.
+
+For most users, I recommend just using Sage which has all of eclib in it.
+
+JEC 2015-08-26

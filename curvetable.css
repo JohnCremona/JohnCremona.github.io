@@ -1,0 +1,25 @@
+BODY { font-family: Arial, Helvetica, sans-serif }
+H1 { text-align: center }
+TABLE.curvetable {
+   frame:border; 
+   rules:groups; 
+   border-width:3; 
+   border-style:solid;
+   padding:10; 
+   text-width:"75%";  
+}
+TR.table_head { background-color: aqua }
+TR.level_head { background-color: yellow }
+TR.class_gap { background-color: silver ; line-height: 1pt}
+TR.curve { border-style:solid;    border-width:1 }
+TH { padding:5 }
+TD { padding:5 }
+TD.coeff { text-align: right }
+TD.rank { text-align: right }
+TD.torsion { text-align: center }
+TD.sign { text-align: center }
+TD.delta { text-align: center }
+TD.ordj { text-align: center }
+TD.cp { text-align: center }
+TD.kodaira { font-family: Roman; text-align: center }
+TD.isogs { text-align: left }

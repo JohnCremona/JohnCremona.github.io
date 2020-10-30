@@ -1,0 +1,252 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>Best known conductors for elliptic curves of given rank</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h1>Best known conductors for elliptic curves of given rank</h1>
+<p>Original table created by Tom Womack.  Updated by John Cremona, April 2012.</p>
+<p>The curves are given in the form [a1, a2, a3, a4, a6].</p>
+
+<p>There are five classes of curves here, which are colour-coded as
+follows (note that Elkies &amp; Watkins (2004) completely supercedes
+Womack's records):</p>
+
+<table border="1">
+    <tr>
+        <td bgcolor="#80FF80"><strong>Green</strong></td>
+        <td bgcolor="#80FF80">Curve is known to have the smallest
+        conductor for that rank, as a result of an exhaustive
+        search over conductors</td>
+    </tr>
+    <tr>
+        <td bgcolor="#8080FF"><strong>Blue</strong></td>
+        <td bgcolor="#8080FF">Curve is known to have the smallest
+        conductor for that rank among curves with max(a4,a6) &lt;=
+        its value of max(a4,a6)</td>
+    </tr>
+    <tr>
+        <td bgcolor="#FF80FF"><strong>Pink</strong></td>
+        <td bgcolor="#FF80FF">Curve was found by the sieve-driven
+        search documented <a href="ecsieve.htm">here</a> (with
+        bounds |a4|&lt;=20000, |a6|&lt;2^24)</td>
+    </tr>
+    <tr>
+        <td bgcolor="#808080"><font color="#FFFFFF"><strong>Grey</strong></font></td>
+        <td bgcolor="#808080"><font color="#FFFFFF">Curve was
+        found by the Mestre-style method documented </font><a
+        href="mestre2.htm"><font color="#FFFFFF">here</font></a></td>
+    </tr>
+    <tr>
+        <td bgcolor="orange"><strong>Orange</strong></td>
+        <td bgcolor="orange">Curve was
+        found by Elkies and Watkins (see their <a
+        href="http://arxiv.org/abs/math/0403374">paper</a> in ANTS VI)</td>
+    </tr>
+</table>
+
+<p>
+<!--
+<p>If the conductor is displayed in a saturated (rather than a
+pastel) colour, it is prime.</p>
+-->
+
+<table border="1" width="100%">
+    <tr>
+        <td bgcolor="#FF0000"><font color="#C0C0C0"><strong>Rank</strong></font></td>
+        <td bgcolor="#FF0000"><font color="#C0C0C0"><strong>Curve</strong></font></td>
+        <td bgcolor="#FF0000"><font color="#C0C0C0"><strong>Conductor</strong></font></td>
+        <td bgcolor="#FF0000"><font color="#C0C0C0"><strong>log(N)</strong></font></td>
+        <td bgcolor="#FF0000"><font color="#C0C0C0"><strong>Source</strong></font></td>
+    </tr>
+    <tr>
+        <td bgcolor="#80FF80">0</td>
+        <td bgcolor="#80FF80">[0, -1, 1, 0, 0]</td>
+        <td bgcolor="#00FF00">11</td>
+        <td bgcolor="#80FF80">2.398</td>
+        <td bgcolor="#80FF80">Cremona [1997]</td>
+    </tr>
+    <tr>
+        <td bgcolor="#80FF80">1</td>
+        <td bgcolor="#80FF80">[0, 0, 1, -1, 0]</td>
+        <td bgcolor="#00FF00">37</td>
+        <td bgcolor="#80FF80">3.611</td>
+        <td bgcolor="#80FF80">Cremona [1997]</td>
+    </tr>
+    <tr>
+        <td bgcolor="#80FF80">2</td>
+        <td bgcolor="#80FF80">[0, 1, 1, -2, 0]</td>
+        <td bgcolor="#00FF00">389</td>
+        <td bgcolor="#80FF80">5.964</td>
+        <td bgcolor="#80FF80">Cremona [1997]</td>
+    </tr>
+    <tr>
+        <td bgcolor="#80FF80">3</td>
+        <td bgcolor="#80FF80">[0, 0, 1, -7, 6]</td>
+        <td bgcolor="#00FF00">5077</td>
+        <td bgcolor="#80FF80">8.532</td>
+        <td bgcolor="#80FF80">Cremona*</td>
+    </tr>
+    <tr>
+        <td bgcolor="#80FF80">4</td>
+        <td bgcolor="#80FF80">[1, -1, 0, -79, 289]</td>
+        <td bgcolor="#80FF00">234446</td>
+        <td bgcolor="#80FF80">12.365</td>
+        <td bgcolor="#80FF80">APECS, Cremona*</td>
+    </tr>
+    <tr>
+        <td bgcolor="#FF80FF">5</td>
+        <td bgcolor="#FF80FF">[0, 0, 1, -79, 342]</td>
+        <td bgcolor="#FF00FF">19047851</td>
+        <td bgcolor="#FF80FF">16.762</td>
+        <td bgcolor="#FF80FF">BMcG [1990]</td>
+    </tr>
+    <tr bgcolor="orange">
+        <td>6</td>
+        <td>[1 1 0 -2582 48720]</td>
+        <td>5187563742</td>
+        <td>22.370</td>
+        <td>Elkies &amp; Watkins 2004</td>
+    </tr>
+<!--
+    <tr>
+        <td bgcolor="#FF80FF">7</td>
+        <td bgcolor="#FF80FF">[0, 0, 0, -12979, 405826]</td>
+        <td bgcolor="#FF80FF">1074680679376</td>
+        <td bgcolor="#FF80FF">27.703</td>
+        <td bgcolor="#FF80FF">Womack (2000)</td>
+    </tr>
+-->
+    <tr bgcolor="orange">
+        <td>7</td>
+        <td>[0,0,0,-10012,346900]</td>
+        <td>382623908456</td>
+        <td>26.670</td>
+        <td>Elkies &amp; Watkins 2004</td>
+    </tr>
+<!--
+    <tr>
+        <td bgcolor="#FF80FF">8</td>
+        <td bgcolor="#FF80FF">[0, 1, 1, -16440, 1394010] </td>
+        <td bgcolor="#FF80FF">561715239383323</td>
+        <td bgcolor="#FF80FF">33.962</td>
+        <td bgcolor="#FF80FF">Womack (2000)</td>
+    </tr>
+-->
+    <tr bgcolor="orange">
+        <td>8</td>
+        <td>[1,-1,0,-106384,13075804]</td>
+        <td>249649566346838</td>
+        <td>33.151</td>
+        <td>Elkies &amp; Watkins 2004</td>
+    </tr>
+<!--
+    <tr>
+        <td bgcolor="#808080">9</td>
+        <td bgcolor="#808080">[0, 0, 1, -11810617, 16176240456]</td>
+        <td bgcolor="#808080">3784782033335860627</td>
+        <td bgcolor="#808080">42.778</td>
+        <td bgcolor="#808080">Womack* (2000)</td>
+    </tr>
+-->
+    <tr bgcolor="orange">
+        <td>9</td>
+        <td>[1,-1,0,-135004,97151644]</td>
+        <td>32107342006814614</td>
+        <td>38.008</td>
+        <td>Elkies &amp; Watkins 2004</td>
+    </tr>
+<!--
+    <tr>
+        <td bgcolor="#808080">10</td>
+        <td bgcolor="#808080"><font size="1">[0, 0, 0, -4033021332, 96504614966180]</font></td>
+        <td bgcolor="#808080"><font size="1">164275332804028000133496</font></td>
+        <td bgcolor="#808080">53.456</td>
+        <td bgcolor="#808080">Womack* (2000)</td>
+    </tr>
+-->
+    <tr bgcolor="orange">
+        <td>10</td>
+        <td>[0,0,1,-16312387,25970162646]</td>
+        <td>10189285026863130793</td>
+        <td>43.768</td>
+        <td>Elkies &amp; Watkins 2004</td>
+    </tr>
+<!--
+    <tr>
+        <td bgcolor="#808080">11</td>
+        <td bgcolor="#808080"><font size="1">[0, 1, 0, -11612904377065, 15096476980088311259]</font></td>
+        <td bgcolor="#808080"><font size="1">3526627091771827219233827928</font></td>
+        <td bgcolor="#808080">63.430</td>
+        <td bgcolor="#808080">Womack* (2000)</td>
+    </tr>
+-->
+    <tr bgcolor="orange">
+        <td>11</td>
+        <td>[0,0,1,-16359067,26274178986]</td>
+        <td>18031737725935636520843</td>
+        <td>51.246</td>
+        <td>Elkies &amp; Watkins 2004</td>
+    </tr>
+</table>
+
+<h2>Sources:</h2>
+
+<table border="0">
+    <tr>
+        <td valign="top"><strong>APECS</strong></td>
+        <td>The exam(4) table in Ian Connell's elliptic-curve
+        system (proved minimal by Cremona in 2012).</td>
+    </tr>
+    <tr>
+        <td valign="top"><strong>BMcG [1990]</strong></td>
+        <td>A. Brumer &amp; O. McGuinness, <em>The Behaviour of
+        the Mordell-Weil Group of Elliptic Curves</em>, Bulletin
+        of the AMS <strong>23</strong> #2 (Oct 1990) pp 375-382</td>
+    </tr>
+    <tr>
+        <td valign="top"><strong>Buddenhagen</strong></td>
+        <td>provided the r=9 example to Ian Connell for APECS</td>
+    </tr>
+    <tr>
+        <td valign="top"><strong>Cremona[1997]</strong></td>
+        <td>J E Cremona, <em>Algorithms for Modular Elliptic
+        Curves, 2nd Edition</em>, pub. CUP, ISBN 0521598206</td>
+    </tr>
+    <tr>
+        <td valign="top"><strong>Cremona*</strong></td>
+        <td>The extended table found at <a
+        href="http://www.warwick.ac.uk/staff/J.E.Cremona/ftp/data">http://www.warwick.ac.uk/staff/J.E.Cremona/ftp/data</a></td>
+    </tr>
+
+<tr>
+<td><strong>Elkies &amp; Watkins</strong></td>
+<td><a  href="http://arxiv.org/abs/math/0403374">Elliptic curves of
+large rank and small conductor</a>, ANTS VI
+</td>
+</tr>
+
+    <tr>
+        <td valign="top"><strong>Mestre (1986)</strong></td>
+        <td>the paper in Math: Comp: 58 about constructing
+        elliptic curves of large rank; contained a very good rank-8
+        example.</td>
+    </tr>
+    <tr>
+        <td valign="top"><strong>Suess (2000)</strong></td>
+        <td>Nigel Suess's PhD thesis (contained the reasonable
+        rank-7 example [0, 0, 1, -5707, 151416])</td>
+    </tr>
+    <tr>
+        <td valign="top"><strong>Womack (2000)</strong></td>
+        <td valign="top">Not documented other than in this table:
+        Womack* denotes curves found by Mestre-style approach</td>
+    </tr>
+</table>
+</body>
+</html>

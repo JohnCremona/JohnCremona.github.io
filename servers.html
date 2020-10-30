@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="styles.css" type="text/css">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<style type="text/css"></style>
+<title>Number Theory Group server info</title>
+<style type="text/css">
+table.machine_table {
+  border-spacing: 2px;
+  border: 1px solid black;
+}
+table.machine_table td, th, tr {
+  padding: 5px;
+  border:1px solid black;
+}
+table.machine_table tr.up {
+  background-color : lightgreen;
+}
+table.machine_table tr.offline {
+  background-color : orange;
+}
+table.machine_table tr.down {
+  background-color : grey;
+}
+</style>
+</head>
+
+
+
+<body bgcolor="#FFFFFF">
+<h1 align="center">Information about the number theory group's computers</h1>
+
+<h2>JANET acceptable use policy</h2>
+<p>
+As with all university computers, anyone using any of these machines
+must agree to adhere to the JANET Acceptable Use Policy which is set
+out <a href="https://community.ja.net/library/acceptable-use-policy">here</a>.
+Basically this just means being a good citizen and using your common
+sense.
+</p>
+
+<h2> Current status</h2>
+<p style="display:inline-table;">
+See <a href="http://lmfdb.warwick.ac.uk/ganglia/">here</a> for more details
+  (thanks to Harald Schilly for ganglia setup)</p>
+&nbsp;&nbsp;
+<table class="machine_table" style="display:inline-table;">
+<tr><td>status</td></tr>
+<tr class="up"><td>up</td></tr>
+<tr class="offline"><td>offline</td></tr>
+<tr class="down"><td>down</td></tr>
+</table>
+
+<h2>General information</h2>
+<table class="machine_table" align=center>
+<tr><th>server<th>date installed<th>funding<th>usage</tr>
+<!--
+<tr class="down"><td>selmer<td>2009
+    <td>John's departmental and Bill's EPSRC grants<td>general</tr>
+-->
+<tr class="up"><td>fermat<td>2010
+    <td>Department<td>general</tr>
+<tr class="up"><td>hilbert<td>2010
+    <td>Bill's EPSRC grant<td>general (was: Bill's EPSRC project)</tr>
+<tr class="up"><td>hecke<td>2012
+    <td>Lassina's EPSRC grant<td>Lassina's EPSRC project</tr>
+<tr class="up"><td>galois<td>2016
+    <td>Department<td>general</tr>
+<tr class="up"><td>atkin<td>2013
+    <td><a href="http://www2.warwick.ac.uk/fac/sci/maths/people/staff/john_cremona/lmf">LMF</a>
+    EPSRC Programme Grant<td>LMF project</tr>
+<tr class="up"><td>lehner<td>2013
+    <td><a href="http://www2.warwick.ac.uk/fac/sci/maths/people/staff/john_cremona/lmf">LMF</a>
+    EPSRC Programme Grant<td>LMF project</tr>
+<tr class="up"><td>lmfdb<td>2013
+    <td><a href="http://www2.warwick.ac.uk/fac/sci/maths/people/staff/john_cremona/lmf">LMF</a>
+    EPSRC Programme Grant<td>LMF database and webserver</tr>
+<tr class="up"><td>zeta<td>2017
+    <td><a href="http://www2.warwick.ac.uk/fac/sci/maths/people/staff/john_cremona/lmf">LMF</a>
+    EPSRC Programme Grant<td>LMF project fileserver</tr>
+</table>
+
+<h2>Hardware</h2>
+<p>Disk capacity approximate.  Actual physical hard drive capacity usually
+  greater but configured with hardware or software RAID</p>
+
+<table class="machine_table" align=center>
+<tr><th>server<th>processors<th>speed (MHz)<th>number<th>total cores (threads)<th>L1/L2/L3 cache<th>RAM (gb)<th>disks (tb)</tr>
+<!--
+<tr class="down"><td>selmer<td>AMD Opteron(tm) Processor 8378<td>2400<td>16
+    <td>128<td>1.2</tr>
+-->
+<tr class="up"><td>fermat<td>AMD Opteron(tm) Processor
+6174<td>2200<td>2<td>24<td>1536K/6M/10M
+    <td>64<td>7</tr>
+<tr class="up"><td>hilbert<td>AMD Opteron(tm) Processor 6174<td>2200<td>4<td>48
+    <td>1536K/6M/10M<td>256<td>8</tr>
+<tr class="up"><td>hecke<td>AMD Opteron(tm) Processor 6282 SE<td>2600<td>4<td>64
+    <td>16K/2M/16M<td>512<td>19</tr>
+<tr class="up"><td>galois<td>Intel(R) Xeon(R) CPU E5-2697 v4<td>2.30GHz<td>2<td>36 (72)
+    <td>1152K/4608K/45M<td>512<td>3</tr>
+<tr class="up"><td>atkin<td>AMD Opteron(tm) Processor 6380<td>2500<td>4<td>64
+    <td>768K/16M/16M<td>128<td>2</tr>
+<tr class="up"><td>lehner<td>AMD Opteron(tm) Processor 6380<td>2500<td>4<td>64
+    <td>768K/16M/16M<td>128<td>2</tr>
+<tr class="up"><td>lmfdb<td>AMD Opteron(tm) Processor 6366 HE<td>1800<td>2<td>32
+    <td>768K/16M/16M<td>64<td>37</tr>
+<tr class="up"><td>zeta<td>Intel(R) Xeon(R) CPU E5-1620 v4<td>3.50GHz<td>1<td>8
+    <td>256K/1M/10M<td>32<td>72</tr>
+</table>
+
+<h2>Software</h2>
+<p>All machines have roughly the same set of ubuntu packages
+  installed (modulo human error), last updated on the date listed,
+  in addition to those listed which
+  have been built from source (except Magma).</p>
+
+<table class="machine_table"  align=center>
+<tr><th>server<th>OS<th>updated<th>rebooted<th>kernel<th>gcc
+    <th>Pari/GP<th>MPIR<th>MPFR<th>FLINT<th>NTL<th>Sage<th>Magma</tr>
+
+<!--
+<tr class="down"><td>selmer<td>Ubuntu 12.04 (LTS) server
+    edition<td>2013-12-12<td>2014-07-25<td>3.2.0-65<td>?<td>2.7.1<td>2.6.0<td>3.1.2<td>2.4.2<td>6.0.0<td>6.2<td>2.20-6</tr>
+-->
+<tr class="up"><td>fermat<td>Ubuntu 16.04.5 (LTS) server
+edition<td>2019-01-10<td>2018-12-03
+    <td>4.4.0-45<td>5.4.0<td>2.11.1<td>2.7.2<td>3.1.4<td>2.5.2<td>11.1.0<td>8.5<td>2.24-1</tr>
+
+<tr class="up"><td>hilbert<td>Ubuntu 16.04.5 (LTS) server
+edition<td>2019-01-11<td>2019-01-11
+    <td>4.4.0-141<td>5.4.0<td>2.11.1<td>2.7.2<td>3.1.4<td>2.5.2<td>11.1.0<td>8.4<td>2.24-1</tr>
+
+<tr class="up"><td>hecke<td>Ubuntu 14.04.5 (LTS) server
+edition<td>2019-01-10<td>2018-12-19
+    <td>3.13.0-100<td>4.8.4<td>2.11.1<td>2.7.2<td>3.1.4<td>2.5.2<td>11.1.0<td>8.5<td>2.24-1</tr>
+
+<tr class="up"><td>galois<td>Ubuntu 16.04.5 (LTS) server
+edition<td>2019-01-10<td>2019-01-04
+    <td>4.4.0-141<td>5.4.0<td>2.11.1<td>2.7.2<td>3.1.4<td>2.5.2<td>11.1.0<td>8.5<td>2.24-1</tr>
+
+<tr class="up"><td>atkin<td>Ubuntu 14.04.5 (LTS) server
+edition<td>2019-01-10<td>2018-12-20
+    <td>3.13.0-100<td>4.8.4<td>2.11.1<td>2.7.2<td>3.1.4<td>2.5.2<td>11.1.0<td>8.5<td>2.24-1</tr>
+
+<tr class="up"><td>lehner<td>Ubuntu 14.04.5 (LTS) server
+edition<td>2019-01-10<td>2018-12-19
+    <td>3.13.0-100<td>4.8.4<td>2.11.1<td>2.7.2<td>3.1.4<td>2.5.2<td>11.1.0<td>8.5<td>2.24-1</tr>
+
+<tr class="up"><td>lmfdb<td>Ubuntu 14.04.5 (LTS) server
+edition<td>2019-01-10<td>2018-12-19
+    <td>3.13.0-100<td>4.8.4<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;</tr>
+
+<tr class="up"><td>zeta<td>Zetavault 3.28 Standard Edition<td>2018-12-19<td>2018-12-19
+    <td>4.9.110-180-zetavault<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;</tr>
+</table>
+
+
+
+<!--
+<p>
+<tt>fermat</tt> no longer runs a
+ <a href="https://fermat.warwick.ac.uk:8081">Sage notebook server</a>
+ (only accessible from on campus for firewall reasons).  Same version
+ as in the above table.</p>
+-->
+<p>Magma users should run the <tt>SetMemoryLimit()</tt> function to
+  avoid memory leaks inconveniencing others.  The simplest way is to
+  put the line <tt>SetMemoryLimit(n);</tt> in your Magma startup file,
+  where <tt>n</tt> is about half the RAM of the machine <i>in
+  bytes</i>: for example, on fermat
+  use <tt>SetMemoryLimit(32*10^9);</tt>.  In fact, it might be better
+  to use a much smaller value, say 1/10 of the above, as your default,
+  since it seems that most of the time when the memory runs away it's
+  because of some fault or bug.  You can always increase the memory
+  for a particular run by putting a call to <tt>SetMemoryLimit</tt> in
+  your script.  You can see the current value
+  with <tt>GetMemoryLimit();</tt> where 0 means no limit and is the
+  default.</p>
+
+<hr>
+ <p>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+      border="1"
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="31" width="88"></a>
+    </p>
+<hr>
+
+</body>
+</html>
+<!--  LocalWords:  HTML
+ -->

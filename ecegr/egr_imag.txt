@@ -1,0 +1,60 @@
+Imaginary quadratic fields K=Q(sqrt(-d)), 0<d<100
+
+Existence/nonexistence of elliptic curves /K with e.g.r 
+
+NB if (h,6)=1 there are none by Setzer/Stroeker
+
+[d,h]
+
+[-5, 2]		no  (Setzer 1978)
+[-6, 2]		no  (Setzer 1978)
+[-10, 2]	no  (Setzer 1978)
+[-13, 2]	no  (Setzer 1978)
+[-14, 4]	no  (Setzer 1978)
+[-15, 2]	no  (Setzer 1978)
+[-17, 4]	no  (Setzer 1978)
+[-21, 4]	no  (Setzer 1978)
+[-22, 2]	no  (Setzer 1978)
+[-23, 3]	no  (JEC 2003)
+[-26, 6]
+[-29, 6]
+[-30, 4]	no  (Setzer 1978)
+[-31, 3]
+[-33, 4]	no  (Setzer 1978)
+[-34, 4]	no  (Setzer 1978)
+[-35, 2]	no  (Kida 2001)
+[-37, 2]	no  (Kida 2001)
+[-38, 6]
+[-39, 4]	no  (Setzer 1978)
+[-41, 8]	no  (Setzer 1978)
+[-42, 4]	no  (Setzer 1978)
+[-46, 4]	no  (Setzer 1978)
+[-51, 2]	no  (Kida 2001)
+[-53, 6]
+[-55, 4]	no  (Setzer 1978)
+[-57, 4]	no  (Setzer 1978)
+[-58, 2]	no  (Setzer 1978)
+[-59, 3]
+[-61, 6]
+[-62, 8]	no  (Setzer 1978)
+[-65, 8]	yes (Setzer 1978, JEC)
+[-66, 8]	no  (Setzer 1978)
+[-69, 8]	no  (Setzer 1978)
+[-70, 4]	no  (Setzer 1978)
+[-73, 4]	no  (Setzer 1978)
+[-74, 10]	no  (Kida 1999)
+[-77, 8]	no  (Setzer 1978)
+[-78, 4]	no  (Setzer 1978)
+[-82, 4]	no  (Setzer 1978)
+[-83, 3]
+[-85, 4]	no  (Setzer 1978)
+[-86, 10]	no  (Setzer 1978)
+[-87, 6]
+[-89, 12]
+[-91, 2]	no  (Kida 2001)
+[-93, 4]	no  (Setzer 1978)
+[-94, 8]	no  (Setzer 1978)
+[-95, 8]	no  (Setzer 1978)
+[-97, 4]	no  (Setzer 1978)
+
+Unknown:  -26, -29, -31, -38, -53, -59, -61, -83, -87, -89

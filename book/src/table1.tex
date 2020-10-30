@@ -1,0 +1,77 @@
+%
+%  TABLE 1
+%
+\input book.def
+\advance\pageno by\chaponepages
+\advance\pageno by\chaptwopages
+\advance\pageno by\appendixpages
+\advance\pageno by\chapthreepages
+\advance\pageno by\chapfourpages
+%
+\topmatter
+\title\chapter\nofrills{Table 1} Elliptic curves \endtitle
+\endtopmatter
+
+\document
+%\openup2pt
+
+The table is arranged in blocks by conductor.  Each conductor is given in
+factorized form at the top of its block (repeated, if necessary, on 
+continuation pages), together with the number of isogeny classes of 
+curves with that conductor.   Each block is subdivided into isogeny 
+classes by a row of dashes.
+
+The columns of the table give the following data for each curve $E$:
+\roster
+
+\item an identifying letter (A, B, C, \dots) for each isogeny class of curves 
+      with the same conductor, choosing consecutive letters for the
+      curves in the order in which they were computed.  Within each
+      isogeny class we also number the curves in that class, with
+      curve~1 being the ``strong Weil curve''.\footnote{For class 990H
+      the ``strong'' curve is 990H3 and not 990H1.}  For ease of
+      reference, when $N\le200$ we also give the identifying letter of
+      each curve as given in Table~1 of \cite{\Antwerp}.
+
+\item The integer coefficients $a_1$,~$a_2$,~$a_3$,~$a_4$ and~$a_6$ of a 
+minimal equation for $E$.
+
+\item The rank $r$ of $E(\Q)$. 
+
+\item The order $|T|$ of the torsion subgroup $T$ of $E(\Q)$. 
+
+\item The sign of the discriminant $\Delta$  of $E$, and its 
+factorization. 
+
+\item The prime factorization of the denominator of $j(E)$. 
+
+\item The local indices $c_p$ for the primes of bad reduction. 
+
+\item The Kodaira symbols for $E$ at each prime of bad reduction. 
+
+\item The curves isogenous to $E$ via an isogeny of prime degree, with  the
+degree $l$ in bold face.  For example, the entry ``{\bf2}: 3; {\bf3}:  2, 6''
+for curve 448C4 indicates it is 2-isogenous to 448C3 and  3-isogenous to both
+448C2 and 448C6.   From these entries it is easy to  draw isogeny diagrams for
+each isogeny class in the manner of the Antwerp tables  \cite{\Antwerp}. We
+regret that we could not persuade Birch to draw  little diagrams for us in this
+column, as he did for  \cite\Antwerp.
+
+\endroster
+
+For convenience, we give the factorization of $N$ at the head of each 
+section of the table.  This order of the `bad' prime factors 
+$p_1,\ldots,p_k$ of $N$ is used within the table itself.  We give the 
+discriminant $\Delta=\pm p_1^{e_1}\ldots p_k^{e_k}$ in factorized form as 
+$\pm,e_1,\ldots,e_k$ in the columns headed $s$, $\hbox{ord}(\Delta)$.  
+The column headed $\hbox{ord}_-(j)$ contains the exponents of these same 
+primes in the denominator of the $j$-invariant, as in \cite\Antwerp.  
+Finally the local factors $c_p$, and then the Kodaira symbols, are given 
+for each of these primes in order.
+
+\vfill
+\eject
+\input table1.def
+\input table1.dat
+
+\enddocument

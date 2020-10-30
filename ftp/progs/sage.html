@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>mwrank in Sage</title>
+</head>
+<body>
+<h1>
+<a href="http://www.warwick.ac.uk/staff/J.E.Cremona/ftp/progs/"><tt>mwrank</tt></a> 
+in 
+<a href="http://sage.math.washington.edu/sage">Sage</a>
+</h1>
+
+<p>
+News:  From November 2007 I am no longer regularly maintaining the mwrank
+distribution as a separate package.  If you want to run mwrank, it is
+recommended that you install Sage.  Otherwise
+see <a href="../../mwrank/index.html">here</a> for the latest version of mwrank
+available as a separate package.
+</p>
+
+<p>
+Depending on what you're doing, if you would like to use mwrank in
+OS X, Linux, or Microsoft 
+Windows, <a href="http://sage.math.washington.edu/sage">downloading
+Sage</a> is another alternative.  As of sage-1.4, 
+<a href="http://sage.math.washington.edu/sage">Sage</a> 
+includes the mwrank build and builds of all the extra programs, e.g., tmrank,
+findinf, etc., so they are available from sage by typing at a command-line
+prompt, e.g.,
+<pre>
+     sage -mwrank (+options as needed)
+</pre>
+<a href="http://sage.math.washington.edu/sage">Sage</a>, 
+builds the component programs of
+mwrank against a shared version of the mwrank, NTL, and PARI
+libraries, so the binaries are smaller and should load more quickly (if
+loaded repeatedly).  Also,
+<a href="http://sage.math.washington.edu/sage">Sage</a> is designed
+to be easy to build from source on a wide range of platforms,
+so if you're having problems building mwrank because of missing
+dependencies, try building 
+<a href="http://sage.math.washington.edu/sage">Sage</a>
+which includes all dependencies, e.g., NTL, PARI, etc. 
+</p>
+
+<p>On Linux getting shared versions of the above-mentioned libraries
+wasn't too hard; under OS X it was pretty tricky. 
+Also, on Intel OS X, as of October 2006,
+<a href="http://sage.math.washington.edu/sage">Sage</a>
+is still the only system that ships a
+version of MPIR (and hence PARI) that is compiled with assembly
+language optimization, so it's often 3 times faster at big integer
+arithmetic.  So, especially for OS X, you might get a better
+environment in which to run the mwrank programs by getting
+<a href="http://sage.math.washington.edu/sage">Sage</a>.  
+There is also the advantage that one can access the elliptic
+curve database and mwrank both from a single interpreter interface.
+
+</body>
+
+</html>

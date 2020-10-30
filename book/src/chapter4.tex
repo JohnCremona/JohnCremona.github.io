@@ -1,0 +1,411 @@
+% ALGORITHMS FOR MODULAR ELLIPTIC CURVES  (2nd edn.)  Last change: 10/96
+%
+% CHAPTER 4  THE TABLES
+%
+% Use AmSTeX 2.1 or higher
+%
+\input book.def
+\advance\pageno by\chaponepages
+\advance\pageno by\chaptwopages
+\advance\pageno by\appendixpages
+\advance\pageno by\chapthreepages
+%
+\topmatter
+%
+\title\chapter{4} The tables \endtitle
+%
+\endtopmatter
+%
+\document
+%\openup 2pt 
+%\raggedbottom % for drafts only
+
+\head Introduction to the tables \endhead
+
+\subhead Table~1.  Elliptic curves \endsubhead
+
+In Table~1 we give details of each computed elliptic curve $E$ of 
+conductor $N$ for $N\le1000$, arranged by conductor and isogeny class.  
+The first curve in each class
+\footnote{with the single exception of class 990H, where curve H3 is
+the strong Weil curve $E_f$, owing to a slip; we have not changed
+the numbering, in order to maintain consistency with the first edition
+of these tables.}  is the `strong Weil curve' $E_f$ computed from the
+periods of the newforms $f$, and it is followed by the isogenous
+curves, if any.  There are 2463 isogeny classes, and 5113 curves in
+all.
+
+The table contains the coefficients of minimal models of all the
+curves.  Each curve has a code of the form $N$X$i$, where $N$ is the
+conductor, X is the letter code for the corresponding newform or
+isogeny class, and $i$ is the number of the curve in its class.  The
+order of the isogeny classes for each $N$ is the order in which the
+corresponding newforms were found.  
+\footnote{Roughly speaking, this is in lexicographic order of the
+vector of Hecke eigenvalues, but we claim no uniformity here; as the
+program evolved its strategy changed at least twice: once when we
+first started using the $W$ operators, and again when we changed the
+order of searching for eigenvalues of $T_p$ from
+$\ldots,-2,-1,0,1,2,\ldots$ to $0,1,-1,2,-2,\ldots$, after realizing
+that small values of $a_p$ were more likely to occur.  Unfortunately,
+this means that the current version of the program recomputes the
+newforms in a different order; for consistency, we now have to build
+into the program the permutations necessary to produce output in the
+order fixed by the first edition of the tables.}
+
+After the first curve in each class,  the other curves in the class (if 
+any) are listed in the order in which they were found by the isogeny 
+program, as described in Section~3.8.  The isogeny information 
+given in the last column was also recorded by that program.  For each 
+curve for $N\le200$ we also give in parentheses the Antwerp code of each, 
+as in \cite\Antwerp.  Thus curves 11A1, 11A2 and 11A3 are the Antwerp 
+curves 11B, 11C and 11A in that order.  We hope that this new system of 
+identifying codes will not cause confusion; it was the most natural, 
+given the way the curves were found.
+
+The other data in this table is, for each curve: the rank and number of 
+torsion points; the factorization of the discriminant and $j$-invariant; 
+the local index $c_p$ and the Kodaira symbol at each bad prime $p$; and 
+the isogenies of prime degree.
+
+When the number of torsion points is of the form $4k$,
+one can tell whether the torsion subgroup is cyclic ($C_{4k}$) or not
+($C_{2k}\times C_2$) by seeing whether the number of 2-isogenies is 1
+or 3 (respectively), since this number is the same as the number of
+points of order~2.
+
+We have not indicated on this table either the presence of complex
+multiplication, or when a curve is a twist of one elsewhere in the
+table.  These omissions were made to save space.  Complex
+multiplication may be determined most easily by referring to the table
+in Section~3.9, where a complete list of the rational
+$j$-invariants of curves with \CM\ was given.  For example, the
+isogeny class 49A1-2-3-4 consists of four \CM\ curves; 49A1,3 have
+$j=-3375=-15^3$ and CM by $-7$, while 49A2,4 have
+$j=16581375=255^3=3^35^317^3$ and CM by $-28$.  All other curves with
+these \CM s are twists of these.  Within the range of the tables here
+we find their $-3$-twists at 441D1-2-3-4 and their $-4$-twists at
+784H1-2-3-4.  As remarked earlier, the presence of~\CM\ can also be spotted in
+Table~3, where half the Hecke eigenvalues will be zero.
+
+In the non-\CM\ case, unless $N$ is divisible by $D^2$ the twist with
+discriminant $D$ of a (non-\CM) newform at level $N$ will have level
+$\lcm(N,D^2)>N$; thus a necessary condition for a newform to have a
+twist earlier in the table is that its level should be divisible by a
+square.  It is then usually easy to see which newform at a lower level
+is the twist.  Table~3 can help here, since twisted newforms have the
+same Hecke eigenvalues $a_p$ up to sign.  Thus we can determine when
+two isogeny classes of curves are twists of each other, since each
+class corresponds to a newform.  Once two isogeny classes have been
+identified as twists of each other, one can determine which curves in
+the first class are twists of which in the second by comparing
+$j$-invariants.
+
+For example, consider level $N=704=2^6\cdot11$.  At this level three
+twists operate, with $D=-4$, $-8$ and $+8$.  The 12 newforms form 6
+pairs which are $-4$-twists of each other: A--K, B--C, D--F, E--I,
+G--J and H--L.  Their $\pm8$-twists, however, are all at lower levels.
+704A and 704K are $\pm8$ twists of 11A and 176B; 704D and 704F of 44A
+and 176C; 704E and 704I of 88A and 176A; 704G and 704J of 352A and
+352C; 704B and 704C of 352B and 352D; and 704L and 704H of 352E and
+352F (respectively).  Thus of the 24 newforms, we only have 6 up to
+twists, whose first representatives are 11A, 44A, 88A, 352A, 352B and
+352E.  The first of the corresponding sets of isogeny classes consists
+of three curves, linked by 5-isogenies: 11A3-1-2; 176B1-2-3;
+704A1-2-3; 704K1-2-3 (respectively).  (Note that in order to keep to
+our convention that the first curve in each class is the `strong Weil
+curve', we were not able to number the curves in the classes in such a
+way that the numbers in twisted classes correspond: being the `strong'
+curve is not preserved under twisting, as this example shows.)  Also
+the classes 44A, 176C, 704D, 704F each consist of a pair of curves
+linked by 3-isogeny: in this case the first curves do all correspond
+under twisting.  Each of the other isogeny classes consists of a
+single curve.
+
+\subhead Table~2.  Mordell--Weil generators \endsubhead
+
+The second table contains generators for the Mordell--Weil group
+(modulo torsion) of the first curve\footnote{except for class 990H,
+where we give the generator for curve 990H3 as this is the strong Weil
+curve} in each isogeny class of curves of positive rank. In the case
+of rank~1 curves, this generator $P$ is unique up to replacing $P$ by
+$\pm P+Q$ where $Q$ is a torsion point; in rank~2 cases, the given
+generators $P_1$, $P_2$ could be replaced by $aP_1+bP_2+Q_1$ and
+$cP_1+dP_2+Q_2$, where $ad-bc=\pm1$ and $Q_1$, $Q_2$ are torsion
+points.
+
+To save space, we only list generators for one curve in each isogeny
+class.  (Generators for the other curves may be obtained from the
+author's ftp site given below.)  As in Table~1, for $N\le200$ we give
+in brackets the Antwerp code of the curve.
+
+For $N\le200$ there are some discrepancies with Table~2 of
+\cite{\Antwerp}: the generators for 143A and 154C are omitted there;
+the point $(0,2)$ on 155D has order~5, with $(2,5)$ being a generator
+of infinite order; and on 170A, a generator is $P=(0,2)$, and the
+point $(2,1)$ given in \cite{\Antwerp} is $-2P$.
+
+\subhead Table~3.  Hecke eigenvalues \endsubhead
+
+In Table~3 we give the Hecke eigenvalues for all the rational newforms at 
+all levels up to $N=1000$.  As in \cite\Antwerp, we give the eigenvalue 
+$a_p$ for all $p<100$ not dividing $N$, and the $W_q$ eigenvalue $\eps_q$ 
+for all primes $q$ dividing $N$.  
+
+Almost all of these numbers could be computed from the modular curves
+themselves, as listed in Table~1, by the formulae of Section~2.6.  For
+$p\ndiv N$, the eigenvalue $a_p$ is equal to the trace of Frobenius of
+the curve, which is easily computed as in Section~3.9.  When
+$q\div\div N$, we have $-\eps_q=a_q=1+q-\left|E({\Bbb F}_q)\right|$.
+However when $q^2\div N$ we cannot recover $\eps_q$ this way, since
+then $a_q=1+q-\left|E({\Bbb F}_q)\right|=0$.  We did in fact check in
+each case that the Hecke eigenvalues and traces of Frobenius agreed
+for all $p<1000$.
+
+Each newform is identified by its level $N$ and a letter, as in Table~1.  
+Thus 50A is the newform corresponding to the curve 50A1 (and by isogeny 
+to 50A2,3,4), while 50B corresponds to curves 50B1,2,3,4. As in Table~1, 
+for $N\le200$ we give in brackets the Antwerp codes, for ease of 
+cross-reference.
+
+\subhead Table~4.  Birch--Swinnerton-Dyer data \endsubhead
+
+In this table we present the data pertaining to the \BSD\ conjectures
+for the modular curves $E=E_f$ of conductor $N$ up to 1000 attached to rational
+newforms $f$ in $S_2(N)$.  In each case we list the following quantities:
+
+$\bullet$ the rank $r$ 
+%(either the analytic rank of $f$ or the Mordell--Weil rank of $E(\Q)$);
+
+$\bullet$ the period $\RP(f)=\RP(E)$;
+
+$\bullet$ the value of $L^{(r)}(E,1)/r!=L^{(r)}(f,1)/r!$;
+
+$\bullet$ the regulator $R$ of $E(\Q)$; 
+
+$\bullet$ the ratio $L^{(r)}(E,1)/r!\RP R$;
+
+$\bullet$ and finally the quantity $S$ defined as
+$$
+   S = \frac {L^{(r)}(f,1)}  {r!\;\RP(f)} \left/ 
+       \frac {(\prod c_p)\; R} {\left|E(\Q)_{\tor}\right|^2}  \right. . 
+$$ 
+
+Note that some of these quantities are computed from the newform $f$,
+while others are computed from the curve $E$.  Some can be obtained
+from either: for example, we know that the analytic rank is in each
+case equal to the Mordell--Weil rank.  When the rank is 0, we use the
+exact value of the ratio ratio $L(f,1)/\RP(f)$ obtained via modular
+symbols; dividing by the rational number $\prod
+c_p/\left|E(\Q)_{\tor}\right|^2$, we thus obtain an exact rational
+value for $S$.  This was equal to 1 in all but four cases: $S=4$ for
+571A1, 960D1 and 960N1, and $S=9$ for 681B1.  These are consistent
+with the data concerning the order of $\Sha(E/\Q)$ coming from the
+two-descent which we carried out: in the three cases 571A1, 960D1 and
+960N1 and in no other cases there are homogeneous spaces (2-coverings
+of $E$) which have points everywhere locally, but on which we could
+find no rational point.  Since these curves are modular, and we know
+that $L(E,1)\not=0$ in each case, we know that the rank is in fact 0
+(by Kolyvagin's result), so that $\left|\Sha[2]\right|=4$ in each
+case.  For the \BSD\ conjecture to hold we would need to establish
+$\left|\Sha\right|=4$. This should be possible using the methods of
+Rubin and Kolyvagin.
+
+When the rank is positive the ratio is computed from three approximations
+to the values of $L^{(r)}(f,1)$, $R$ and $\RP(E)$.  Thus in these cases 
+we only compute an approximation to the value of $S$; but in all cases in 
+the tables this value was equal to 1 to within the accuracy of the 
+computation.  These values are listed as $1.0$ in the table to emphasize 
+the fact that they were obtained as approximations.
+
+\subhead Table~5.  Parametrization degrees \endsubhead
+
+This table shows, for each newform $f$, the degree of the modular
+parametrization $X_0(N)\to E_f$, together with the prime
+factorization of the degree.
+
+\head Some remarks on the computations \endhead
+
+We have implemented the algorithms described in Chapter~2 and run them
+for all $N$ up to 5077. For a summary of the results obtained over
+this range, see the end of this section.
+
+In the first phase of the computation for each $N$, we worked in the
+smaller space $H^+(N)$ and found rational newforms, storing in a data
+file the number of forms, and for each, the rational number
+$L(f,1)/\RP(f)$ and a certain number of Hecke eigenvalues including
+all the $W_q$ eigenvalues.  We also stored enough modular symbol
+information that if we needed more Hecke eigenvalues later we could
+resume the calculation with the minimum of repetition.  At this stage
+we already had all the data given in Table~3 below, and knew the sign
+of the functional equation (and hence the parity of the analytic rank)
+and whether or not $L(f,1)=0$.  Thus we had enough to guess the
+analytic rank as 0, 1 or 2; and in each case this preliminary estimate
+turned out to be correct, since no curves of rank greater than~2 were
+found for $N<5077$.
+
+The second phase was to work in $H(N)$, using the eigenvalues already
+known, to find the period lattices, the approximate $c_4$ and $c_6$
+invariants of the modular curves, and hence their (rounded)
+coefficients.  These coefficients were stored.  We also stored
+information about the twisting primes $l$ and matrices used to
+evaluate the periods.  In some cases the first pass through this phase
+did not produce $c_4$ and $c_6$ to sufficient precision; this tended
+to happen when their values were large and when the auxiliary primes
+$l$ were also large.  In such cases we went back to phase~1 to compute
+more eigenvalues, so that we could evaluate more terms of the relevant
+series.  The re-evaluation of the periods given more $a_p$ was then
+very fast, as we had all the relevant information stored and merely
+had to sum the series. In very few cases did we need to use $a_p$ for
+$p>5000$.
+
+We then implemented and ran the algorithms of Chapter 3 on the
+resulting curves, including finding all curves isogenous to
+them. Checking that the $c_4$ and $c_6$ invariants were indeed those
+of a minimal model of a curve of conductor $N$ was in fact done by the
+program which computed them in the first place, so that we could tell
+when sufficient accuracy had been obtained.  Starting from a file
+containing the coefficients of the original `strong' curves $E_f$, we
+ran the isogeny program to produce a larger file with the complete
+list of curves, together with information on the degrees of the
+isogenies linking them. This file was then used by a further program
+which produced the \TeX\ source code for Table~1, with all the other
+data there being recomputed or read from files.
+
+The number of torsion points was computed by the method of Section~3.3.  
+
+The rank was first guessed as the smallest possible value consistent
+with the \BSD\ conjecture, given that we knew whether $L(E,1)$ was
+zero and the sign of the functional equation; this value $r=0$, $1$
+or~$2$ was then confirmed as the analytic rank by the computation of
+$L^{(r)}(f,1)$.  When $r=0$ or~1 it then follows that the
+Mordell--Weil rank of $E(\Q)$ is also $r$ by Kolyvagin's results.  In
+almost all cases, including all of those where $r=2$, we verified this
+using our two-descent rank program.  The exceptional cases were for
+curves with no rational two-torsion and very large coefficients, where
+the two-descent would have taken too long.  In these cases we did know
+(independently of Kolyvagin) that the given value of $r$ was a
+lower bound, since we always found that number of independent
+generators of infinite order.
+
+The case $r=2$ occurs only 18 times in these tables, with the
+following curves: 389A, 433A, 446D, 563A, 571B, 643A, 655A, 664A,
+681C, 707A, 709A, 718B, 794A, 817A, 916C, 944E, 997B and 997C.  In
+each case, there are no isogenous curves.
+
+Apart from the rank, all the other data in Table~1 was computed by our 
+implementation of Tate's algorithm.   
+
+The generators given in Table~2 were obtained by the methods of
+Section~3.5, where we first searched for the expected number of
+independent points of infinite order, and then refined these where
+necessary to be sure we had generators of the curves (modulo torsion),
+and not of a subgroup of finite index.  In most cases the generators
+were found immediately; the hard ones to find were those with most
+digits, and particularly those which are not integral.  For the last
+few to be found, the modular refinements mentioned in Chapter~3 were
+essential.  (For the record, the generator of 873C1 was first found
+not by search, but via Heegner points, during the July 1989 Durham
+meeting on $L$-series; by day we learned about the latest results of
+Rubin and Kolyvagin, and about Heegner points, while by night we
+applied some of these ideas in a new program, which eventually came up
+with the elusive point.)  We also found generators on the isogenous
+curves; see \cite\JCsha\ for details of this.
+
+Table~4 was produced by a program which took as data the Hecke
+eigenvalues, sign of functional equation (and hence the analytic rank)
+of the newform $f$; the coefficients of the curve $E_f$ attached to
+$f$; and the generators.  Then the value $L^{(r)}(f,1)$ and the period
+$\RP$ were computed from the eigenvalues as in Section~2.13; and the
+regulator from the heights of the generators as in Section~3.4.  We
+also recomputed the local factors $c_p$ and number of torsion points,
+and from all these could obtain the conjectured value $S$ of the order
+of the \TS\ group $\Sha$.
+
+Finally, the data in Table~5 was obtained by implementing the formula
+for $\deg(\varphi)$ given in Section~2.15.  The degree was computed
+during the second phase of each computation (working in $H(N)$) and
+stored on file with the other data.
+
+All the tables were produced as follows, to minimize the risk of transcription
+error.   The programs which computed the numbers themselves wrote the results
+to data files; separate programs read in this data and added the \TeX\
+formatting characters, producing the \TeX\ source files, which were then
+processed in the usual way.  Thus none of the numbers in the tables was typed
+by human hand at any stage.   Many consistency checks were applied along the
+way.  Almost all the errors in the earlier versions of the tables arose as a
+result of using old versions of data files by mistake, rather than from errors
+in the programs.  We sincerely hope that all such slips have been avoided here.
+
+More details of the specific layout of each of the five sets of tables
+is given immediately before each set below.
+
+\head Summary of results obtained up to 5077 \endhead
+
+Although the tables included here only contain results for levels up
+to~1000, we have to date carried out the computations described above
+for all levels $N$ up to~5077.  For each $N$ we found the rational
+newforms, and computed many Hecke eigenvalues for each; for each form
+we computed a period lattice, and hence found a corresponding curve of
+conductor $N$.  
+%
+% Next sentence was deleted when computations completed to 5077:
+%
+%At present, we have found the full period lattice and hence $E_f$ only
+%for $N\le4500$; for $4500<N\le5077$ we have only used the method of
+%Section~2.11 to find a suitable curve, which we only know to be
+%isogenous to $E_f$.
+%
+For each curve, we verified by 2-descent (in most cases, including all
+cases of rank~2) that the rank was equal to the analytic rank, and by
+finding the Mordell-Weil group of each curve (again, in most cases) we
+were able to compute the value predicted by the Birch Swinnerton-Dyer
+conjecture for the order of the
+\TS\ group.
+
+We summarize the results obtained in the following table, where for
+brevity we only give the numbers of newforms found, subdivided by
+rank.  The first examples of each rank are: $N=11$ for rank~0; $N=37$
+for rank~1; $N=389$ for rank~2; and $N=5077$ for rank~3.
+
+\medskip
+\centerline{\bf Rational newforms for $\Gamma_0(N)$, $N\le5077$}
+\bigskip
+\def\gap{\omit&height2pt&&&&&&&&&&&&\cr}
+{\offinterlineskip
+\centerline{
+\vbox{
+\halign{
+\strut#&\vrule#\tabskip5pt plus1fil&          % left border
+\hfil#&\vrule#&                          % range
+\hfil$#$&\vrule#&                        % total
+\hfil$#$&\vrule#&                        % r=0
+\hfil$#$&\vrule#&                        % r=1
+\hfil$#$&\vrule#&                        % r=2
+\hfil$#$&\vrule\tabskip0pt#\cr           % r=3
+\noalign{\hrule}
+\gap
+&&{Range of $N$}&&\hbox{Total}&&r=0&&r=1&&r=2&&r=3&\cr
+\gap         
+\noalign{\hrule}
+\gap   
+&&   1--1000&&2463&&1321&&1124&&18&&0&\cr
+&&1001--2000&&3391&&1575&&1737&&79&&0&\cr
+&&2001--3000&&3661&&1663&&1852&&146&&0&\cr
+&&3001--4000&&3837&&1665&&2006&&166&&0&\cr
+&&4001--5000&&3962&&1690&&2092&&180&&0&\cr
+&&5001--5077&&284&&121&&148&&14&&1&\cr
+\gap         
+\noalign{\hrule}
+\gap   
+&&   1--5077&&17598&&8035&&8959&&603&&1&\cr
+\gap         
+\noalign{\hrule}
+}}}}
+
+\medskip
+For conductors $N>1000$, tables of the curves and related data may be
+obtained online from {\tt
+http://www.maths.nott.ac.uk/personal/jec/ftp/data/INDEX.html}.
+
+\enddocument

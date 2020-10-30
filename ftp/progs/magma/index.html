@@ -1,0 +1,145 @@
+<HTML>
+<HEAD><TITLE>Magma programs</TITLE>
+</HEAD>
+<BODY bgcolor=#ffffff>
+<center><H2>Assorted Magma programs</center></H2>
+
+<P>
+Some of these may have been incorporated into recent releases and
+hence are now redundant:
+</P>
+
+<UL>
+
+<LI><A HREF="nfhtbound.m">nfhtbound.m</A>:  intrinsics implementing
+both Silverman and Cremona-Prickett-Siksek bounds on naive and
+canonical heights for elliptic curves over number fields.  Released
+under GPL.
+
+<LI><A HREF="conicsFF.m">conicsFF.m</A>:  Functions to solve and parametrize
+conics over function fields of the form F(t1,t2,...,tn), where F is a
+field of characteristic not 2, following Cremona & van Hoeij,
+implemented by Cremona and Roberts. 
+<OL>
+<LI>intrinsic Conic(S::SeqEnum[RngElt]) -> CrvCon<BR>
+For a sequence of coefficients [a,b,c,d,e,f], returns the conic defined by
+a*X^2+b*Y^2+c*Z^2+d*X*Y+e*Y*Z+f*X*Z; or for a sequence [a,b,c], returns the
+conic a*X^2+b*Y^2+c*Z^2
+<LI>intrinsic Matrix(C::CrvCon) -> AlgMatElt <BR>
+Returns the (symmetric) defining matrix M of the conic C
+i.e. C is given by the equation [X,Y,Z]*M*[X,Y,Z]^T where T denotes transpose.
+<LI>intrinsic Conic(M::AlgMatElt) -> CrvCon <BR>
+Returns the conic defined by the 3 x 3 matrix M
+<LI>intrinsic HasRationalPoint_FldFun(C::CrvCon) -> BoolElt,Pt <BR>
+Returns true if the Conic C has a point
+<LI>intrinsic DS_Parametrization(C::CrvCon) -> MapSch <BR>
+Parametrization of the conic C
+</OL>
+
+<LI><A HREF="ternquadFT.m">ternquadFT.m</A>: Functions to solve
+non-diagonal conics over F(t) (i.e. tern(ary)quad(ratics)) using
+minimization and reduction of the associated symmetric 3x3 matrix of
+polynomials.  The minimization step terminates iff there is a
+solution, giving an equivalent unimodular matrix (i.e. with constant
+determinant).  Then the reduction step reduces the maximum degree of
+the entries, by copying the analogous algorithm over Z described by
+Gauss in Article 272 of Disquisitiones.  This second step is not
+efficient except when F is a finite field; it leads to an equation
+over F which is then solved by recursion.
+
+<LI><A HREF="esign.m">esign.m</A>:  Function to compute local and
+global root numbers of elliptic curves, currrently only over Q.
+<OL>
+<LI>intrinsic GlobalRootNumber(e::CrvEll) -> RngIntElt<BR>
+{Given E, an elliptic curve over Q, returns +1 or -1, being the "global root number" 
+or sign of the functional equation of L(E,s).}
+<LI>intrinsic LocalRootNumber(e::CrvEll,p::RngIntElt) -> RngIntElt<BR>
+{Given E, an elliptic curve over Q, and a prime number p, returns +1 or -1, 
+being the "local root number"  of E at p.}
+</OL>
+
+<LI><A HREF="divpt.m">divpt.m</A>: My function to simulate
+Inverse(MultiplicationByMMap(E,m)), giving a clean result when the
+given point cannot be divided by m
+<OL>
+<LI>intrinsic DividePoint(pt::PtEll,m::RngIntElt) -> BoolElt, PtEll<BR>
+{Given an point P on an elliptic curve E and a positive integer m, returns either true,Q if P=m*Q has a solution Q in E, else false,_ .}
+<BR>
+<B>This is now redundant</B>: Magma 2.10 has a function
+DivisionPoints(P,m) which does what is required
+</OL>
+
+<LI><A HREF="modsq.m">modsq.m</A>: Utility functions for Qp^*/(Qp^*)^2
+for p=infty,2 or odd primes
+<OL>
+<LI>intrinsic Qpchar(p::RngIntElt) -> Map, Map<BR>
+{Given a prime p or 0, returns two maps between 
+   Q_p^*/(Q_p^*)^2 and VectorSpace(GF(2),d)
+   where d=1,2 or 3 for p=0,odd or 2.}
+
+</OL>
+<LI><A HREF="modsq2.m">modsq2.m</A>: Useful functions from Stoll's
+CrvHyp package:
+<OL>
+<LI>intrinsic MyResidueClassField(pid::RngOrdIdl) -> FldFin, Map<BR>
+{ Given a prime ideal, returns the residue field Order(pid)/pid
+  together with the reduction map from the ring of pid-integral
+  elements in the corresponding number field to the residue field. 
+    This map has an inverse.}
+<LI>intrinsic  MakeModSquares(K::FldNum, pid::RngOrdIdl) -> ModTupFld, Map<BR>
+{ (K::FldNum, pid::prime ideal in K)
+    Returns a GF(2)-vector space V and a map K^* -> V
+    with kernel the elements that are squares in the completion. }
+<LI>intrinsic MakeIsSquare(pid::RngOrdIdl) -> UserProgram<BR>
+{ Given a prime ideal in some order O, return a function that decides
+  whether its argument (an element of O) is a square in the completion
+  of O at pid. }
+<LI>intrinsic MakeIsSquare(p::RngIntElt) -> UserProgram<BR>
+{ Given a prime number p, return a function that decides
+  whether its argument (an integer) is a square in Z_p. }
+<LI>intrinsic MakeIsSquare(I::RngInt) -> UserProgram<BR>
+{ Given a prime ideal pZ in the integers, return a function that decides
+  whether its argument (an integer) is a square in Z_p. }
+<LI>intrinsic  MakeModSquares(K::FldNum, p::RngIntElt)  -> ModTupFld, Map<BR>
+{ (K::FldNum, p::rational prime)
+    Returns a GF(2)-vector space V and a map K^* -> V
+    with kernel the elements that are squares in all the completions of K 
+    at primes above p. } 
+</OL> 
+<LI><A HREF="q4red.m">q4red.m</A>: Stoll's functions for reducing an
+intersection of two quadric surfaces
+<OL>
+<LI>intrinsic Covariant(Q1::RngMPolElt, Q2::RngMPolElt) -> AlgMatElt<BR>
+{Compute the covariant of the pair of quadratic forms Q1, Q2.}
+<LI>intrinsic Covariant(mat1::AlgMatElt, mat2::AlgMatElt) -> AlgMatElt<BR>
+{Compute the covariant of a pair of symmetric 4x4 matrices.}
+<LI>intrinsic Reduce(Q1::RngMPolElt, Q2::RngMPolElt : AdHocOnly := false, NoAdHoc := false)
+  -> RngMPolElt, RngMPolElt, AlgMatElt<BR>
+{Computes a reduced pencil in the SL_4(Z)-equivalence class of <Q1, Q2>.}
+</OL>
+<LI><A HREF="t3red.m">t3red.m</A>: Stoll's functions for reducing a
+ternary cubic
+<OL>
+<LI>intrinsic Flexes(C::RngMPolElt) -> SeqEnum<BR>
+{Finds the real and complex flexes of a ternary cubic over Q.}
+<LI>intrinsic LinesFromFlexes(flexes::SeqEnum) -> SeqEnum<BR>
+{Given a sequence of nine flexes of a ternary cubic, finds the
+ line through the 3 real flexes, its complementary factor, and
+ the three real lines through a real and two complex flexes.}
+<LI>intrinsic CovariantFromLines(lines::[RngMPolElt]) -> RngMPolElt<BR>
+{Finds the covariant positive definite Hermitian form from the
+ given lines through the flexes of a ternary cubic.}
+<LI>intrinsic Covariant(C::RngMPolElt) -> RngMPolElt<BR>
+{Computes the positive definite Hermitian covariant of a ternary cubic
+ as a real quadratic form.}
+<LI>intrinsic Reduce(C::RngMPolElt) -> RngMPolElt, AlgMatElt<BR>
+{Computes a reduced form in the SL_3(Z)-equivalence class of C.}
+
+</OL>
+</UL>
+
+<HR>
+[<A HREF="index.html">Back</A>] to JC's home page
+
+</BODY>
+</HTML>

@@ -1,0 +1,136 @@
+%
+% ERRATA TO  ALGORITHMS FOR MODULAR ELLIPTIC CURVES (TEXT)
+%
+\def\lastupdate{22 August 1996}  % (DATE OF LAST UPDATE)
+%
+% (process with plain tex but uses some AmSTeX symbols)
+%
+\magnification=\magstep1
+\parskip=2pt
+\parindent=0pt
+%\nopagenumbers
+
+\input amssym.def
+\input amssym.tex
+\def\Z{{\Bbb Z}}
+\def\N{{\Bbb N}}
+\def\R{{\Bbb R}}
+\def\Q{{\Bbb Q}}
+\def\C{{\Bbb C}}
+\def\RP{\Omega}
+
+\def\err#1;#2:#3\par{\hangindent 60pt \leavevmode%
+                         \hbox to 10pt{\hss#1\quad}%
+                         \hbox to 50pt{\hss$#2$\quad\quad\ignorespaces}%
+                         #3\par}
+
+
+\centerline{\bf ALGORITHMS FOR MODULAR ELLIPTIC CURVES}
+\medskip
+\centerline{\bf Final errata list to the First Edition text, last updated \lastupdate}
+\bigskip
+
+(The changes on pages 4--5 are a minimal set which makes the text
+correct; however, this material will be rewritten for a future edition
+in such a way as to make the discussion on duality clearer.)
+\smallskip
+\err Page;\hbox{Line}:Correction\par
+%
+%Chapter 1
+%
+\err1;9:Change ``2447'' to ``2463'' and ``5089'' to ``5113''.\par
+\err2;10:Change ``$L^{(r)}(f,1)$'' to ``$L^{(r)}(f,1)/r!$''.\par
+%
+%Chapter 2
+%
+\err4;-8:Change ``$\dim_{\C}H_1(X_G,\C)$'' to ``$\dim_{\R}H_1(X_G,\R)$''.\par
+\err5;5:In (2.1.1) change ``$H_1(X_G,\C)$'' to ``$H_1(X_G,\R)$''.\par
+\err5;8:Change ``an isomorphism of complex vector spaces'' to ``a vector
+space isomorphism''.\par
+\err5;9:In (2.1.2) change ``$H_1^+(X_G,\C)$'' to ``$H_1(X_G,\R)$''.\par
+\err5;11:Change ``$H_1^+(X_G)$'' to ``$H_1(X_G)$''.\par
+\err5;-16:Change ``$H_1(X_\Gamma,\C)$'' to ``$H_1(X_G,\R)$''.\par
+\err6;-8:Change ``group ring'' to ``group algebra''.\par
+\err6;-7:Change ``$\Z\Gamma$'' to ``$\Q\Gamma$'', twice.\par
+\err6;-6:Change ``free abelian group on'' to ``$\Q$-vector space generated 
+by''.\par 
+\err8;-3:In (2.2.4) change ``$[b/d]-[a/c]$'' to ``$[a/c]-[b/d]$''.\par
+\err17;-6:Change ``$q^{\alpha}w$'' to ``$q^{\alpha+\beta-i}w$'' in the matrix.\par
+\err22;6:Change ``finite'' to ``infinite''.\par
+\err23;\hbox{head}:Change ``2.10'' to ``2.9''.\par
+%
+%Chapter 2 Appendix (examples)
+%
+\err36;\hbox{display}:Correct 3-term relations by changing all signs
+ (the resulting system is equivalent to the one printed).\par
+\err37;-13:Change ``$(0:1)$'' to ``$(1:1)$''.\par
+\err37;-12:Change ``$(0)$'' to ``$(1)$''.\par
+\err39;5:Change ``$\exp(-2\pi/11)$'' to ``$\exp(-2\pi/\sqrt{11})$''.\par
+\err41;9:Change ``-6'' to ``$-6$''.\par
+\err41;-1:Change ``$1+p-3n_2(p)$'' to ``$1+p+3n_2(p)$''.\par
+%
+%Chapter 3
+%
+\err48;11:Change last two congruences ``$\pmod{16}$'' to ``$\pmod{32}$''.\par
+\err48;22:Change ``$b_2^3$'' to ``$b_2^2$''.\par
+\err48;23:Change ``$c_4$'' to ``$c_6$''.\par
+\err53;14:Change ``$a_2$'' to ``$a_3$''.\par
+\err54;4:Change ``4, 8, 12 or 16'' to ``4, 8 or 12''.\par
+\err58;10:In line 5 change ``{\tt H}'' to ``{\tt log(H)}''.\par
+\err58;-5:Change ``on'' to ``on an''.\par
+\err59;-18:Add right parenthesis after first ``$\exp(B)$''.\par
+\err60;-12:Change ``$\log^+(x)=\max\{1,\log|x|\}$'' to ``$\log^+(x)=\log\max\{1,|x|\}$''.\par
+\err60;-9:Change ``$\log(|\Delta|$'' to ``$\log|\Delta|$''.\par
+\err60;-7:Change ``$1.946$'' to ``$1.922$''.\par
+\err61;2:Change ``$1.946$'' to ``$1.922$''.\par
+\err64;16:Change ``$d_1$ must have the same sign as
+$-c+\sqrt{d'}$''\hfill\break to ``either $d_1>0$ or $c+\sqrt{d'}>0$''.\par
+\err66;-5:In line 4 change {\tt d1*(-c+sqrt(d'))<0} \hfill\break to
+{\tt d1<0 AND (c+sqrt(d'))<0}.\par 
+\err68;25:In line 10 before ``THEN'' insert ``AND even(l)''.\par
+\err68;27:In line 12 before ``THEN'' insert ``AND (gxodd=1)''.\par
+\err68;-7:Change ``to to'' to ``to''.\par
+\err70;-2:Delete ``divide\dots $\Delta$;''.  Add sentence: ``Note that
+since $(c_4,c_6)$ are invariants of a minimal equation, it follows
+that $(I,J)$ is $p$-reduced for all $p\ge3$.''  \par
+\err71;-3:Change ``$b^2$'' to ``$3b^2$'' in both places.\par
+\err72;3,6:Change ``$\lambda^2{}'$'' to ``$\lambda'{}^2$'' and
+``$p^2{}'$'' to ``$p'{}^2$''.\par
+\err72;4,5:Insert ``)'' before ``$/6a$''.\par
+\err72;-9:Change ``$<$'' to ``$\le$''.\par
+\err72;-5:Change ``as it'' to ``as it is''.\par
+\err74;14:In program line 18 change ``{\tt x13}'' to ``{\tt x1}''.\par
+\err75;3:In program line 5 change ``{\tt 4*t*w$^3$}'' to ``{\tt 4*v*w$^3$}''.\par
+\err75;4:In program line 5 change ``{\tt u$^2$*v}'' to ``{\tt u$^3$*v}''.\par
+\err76;-12:Change ``$-c+d^2/(4q^2)$'' to ``$(-c+d^2/(4q^2),0)$''.\par
+\err77;-10:Change second ``$\sqrt{e_3-e_1}$'' to
+``$\sqrt{e_3-e_2}$''.\par
+\err77;-2:Change ``if are'' to ``if we are''.\par
+\err79;3:Change ``$a_2x$'' to ``$2a_2x$''.\par
+\err80;-6:Change ``2447'' to ``2463''.\par
+\err81;2:Change ``5089/2447'' to ``5113/2463''.\par
+%
+%Chapter 4
+%
+\err84;4:Change ``2447'' to ``2463'' and ``5089'' to ``5113''.\par
+\err86;2:Change ``$L^{(r)}(E,1)=L^{(r)}(f,1)$'' to 
+``$L^{(r)}(E,1)/r!=L^{(r)}(f,1)/r!$''.\par
+\err86;4:Change ``$L^{(r)}(E,1)/\RP R$'' to ``$L^{(r)}(E,1)/r!\RP R$''.\par
+\err86;6:Change ``$L^{(r)}(f,1)$'' to ``$L^{(r)}(f,1)/r!$''.\par
+\err87;20:Change ``reults'' to ``results''.\par
+\err292;6:Change ``$L^{(r)}(f,1)$'' to ``$L^{(r)}(f,1)/r!$'', 
+and \hfill\break ``$L^{(r)}(E,1)/\RP R$'' to ``$L^{(r)}(E,1)/r!\RP R$''.\par
+\err292;9:Change ``$L^{(r)}(f,1)$'' to ``$L^{(r)}(f,1)/r!$''.\par
+\err293--340;1:Change ``$L^{(r)}(1)$'' to ``$L^{(r)}(1)/r!$'', and
+\hfill\break ``$L^{(r)}(1)/\RP R$'' to ``$L^{(r)}(1)/r!\RP R$''.\par
+%\err;:\par
+%
+%Bibliography
+%
+\err343;-1:Add ``(1971)''.\par
+
+\bigskip
+\rightline{JEC}
+\rightline{\lastupdate}
+
+\bye

@@ -1,0 +1,558 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>MA257: Lecture Log</title>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+</script>
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js">
+</script>
+
+<style type="text/css">
+narrow{width: 200px; text-align:center;}
+table.center {
+  border-spacing: 2px;
+  border: 2px solid black;
+    margin-left:auto;
+    margin-right:auto;
+  }
+ tr, td {
+  padding: 2px;
+  border:1px solid black;
+}
+#lecture_log {
+  border-spacing: 2px;
+  border: 2px solid black;
+  width:90%;
+  margin-left:5%;
+  margin-right:5%;
+}
+#lecture_log tr {
+  padding: 2px;
+  border:2px solid black;
+}
+#lecture_log tr.sofar {
+  background-color : yellow;
+}
+#lecture_log tr.past {
+  background-color : lightgreen;
+}
+#lecture_log tr.future {
+  background-color : white;
+}
+#lecture_log tr.chapter {
+  background-color : lightblue;
+}
+#lecture_log td {
+  padding: 5px;
+  border:1px solid black;
+}
+#lecture_log td.pages {
+  text-align: center;
+}
+#lecture_log td.date {
+  text-align: right;
+}
+#lecture_log td.head {
+  text-align: center;
+}
+#lecture_log td.content {
+  text-align: left;
+}
+</style>
+
+</head>
+<body bgcolor="#FFFFFF">
+
+<h1 align="center"><font color="blue"><a
+href="http://www2.warwick.ac.uk/fac/sci/maths/undergrad/ughandbook/year2/ma257/">MA257: 
+Introduction to Number Theory</a></font></h1> 
+
+<table class=center>
+<tr>
+<th>Lecturer</th>
+<th>Lecture times</th>
+<th>Lecture room</th>
+</tr>
+<tr>
+<td rowspan=3><a href="mailto:J.E.Cremona@warwick.ac.uk">Prof John Cremona</a><br>
+Zeeman C2.21 (ext 24403)
+</td>
+<td>Monday 11-12</td>
+<td align=center>L3</td>
+</tr>
+<tr>
+<td>Tuesday 11-12</td>
+<td align=center>OC0.03</td>
+</tr>
+<tr>
+<td>Wednesday 9-10</td>
+<td align=center>OC0.03</td>
+</tr>
+<tr>
+<th>Teaching assistants</th>
+<th>Support class time</th>
+<th>Support class room</th>
+</tr>
+<tr>
+<td><a href="mailto:C.D.Birkbeck@warwick.ac.uk">Chris Birkbeck</a></td>
+<td align=center>Thursday 5-6</td>
+<td align=center>F1.10</td>
+</tr>
+<tr>
+<td><a href="mailto:D.Grech@warwick.ac.uk">Daniel Grech</a></td>
+<td align=center>Tuesday 4-5</td>
+<td align=center>S0.18</td>
+</tr>
+<tr>
+<td><a href="mailto:M.Caselli@warwick.ac.uk">Marco Caselli</a></td>
+<td align=center>Monday 12-1</td>
+<td align=center>S0.18</td>
+</tr>
+</table>
+
+
+<h2 align="center">Lecture Log for 2017</h2>
+
+<div style="width: 50%; margin-left:25%">
+<p style="text-align:center;">
+The material covered in each lecture will appear here throughout the term.
+</p>
+<p style="text-align:center;">
+In the right columns are the approximate relevant pages in
+the <b><a href="ma257.pdf">full lecture notes</a></b>. Each chapter heading is a link to the
+larger format version (without proofs) used in the cinema lectures.
+</p>
+<p>An alternative
+experimental <a href="http://sl2x.aimath.org/lecturenotes/cremona/MA257/section0.html">web
+version</a> of the lecture notes is available (thanks to David Farmer).
+</div>
+
+<p>
+<a href="#current">Next lecture</a>
+</p>
+
+<table id="lecture_log">
+
+<tr class=sofar>
+<th>Lecture</th>
+<th>Date</th>
+<th>Material covered</th>
+<th>Notes</th>
+</tr>
+
+<tr class=chapter>
+<td class=pages>1</td>
+<td class=date>9 Jan</td>
+<td class=head><a href="ma257_ch0_large.pdf">INTRODUCTION: What is Number Theory?</a></td>
+<td class=pages>1-3</td>
+</tr>
+
+<tr class=chapter>
+<td class=pages>2-6</td>
+<td class=date>&nbsp;</td>
+<td class=head><a href="ma257_ch1_large.pdf">CHAPTER ONE: Factorization</a></td>
+<td class=pages>4-13</td>
+</tr>
+
+<tr class=past>
+<td class=pages>2</td>
+<td class=date>10 Jan</td>
+<td class=content>
+(1.1) Review of divisibility, "to contain is to divide",  $\mathbb{Z}$
+ as a PID.
+<br>
+(1.2) Review of integer gcd;  Bezout identity.
+</td>
+<td class=pages>4-6</td>
+</tr>
+
+<tr class=past>
+<td class=pages>3</td>
+<td class=date>11 Jan</td>
+<td class=content>
+(1.3) Review of Euclidean Algorithm (EA) in $\mathbb{Z}$.
+<br>
+(1.4) Review of primes and unique factorization in $\mathbb{Z}$ and $\mathbb{Q}$.
+</td>
+<td class=pages>7-8</td>
+</tr>
+
+<tr class=past>
+<td class=pages>4</td>
+<td class=date>16 Jan</td>
+<td class=content>
+(1.5) Introduction to Euclidean Domains (EDs) and  Unique Factorization Domains (UFDs).
+<br>
+The Gaussian integers $\mathbb{Z}[i]$ as a Euclidean Domain, PID
+  and UFD. Euclidean implies PID.  Gaussian norm and units.
+</td>
+<td class=pages>9-11</td>
+</tr>
+
+
+
+<tr class=past>
+<td class=pages>5</td>
+<td class=date>17 Jan</td>
+<td class=content>
+gcds, primes and irreducibles in a PID.  Examples from  $\mathbb{Z}[i]$.
+</td>
+<td class=pages>11-13</td>
+</tr>
+
+<tr class=past>
+<td class=pages>6</td>
+<td class=date>18 Jan</td>
+<td class=content>
+Existence of irreducible factors and factorizations in a PID.
+PID implies UFD.  Gaussian primes. Mention other examples of UFDs and
+  non-UFDs.
+</td>
+<td class=pages>11-13</td>
+</tr>
+
+<tr class=chapter>
+<td class=pages>7-11</td>
+<td class=pages>&nbsp;</td>
+<td class=head><a href="ma257_ch2_large.pdf">CHAPTER TWO: Congruences and
+    modular arithmetic</a></td>
+<td class=pages>14-23</td>
+</tr>
+
+<tr class=past>
+<td class=pages>7</td>
+<td class=date>23 Jan</td>
+<td class=content>
+Congruence.  Solving linear congruences.
+Residue classes and the ring $\mathbb{Z}/m\mathbb{Z}$.
+</td>
+<td class=pages>14-15</td>
+</tr>
+
+
+<tr class=past>
+<td class=pages>8</td>
+<td class=date>24 Jan</td>
+<td class=content>
+  The unit group $U_m$ of $\mathbb{Z}/m\mathbb{Z}$ and
+  Euler's $\varphi$-function.    Fermat's and Euler's Theorems.
+</td>
+<td class=pages>16-18</td>
+</tr>
+
+<tr class=past>
+<td class=pages>9</td>
+<td class=date>25 Jan</td>
+<td class=content>
+Wilson's Theorem.  Applications of Fermat and Euler.  Primes
+$p\equiv1\pmod4$ are sums of 2 squares.
+</td>
+<td class=pages>18-19</td>
+</tr>
+
+
+<tr class=past>
+<td class=pages>10</td>
+<td class=date>30 Jan</td>
+<td class=content>
+More applications:  Infinitely many primes
+$\equiv1\pmod{m}$ for $m=4, 8, 16, \dots, q$.
+<br>
+Chinese Remainder Theorem (first form)</td>
+<td class=pages>19-21</td>
+</tr>
+
+<tr class=past>
+<td class=pages>11</td>
+<td class=date>31 Jan</td>
+<td class=content>
+Chinese Remainder Theorem and applications.
+Multiplicativity of $\varphi$, formula for $\varphi(m)$.
+</td>
+<td class=pages>21-22</td>
+</tr>
+
+<tr class=past>
+<td class=pages>12</td>
+<td class=date>1 Feb</td>
+<td class=content>
+Structure of $U_m$:  primitive roots for primes, the general case.  Examples.
+</td>
+<td class=pages>22-23</td>
+</tr>
+
+
+<tr class=past>
+<td class=pages>13a</td>
+<td class=date>6 Feb</td>
+<td class=content>
+End of proof of Theorem 2.6.4: primitive roots for odd prime powers.
+</td>
+<td class=pages>23</td>
+</tr>
+
+<tr class=chapter>
+<td class=pages>13-15</td>
+<td class=date>&nbsp;</td>
+<td class=head>
+<a href="ma257_ch3_large.pdf">CHAPTER THREE: Quadratic Reciprocity</a>
+</td>
+<td class=pages>23-27</td>
+</tr>
+
+<tr class=past>
+<td class=pages>13b</td>
+<td class=date>6 Feb</td>
+<td class=content>
+Quadratic residues and non-residues: definition and first examples.
+Legendre symbols.  Euler's criterion.
+</td>
+<td class=pages>23-24</td>
+</tr>
+
+<tr class=past>
+<td class=pages>14</td>
+<td class=date>7 Feb</td>
+<td class=content>
+Gauss's Lemma. Quadratic character of 2.
+Law of Quadratic Reciprocity (first form).
+</td>
+<td class=pages>25-27</td>
+</tr>
+
+
+<tr class=past>
+<td class=pages>15</td>
+<td class=date>8 Feb</td>
+<td class=content>
+Law of Quadratic Reciprocity. Examples.
+<br>
+Non-examinable interlude: discrte logs and Diffie-Helman key exchange.
+</td>
+<td class=pages>27-28</td>
+</tr>
+
+<tr class=chapter>
+<td class=pages>15-19</td>
+<td class=date>&nbsp;</td>
+<td class=head>
+<a href="ma257_ch4_large.pdf">CHAPTER FOUR: Diophantine Equations</a>
+</td>
+<td class=pages>29-36</td>
+</tr>
+
+<tr class=past>
+<td class=pages>16</td>
+<td class=date>13 Feb</td>
+<td class=content>
+Geometry of Numbers: Minkowski's Theorem,  sums of 2 squares.
+</td>
+<td class=pages>30-31</td>
+</tr>
+
+<tr class=past>
+<td class=pages>17</td>
+<td class=date>14 Feb</td>
+<td class=content>
+Sums of 3 and 4 squares.
+</td>
+<td class=pages>31-33</td>
+</tr>
+
+<tr class=past>
+<td class=pages>18</td>
+<td class=date>15 Feb</td>
+<td class=content>
+Legendre's Theorem.
+</td>
+<td class=pages>36-37</td>
+</tr>
+
+
+<tr class=past>
+<td class=pages>19</td>
+<td class=date>20 Feb</td>
+<td class=content>
+Pythagorean Triples, Fermat's Last Theorem for exponent 4.
+<!--<br>Blichfeldt's Theorem, proof of Minkowski's Theorem.-->
+</td>
+<td class=pages>33-36</td>
+</tr>
+
+
+<tr class=chapter>
+<td class=pages>20-27</td>
+<td class=date>&nbsp;</td>
+<td class=head>
+<a href="ma257_ch5_large.pdf">CHAPTER FIVE: p-adic numbers</a>
+</td>
+<td class=pages>38-48</td>
+</tr>
+
+<tr class=past>
+<td class=pages>20</td>
+<td class=date>21 Feb</td>
+<td class=content>
+Introduction to $p$-adic numbers, examples.  Definition of $\mathbb{Z}_p$.
+</td>
+<td class=pages>38-39</td>
+</tr>
+
+<tr class=past>
+<td class=pages>21</td>
+<td class=date>22 Feb</td>
+<td class=content>
+Arithmetic in $\mathbb{Z}_p$:commutative ring, no zero-divisors,
+characterization of units.
+<br>
+Intersection with $\mathbb{Q}$.
+</td>
+<td class=pages>39-41</td>
+</tr>
+
+<tr class=past>
+<td class=pages>22</td>
+<td class=date>27 Feb</td>
+<td class=content>
+Divisibility and unique factorization in $\mathbb{Z}_p$.
+The $\mbox{ord}_p$ function on $\mathbb{Z}_p$.
+</td>
+<td class=pages>41-42</td>
+</tr>
+
+<tr class=past>
+<td class=pages>23</td>
+<td class=date>28 Feb</td>
+<td class=content>
+The field $\mathbb{Q}_p$.
+Example calculations in  $\mathbb{Q}_p$.
+<br>
+Normed fields. The $p$-adic norm on $\mathbb{Q}$ and
+$\mathbb{Q}_p$.
+</td>
+<td class=pages>42-43</td>
+</tr>
+
+<tr class=past>
+<td class=pages>24</td>
+<td class=date>1 Mar</td>
+<td class=content>
+Convergence in $\mathbb{Q}_p$.  $\mathbb{Q}_p$ as a completion of
+$\mathbb{Q}$.  Numerical examples of convergent sequences and series.
+<br><hr>
+Proof that Blichfeld's theorem implies Minkowski's theorem.
+</td>
+<td class=pages>43-44</td>
+</tr>
+
+<tr class=past>
+<td class=pages>25</td>
+<td class=date>6 Mar</td>
+<td class=content>
+Squares in $\mathbb{Q}_p$.
+</td>
+<td class=pages>44-45</td>
+</tr>
+
+<tr class=past>
+<td class=pages>26</td>
+<td class=date>7 Mar</td>
+<td class=content>
+Solving equations in $\mathbb{Q}_p$; Hensel lifting. Examples.
+</td>
+<td class=pages>46-47</td>
+</tr>
+
+<tr class=past>
+<td class=pages>27a</td>
+<td class=date>8 Mar</td>
+<td class=content>
+Proof of Blichfeld's theorem.
+</td>
+<td class=pages>47-48</td>
+</tr>
+
+
+<tr class=chapter>
+<td class=pages>28-30</td>
+<td class=date>&nbsp;</td>
+<td class=head>
+<a>CHAPTER SIX: additional topics</a>
+</td>
+<td class=pages>&nbsp;</td>
+</tr>
+
+<tr class=past>
+<td class=pages>27b</td>
+<td class=date>8 Mar</td>
+<td class=content>
+Perfect numbers and Mersenne primes.
+</td>
+<td class=pages>47-48</td>
+</tr>
+
+<tr class=past>
+<td class=pages>28</td>
+<td class=date>13 Mar</td>
+<td class=content>
+Mersenne primes: the Lucas-Lehmer test.
+<br><hr>
+$p$-adic examples.
+</td>
+<td class=pages>&nbsp;</td>
+</tr>
+
+
+<tr class=past>
+<td class=pages>29</td>
+<td class=date>14 Mar</td>
+<td class=content>
+Primality tests and proving primality.
+</td>
+<td class=pages>&nbsp;</td>
+</tr>
+
+<tr class=past>
+<td class=pages>30</td>
+<td class=date>15 Mar</td>
+<td class=content>
+Proving primality: Pocklington-Lehmer test.
+<br>
+Assorted revision examples.
+</td>
+<td class=pages>&nbsp;</td>
+</tr>
+
+<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ =-->
+<tr class=sofar>
+<td colspan="5" align="center"><i>
+<A NAME="current"></A>
+Lectures have
+<!--not yet started.-->
+finished.
+<!--  reached this point so far.
+Below this point things are provisional.-->
+</i></td>
+</tr>
+<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ =-->
+
+
+</table>
+
+
+ <p>
+ <a href="http://validator.w3.org/check?uri=referer">
+ <img border="0" src="http://www.w3.org/Icons/valid-html401"
+      alt="Valid HTML 4.01!" height="31" width="88">
+  </a>
+  </p>
+
+</body>
+</html>

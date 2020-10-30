@@ -1,0 +1,10 @@
+Errata for "Algorithms for modular elliptic curves" by J.E.Cremona, CUP 1992
+
+Available by anonymous ftp from euclid.exeter.ac.uk (144.173.8.2) in
+directory ~ftp/pub/cremona there are these files:
+
+errata.tex     errata to the text, process with plain TeX.
+errata.doc     ditto, in plain text format
+
+addenda.tex	addenda/errata to the tables, process with AmSTeX
+addenda.doc     ditto (almost) in plain text

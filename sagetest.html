@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<style type="text/css"></style>
+<script src="http://aleph.sagemath.org/static/jquery.min.js"></script>
+<script src="http://aleph.sagemath.org/embedded_sagecell.js"></script>
+<script>$(function(){sagecell.makeSagecell({inputLocation:'.sage'})});</script>
+
+<title>Testing embedded Sage cells</title>
+</head>
+
+<body>
+
+<div class="sage">
+<script type="text/x-sage">
+E = EllipticCurve('5077a1')
+print E.rank()
+print E.gens()
+plot(E)
+</script></div>
+
+</body>

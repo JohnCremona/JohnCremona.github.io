@@ -1,0 +1,1281 @@
+%  INVARIANTS AND ELLIPTIC CURVES
+%                                                   
+%  last edited 24/6/96 and put into departmental preprint series
+%
+\documentstyle{amsppt}     
+\magnification=\magstep 1
+\overfullrule 0pt
+%
+\define\Z{\Bbb Z}
+\define\N{\Bbb N}
+\define\Q{\Bbb Q}
+\define\R{\Bbb R}
+\define\C{\Bbb C}
+\define\T{\Bbb T}
+\define\SL{\text{SL}}
+\define\PSL{\text{PSL}}
+\define\GL{\text{GL}}
+\define\PGL{\text{PGL}}
+\define\knl{\operatorname{ker}}
+\define\rk{\operatorname{rank}}
+\define\tor{\operatorname{tor}}
+\define\ord{\operatorname{ord}}
+\define\sgn{\operatorname{sign}}
+\define\id{\operatorname{id}}
+\def\Gal{\operatorname{Gal}}
+\def\Tr{\operatorname{Tr}}
+\def\lcm{\operatorname{lcm}}
+\define\eps{\varepsilon}
+\define\w{\omega}
+\def\phi{\varphi}
+\def\from{\colon}
+\redefine\H{\hbox{$\Cal H$}}
+\def\G#1(#2){\Gamma_{#1}(#2)}
+\define\mat(#1,#2;#3,#4){\pmatrix#1&#2\\#3&#4\endpmatrix}
+\redefine\div{\mid}
+\define\ndiv{\nmid}
+\define\<#1>{\left<#1\right>}
+\def\slash#1{\left|#1\right.}
+\def\Kbar{\overline{K}}
+\def\Ft{\tilde{F}}
+\def\EIJ{E_{I,J}}
+\def\CC{{\Cal C}}
+\def\P{{\Cal P}}
+\def\d{\partial}
+\def\longnearrow{\lower4pt\hbox{$\diagup$}\kern-1.3pt\raise4pt\hbox{$\nearrow$}}
+\def\part#1{\par\noindent{\hbox to \parindent{\rm(#1)\hss}}}  % For parts of Theorems, etc.
+
+\newcount\refno  \refno=0
+\newcount\secno  \secno=0
+\newcount\eqno   \eqno=0
+\newcount\propno \propno=0
+
+\def\beginsection#1{\xdef\sec{#1} \eqno=0 \propno=0}
+
+\def\newref#1{\advance\refno by1 \xdef#1{\the\refno}}
+\def\newsec#1{\advance\secno by1 \xdef#1{\the\secno}}
+\def\neweq#1{\advance\eqno by1 \xdef#1{\sec.\the\eqno}}
+\def\newprop#1{\advance\propno by1 \xdef#1{\sec.\the\propno}}
+
+\newref\BSD        % 1963 Crelle paper
+% \newref\Cassels    % Survey article
+\newref\JCbook     % My book
+\newref\JCPS       % Joint paper with Pascale
+\newref\Elliott    % Theory of quantics
+\newref\Hilbert    % Invariants book
+\newref\PSthesis   % Pascale's thesis
+%
+\newsec{\Intro}
+\newsec{\Invariants}
+\newsec{\Galois}
+\newsec{\Descent}
+\newsec{\GStructure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\topmatter
+\title  Classical Invariants and $2$-descent on Elliptic Curves
+\endtitle
+\rightheadtext{Classical Invariants and Elliptic Curves}
+\author J. E. CREMONA
+\endauthor
+\address{Department of Mathematics,
+         University of Exeter,
+         North Park Road,
+         Exeter EX4~4QE
+         U.K.}
+\endaddress
+\email cremona\@maths.exeter.ac.uk 
+\endemail
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\abstract The classical theory of invariants of binary quartics is
+applied to the problem of determining the group of rational points of
+an elliptic curve defined over a field $K$ by $2$-descent.  The
+results lead to some simplifications to the method first presented by
+Birch and Swinnerton-Dyer in \cite\BSD, and can be applied to give a
+more efficient algorithm for determining Mordell-Weil groups over
+$\Q$, as well as being more readily extended to other number fields.
+In this paper we restrict to general theory, valid over arbitrary
+fields (of characteristic neither 2 nor 3); in a subsequent paper, the
+case where $K$ is a number field, and the specific case $K=\Q$, will be
+treated in detail. \endabstract
+
+\endtopmatter 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\document
+%\openup 6pt \raggedbottom % for double spacing
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       %
+%   SECTION ONE         %
+%                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\beginsection{\Intro}
+\head\Intro. Introduction \endhead
+
+Computing the rank and a basis for the group of rational points of an
+elliptic curve over a number field is a highly non-trivial task, even
+over the field $\Q$ of rational numbers.  This is particularly true
+when the curve has no rational 2-torsion.  The only general method
+which avoids extending the ground field goes back to Birch and
+Swinnerton-Dyer \cite\BSD, and is based on classifying certain binary
+quartic forms.  This method is described briefly in \cite\JCbook, and
+in more detail in Serf's thesis \cite\PSthesis, where it is also
+extended to real quadratic fields of class number one (see also
+\cite\JCPS).  In this paper I will show how parts of this method may
+be simplified and improved by using more classical invariant theory
+and Galois theory than in the original treatment in \cite\BSD.  With
+this approach it is hoped not only to make existing implementations of
+the algorithm over $\Q$\ simpler and more efficient, but also to make
+the job of extending the implementation to other number fields more
+practical.
+
+In this paper we restrict to general theory, valid over arbitrary
+fields (of characteristic neither 2 nor 3); in a subsequent paper, the
+case where $K$ is a number field, and the specific case $K=\Q$, will be
+treated in detail from an algorithmic viewpoint.
+
+I would like to thank Nigel Byott, Robin Chapman, Samir Siksek and
+Nigel Smart for useful conversations.
+
+\beginsection{\Invariants}
+\head\Invariants. Invariant Theory for Binary Quartics \endhead
+
+In this section we review some standard material on the invariant
+theory of binary quartic forms.  Our references here are Hilbert's
+lecture notes \cite\Hilbert\ and also the book \cite\Elliott.  In
+these texts the ground field is never made explicit.  We will work
+over an arbitrary field $K$ whose characteristic is not~2
+or~3.  It will not be necessary to assume that $K$ is a number field,
+although eventually this will be the case of most interest to us.
+
+Let \neweq{\gxydef}
+$$
+   g(X,Y) = aX^4+bX^3Y+cX^2Y^2+dXY^3+eY^4 \tag\gxydef
+$$
+be a binary quartic form over $K$.  In the classical treatments, the
+coefficients of the form would be denoted $a_0$, $4a_1$, $6a_2$, $4a_3$,
+and $a_4$.  We have chosen the simpler notation to be consistent with
+\cite\BSD, and also because for later purposes (when $K=\Q$, or a
+number field) the
+integrality of the coefficients $a$, $b$, $c$, $d$, $e$ will be
+important.  However, it is still useful to define the {\it weights\/}
+of the coefficients $a$, $b$, $c$, $d$ and $e$ as $0$, $1$, $2$, $3$
+and $4$ respectively, as indicated by the subscripts in the traditional
+notation.  We will also denote the corresponding inhomogeneous
+polynomial by $g(X)=g(X,1)$, which is a quartic except in the
+degenerate case when $a=0$.
+
+The group $\GL(2,K)$ acts on the set of binary quartics via
+$$\align
+  A=\mat(\alpha,\beta;\gamma,\delta)\colon g(X,Y)&\mapsto
+g({\alpha X+\beta Y},{\gamma X+\delta Y}) \\
+&=a^*X^4+b^*X^3Y+c^*X^2Y^2+d^*XY^3+e^*Y^4.
+\endalign
+$$
+The coefficients $a^*$, $b^*$, $c^*$, $d^*$ and~$e^*$ of the transform
+of $g$ are linear combinations of $a$, $b$, $c$, $d$, $e$ with
+coefficients which are polynomials in the matrix entries.  We call two
+quartics $g_1$ and $g_2$ {\it equivalent\/} if they are in the same
+orbit under this action, and write this as $g_1\sim g_2$.
+
+An {\it invariant of weight $w$ and degree $n$} of the binary quartic
+$g(X,Y)$ is a homogeneous polynomial $I$, of degree $n$ in the
+variables $a$, $b$, $c$, $d$ and $e$, satisfying \neweq\invdef
+$$
+   I(a^*,b^*,c^*,d^*,e^*) = \det(A)^w I(a,b,c,d,e) \tag\invdef
+$$
+for all transformation matrices $A$ in $\GL(2,K)$.  The degree $n$ and
+weight $w$ are related: $w=2n$.  (For invariants of forms $g$ of
+general degree, the corresponding relation is $2w/n=\deg(g)$.)
+
+Each term of an invariant of degree $n$, as well as being homogeneous
+of degree $n$, is also {\it isobaric\/} of weight $w(=2n)$, in the
+sense that each term of $I(a,b,c,d,e)$ has the same weight $w$.  
+This follows from invariance under diagonal matrices.
+
+Given an isobaric homogeneous form $I(a,b,c,d,e)$, the condition that
+$I$ should be an invariant is that it should be annihilated by two
+differential operators:
+$$
+  \Omega I = 4a\frac{\d I}{\d b} + 3b\frac{\d I}{\d c} 
+           + 2c\frac{\d I}{\d d} +  d\frac{\d I}{\d e} = 0
+$$
+and
+$$
+  \Omega^* I = 4e\frac{\d I}{\d d} + 3d\frac{\d I}{\d c} 
+             + 2c\frac{\d I}{\d b} +  b\frac{\d I}{\d a} = 0.
+$$
+The second condition is redundant if the weight and degree of $I$ are
+related by $w=2n$.  These follow from invariance under matrices of
+the form $\mat(1,\beta;0,1)$ and $\mat(1,0;\gamma,1)$ respectively.
+
+The two basic invariants for quartics are \neweq\Idef
+$$
+   I = 12ae-3bd+c^2 \tag\Idef
+$$
+of degree 2 and weight 4, and the so-called {\it catalecticant} \neweq\Jdef
+$$
+  J =  72ace+9bcd-27ad^2-27eb^2-2c^3 \tag\Jdef
+$$
+of degree 3 and weight 6.  The invariants of degree $n$ form a vector
+space whose basis consists of the monomials $I^rJ^s$ where $r,s\ge0$
+and $2r+3s=n$.  In particular, $I$ and $J$ are algebraically
+independent (this is easy to see, by specializing $a=1$, $b=c=0$).
+The discriminant $\Delta$ of the quartic has degree 6 and weight 12,
+hence must be a linear combination of $I^3$ and $J^2$; we will take
+\neweq\Deltadef
+$$
+  \Delta = 4I^3-J^2 \tag\Deltadef
+$$
+which is 27 times the usual discriminant.  The condition for $g(X,Y)$
+to have no repeated factors is of course $\Delta\not=0$, and we will
+assume that this condition holds throughout.
+
+A fundamental question to ask of a given field $K$ is: given two
+values $I$ and $J$ in $K$ satisfying $4I^3-J^2\not=0$, find all
+quartics in $K[X,Y]$ with invariants $I$ and $J$, up to
+$\GL(2,K)$-equivalence.  For a number field such as $\Q$ we might also
+take integral $I$ and $J$ and ask for all integral quartics
+$g(X,Y)\in\Z[X,Y]$.  Even over $\Q$\ this question is highly
+non-trivial; as we shall see, a good algorithmic answer to this
+problem forms a substantial part of the process of full 2-descent on
+elliptic curves.
+
+\neweq\pdef
+\neweq\rdef
+\neweq\qdef
+\neweq\semisyz
+\neweq\covardef
+\neweq\gfourdef
+\neweq\gsixdef
+\neweq\covarsyz
+
+As well as invariants we will also need to consider two related kinds
+of objects: seminvariants and covariants.  A {\it seminvariant\/} is a
+form $S$ in the variables $a$, $b$, $c$, $d$ and $e$ which is isobaric
+and homogeneous and satisfies $\Omega S=0$.  Thus all invariants are
+also seminvariants; but we also find three essentially new
+seminvariant quantities: these are $a$ (the leading coefficient, of
+degree 1 and weight 0), 
+$$
+  p=3b^2-8ac \tag\pdef
+$$
+of degree 2 and weight 2, and 
+$$
+  r=b^3+8a^2d-4abc \tag\rdef
+$$
+of degree 3 and weight 3.  For future reference we will also introduce
+the further seminvariant $q$ defined by
+$$
+  q = \frac13(p^2-16a^2I) = 3b^4-16ab^2c+16a^2c^2+16a^2bd-64a^3e. \tag\qdef
+$$
+(The notation $p$, $q$, $r$ is not standard in the literature, but
+will be used consistently throughout this paper.)  Just as all
+invariants are polynomials in $I$ and $J$, all seminvariants are
+polynomials in $I$, $J$, $a$, $p$ and $r$; however these five are not
+algebraically independent, but are related by a syzygy:
+$$
+   p^3-48a^2pI-64a^3J = 27r^2. \tag\semisyz
+$$
+(In general, a {\it syzygy\/} is an equation of algebraic dependence
+between invariants, seminvariants or covariants.)  This syzygy, and
+its extension to covariants below (\covarsyz), will play an important
+role later.
+
+Seminvariants are unchanged by the substitution $X\mapsto X+Y$; it
+follows that if a seminvariant is expressed in terms of the roots
+$x_i$ of $g$, it can be written as a function of the leading
+coefficient $a$ and the differences $x_i-x_j$ of the roots.
+Conversely, every homogeneous function of the roots which can be
+expressed as a function of the differences between the roots is
+seminvariant (if multiplied by a suitable power of the leading
+coefficient $a$ to make it integral); such a function of the roots is
+called an ``irrational'' seminvariant unless it is also symmetric in
+the roots, when it is ``rational'' and hence is an actual seminvariant
+in the sense defined here.  We will make use of this observation in
+the next section.
+
+Finally, a {\it covariant of order $w$} of the binary quartic is a
+form $C(a,b,c,d,e,X,Y)$, homogeneous separately in $X,Y$ and in
+$a,b,c,d,e$, satisfying the following transformation
+law for all $A=\mat(\alpha,\beta;\gamma,\delta)\in\GL(2,K)$:
+$$
+   C(a^*,b^*,c^*,d^*,e^*,X,Y) = \det(A)^w
+   C(a,b,c,d,e,\alpha X+\beta Y,\gamma X+\delta Y). \tag\covardef
+$$
+There is a one-one correspondence between seminvariants and
+covariants: if $C$ is a covariant of order $w$ then the leading
+coefficient $S(a,b,c,d,e)=C(a,b,c,d,e,1,0)$ is a seminvariant.
+Conversely, every seminvariant $S$ is the leading coefficient of a
+unique covariant $C$: one says that $S$ is the {\it source\/} of $C$.
+If $S$ has degree $n$ (in the coefficients $a$, $b$, etc.) and weight
+$w$, then the degree (in $X$, $Y$) of the associated covariant $C$ is
+$d=4n-2w$; for invariants this is 0, and the associated covariant is
+just the invariant itself.  In general, the covariant associated to
+the seminvariant $S$ is
+$$
+   C(X,Y) = \sum_{i=0}^d \frac{(\Omega^*)^i(S)}{i!}X^{d-i}Y^i.
+$$
+The seminvariant $a$ is the source of the original form $g$, which is
+trivially a covariant of itself of order~0.  The seminvariant $p$
+is the source of a quartic covariant $g_4$:
+$$\align
+  g_4(X,Y) &= (3b^2 - 8ac) X^4 
++ 4 (bc - 6ad)             X^3Y 
++ 2 (2c^2 - 24ae - 3bd)    X^2Y^2 \tag\gfourdef\\
+&\quad+ 4 (cd - 6be)            X  Y^3 
++   (3d^2-8ce)                Y^4,
+\endalign
+$$
+while the seminvariant $r$ leads to the sextic covariant $g_6$:
+$$\align
+  g_6(X,Y) &= (b^3 + 8a^2d - 4abc)   X^6 
++ 2 (16a^2e + 2abd - 4ac^2 + b^2c)  X^5 Y \tag\gsixdef\\
+&\quad+ 5 (8abe + b^2d - 4acd)            X^4 Y^2
++ 20(b^2e - ad^2)                   X^3 Y^3 \\
+&\quad- 5 (8ade + bd^2 - 4bce)            X^2 Y^4 
+- 2 (16ae^2 + 2bde - 4c^2e + cd^2 ) X   Y^5 \\
+&\quad-   (d^3 + 8be^2 - 4cde)                Y^6.
+\endalign
+$$
+The syzygy between the seminvariants extends to a syzygy between the
+covariants:
+$$
+   27g_6^2 = g_4^3 - 48Ig^2g_4 - 64Jg^3. \tag\covarsyz
+$$
+This is an identity in $X$ and $Y$; substituting $(X,Y)=(1,0)$, we
+recover (\semisyz).
+
+\beginsection{\Galois}
+\head\Galois. The Resolvent Cubic \endhead
+
+We keep the notation of the previous section.  Traditionally, the
+invariant theory of quartics can be used to derive the solution of
+quartics by radicals, by reducing the problem to that of solving an
+associated cubic equation, called the resolvent cubic.   We will need
+to make the relation between a quartic and its resolvent cubic rather
+explicit, and to describe the situation in terms of Galois theory.
+This will lead us to a simple criterion for two quartics with the same
+invariants to be $\GL(2,K)$-equivalent.
+
+Let $I$ and $J$ be the invariants of a quartic $g$ defined over
+$K$, such that $\Delta=4I^3-J^2\not=0$.  Suppose that the leading
+coefficient $a$ of $g$ is nonzero.  Then $g$ factorises over the
+algebraic closure $\Kbar$ into 4 linear factors:
+$$
+   g(X,Y) = a \prod_{j=1}^{4} (X-x_iY).
+$$
+Here the $x_i$ are the four roots of the associated inhomogeneous
+quartic polynomial $g(X)=g(X,1)$.   We will usually exclude as
+degenerate the case of quartics which have a root in $K$ itself; these
+form precisely one orbit, and include quartics with $a=0$ (with a root
+at infinity), under the $GL(2)$ action.
+
+Associated to the quartic $g$, or rather to its pair of invariants
+$I$, $J$, we have the cubic polynomial \neweq\rescub
+$$
+  F(X) = X^3 - 3IX + J \tag\rescub
+$$
+which has nonzero discriminant $27\Delta$.  We are most interested in
+the case where $F(X)$ is irreducible over $K$; this is because in our
+application to 2-descent on elliptic curves, this case will arise when
+the curve has no $K$-rational 2-torsion.  Hence we will make this
+assumption.  In the sequel, this assumption is not strictly necessary,
+though some of the discussion would need to be reformulated if it did
+not hold; the fields $L$ and $K(\phi)$ defined below would need to be
+replaced by semisimple $K$-algebras, but essentially the same results
+would hold.  This still leaves two distinct cases, according to
+whether the Galois group of $F$ is or is not cyclic.  For simplicity
+of exposition we will assume that we are in the generic case where the
+Galois group is the full symmetric group $S_3$; the groups $S_4$ and
+$S_3$ which appear below would need to be replaced by the alternating
+groups $A_4$ and $A_3$ in the non-cyclic case, and appropriate degrees
+of field extensions halved.
+
+Let $\phi$ be a root of $F(X)$ in $\Kbar$, so that $\phi$ satisfies
+$\phi^3=3I\phi-J$ and the field $K(\phi)$ has degree 3 over $K$, with
+normal closure $L$ of degree~6 (in the non-cyclic case).  We denote by
+$\phi'$ and $\phi''$ the conjugates of $\phi$ in $L$ and view
+$\Gal(L/K)=S_3$ as acting by permutations on the set
+$\{\phi,\phi',\phi''\}$.  Note that $\Tr_{K(\phi)/K}(\phi)=0$ since
+$F(X)$ has no $X^2$ term.  We emphasise that neither $\phi$ nor the
+field $L$ depend on the particular quartic $g$, but only on the pair
+of invariants $I$, $J$.
+
+Let $M=K(x_1,x_2,x_3,x_4)$ be the splitting field of $g$ over $K$.  By
+sending $x_1$ to infinity a simple calculation shows that 
+$g(X)$ is equivalent to $F(X)$ over
+$K(x_1)$; it follows that the degree
+$[M:K(x_1)]=6$ with $\Gal(M/K(x_1))\cong S_3$.   For trivial quartics
+(with a root in $K$ itself) this is still true, with $K=K(x_1)$ and
+$[M:K]=6$; in the non-trivial case, however, it follows that $g$ is
+irreducible over $K$ and $[M:K]=24$ with $\Gal(M/K)\cong S_4$.  We
+view this Galois group as acting on the set of roots $x_i$ by
+permutation in the natural way, once we have fixed an ordering of the
+roots $x_i$.
+
+It also follows from this discussion that $L\subset M$, so
+that $S_3=\Gal(L/K)$ is a quotient of $S_4=\Gal(M/K)$.  There is only
+one normal subgroup $H$ of $S_4$ such that $S_4/H\cong S_3$, namely
+the Klein 4-group $V_4$, defined in terms of permutations as
+$$
+   V_4 = \{\id,(1 2)(3 4),(1 3)(2 4),(1 4)(2 3)\}.
+$$
+($S_4$ acts by conjugation on the non-identity elements of $V_4$; this
+gives the homomorphism $S_4\to S_3$ with $V_4$ as kernel.)
+
+Using this explicit description of $\Gal(M/L)$ as a subgroup of
+$\Gal(M/K)$, we may easily write down elements of $L$ in terms of the
+roots $x_i$.  We define \neweq\zdefx
+$$
+   z = a^2(x_1+x_2-x_3-x_4)^2; \tag\zdefx
+$$
+then permutations of the $x_i$ take $z$ to one of three values: $z$
+itself, and the conjugate quantities \neweq\zdashdefx
+$$
+  z'  = a^2(x_1-x_2+x_3-x_4)^2 \quad\text{and}\quad
+  z'' = a^2(x_1-x_2-x_3+x_4)^2. \tag\zdashdefx
+$$
+
+Since $z$ is an integral function of the root differences, it is an
+example of an irrational seminvariant, as introduced in the previous
+section.  Symmetric functions of $z$, $z'$, $z''$ are therefore
+rational seminvariants.  In particular, the coefficients of the
+minimal polynomial of $z$ are seminvariants.
+\newprop\zminpoly
+
+\proclaim{Proposition \zminpoly} The minimal polynomial of $z$
+(defined in (\zdefx)) is \neweq\zpoldef
+$$\align
+  h(Z) = (Z-z)(Z-z')(Z-z'') &= Z^3 - pZ^2 + qZ -r^2 \tag\zpoldef\\
+                 &= \left(\frac{4a}{3}\right)^3F\left(\frac{3Z-p}{4a}\right).
+  \endalign
+$$
+Hence $z\in K(\phi)$; explicitly, $z=\frac13(4a\phi+p)$, and moreover
+$N_{K(\phi)/K}(z) = r^2$.
+\endproclaim
+
+\demo{Proof}
+The first equality can be obtained by manipulation of symmetric
+polynomials: the coefficients are seminvariants of degrees 2, 4 and~6.
+The second equality comes from expanding $F((3Z-p)/(4a))$ and using
+the syzygies (\qdef) and (\semisyz) relating $q$ and $r^2$ to the
+other seminvariants.  The relation between $z$ and $\phi$ follows
+immediately.  This is to be interpreted as a generic relation, since
+both $z$ and $\phi$ are only defined up to conjugacy: if we fix a
+numbering of the roots $x_j$ we thereby fix an ordering of $z$ and its
+conjugates, and we then choose the ordering of $\phi$ and its
+conjugates correspondingly.
+\qed\enddemo
+
+We will call the quantity $z$ the {\it cubic seminvariant\/}
+associated to the quartic $g$.  There are two crucial properties of
+the cubic seminvariant to notice: as an element of the cubic extension
+$K(\phi)$ it is {\it linear\/} in $\phi$, in the sense that when
+expressed in terms of the $K$-basis $1$, $\phi$, $\phi^2$ for
+$K(\phi)$ it has no $\phi^2$ term.  Secondly, its norm is a {\it
+square\/} in $K$.  The latter fact is essentially due to the syzygy
+(\semisyz).
+
+Given $z\in K(\phi)^*$ with conjugates $z'$, $z''$, such that the norm
+$N(z)=zz'z''=r^2$ is a square in $K$, the normal closure of
+$K(\sqrt{z})$ will be a field $M$ which is an $S_4$ extension of $K$
+containing $L$ and with $\Gal(M/L)=V_4$.  (In the degenerate case, $z$
+is itself a square, and $M=L$.)  We may then construct a quartic $g$
+having $M$ as its splitting field and $z$ as its cubic seminvariant by
+working backwards: $g$ is not uniquely defined, but only up to
+translation and scaling.  Choosing $a$ nonzero and $b$ arbitrarily, we
+have the following explicit formulas:
+\neweq\xfromz
+$$\aligned
+4ax_1 &= + \sqrt{z} + \sqrt{z'} - \sqrt{z''} - b, \\
+4ax_2 &= + \sqrt{z} - \sqrt{z'} + \sqrt{z''} - b, \\
+4ax_3 &= - \sqrt{z} + \sqrt{z'} + \sqrt{z''} - b, \\
+4ax_4 &= - \sqrt{z} - \sqrt{z'} - \sqrt{z''} - b. \\
+\endaligned\tag\xfromz
+$$
+Here the square roots may be chosen in any way such that the product
+$\sqrt{z}\sqrt{z'}\sqrt{z''}=r$ (as opposed to $-r$).  For
+compatibility with (\zdashdefx), we have arranged (\xfromz) so that
+$\sqrt{z}=a(x_1+x_2-x_3-x_4)$, $\sqrt{z'}=a(x_1-x_2+x_3-x_4)$ and
+$\sqrt{z''}=a(-x_1+x_2+x_3-x_4)$.
+
+Although the field $M=K(x_1,x_2,x_3,x_4)$ obtained thus will always
+have $L$ as its cubic resolvent subfield, it is important to realise
+that the quartic $g$ with the $x_i$ as its roots will {\it not\/}
+necessarily have invariants $I$ and $J$.  This will only occur if the
+element $z$ used, as well as having square norm, is linear in $\phi$.
+This rather unnatural condition can be interpreted as follows.  
+The condition that $z$ be linear in $\phi$ can be written as
+$$
+   \frac{z-z''}{z'-z''} = \frac{\phi-\phi''}{\phi'-\phi''},
+$$
+and this common value is simply the cross-ratio
+$$
+   \frac{(x_1-x_3)(x_2-x_4)}{(x_1-x_4)(x_2-x_3)};
+$$
+this may be readily checked by calculation from (\xfromz).  Hence by
+requiring $z$ to be linear in $\phi$, we are simply specifying a fixed
+value for the cross-ratio of the roots of the associated quartic $g$,
+namely the value of the cross-ratio of the roots of $F(X)$ (including a
+``root at infinity'').
+
+The fields involved are shown in the diagram, where the degrees
+indicated are for the non-trivial non-cyclic case (where $g$ has no
+root in $K$, and $\Gal(L/K)\cong S_3$). 
+
+\medskip
+\vbox{
+\settabs10\columns
+\+&&$M=K(x_1,x_2,x_3,x_4)$                  \cr
+\+&\hfill6&&\hfill4&&&&           $V_4$     \cr
+\+&&&&$L=K(\phi,\phi',\phi'')$              \cr
+\+&$K(x_1)$&&&2&&&                &$S_4$    \cr
+\+&&&$K(z)=K(\phi)$                         \cr
+\+&\hfill4\hfill&&3&&&&           $S_3$     \cr
+\+&&$K$                                     \cr
+}
+\medskip
+
+In order to have an unambiguous definition of $z$ applicable in all
+cases, we will in fact use the equation \neweq\zdefphi
+$$
+   z = \frac{4a\phi + p}{3} \tag\zdefphi
+$$
+to define $z$ as an element of $K(\phi)$ for all quartics $g$ with
+invariants $I$ and $J$, where $a$ and $p$ are the seminvariants
+attached to $g$.  This includes degenerate cases, such as when $a=0$
+(so that $g$ is in fact a cubic): then $p=3b^2$ and $z=b^2$ is
+actually in the ground field $K$.  The fact that $z$ is a square here
+is a special case of the following fundamental result.
+\newprop\zequivprop
+
+\proclaim{Proposition \zequivprop}  
+
+\part1 $z$ is a square in $K(\phi)$ if and only if $g$ has a linear
+factor in $K[X,Y]$ (that is, one of the roots $x_i$ is in 
+$K\cup\{\infty\}$).
+
+\part2 Let $g$ and $g^*$ be quartics with the same invariants $I$
+and $J$, with cubic seminvariants $z$ and $z^*$.  Then 
+$$
+  g_1 \sim g_2 \iff zz^*\in(K(\phi)^*)^2.
+$$
+\endproclaim
+
+\demo{Proof}
+\part1 Let $h(Z)=Z^3-pZ^2+qZ-r^2$ be the minimum polynomial of $z$.
+The condition that $z$ be a square in $K(\phi)$ is that $h(Z^2)$
+should factorise over $K$ as $h(Z^2)=-h_0(Z)h_0(-Z)$.  Writing
+$h_0(Z)=Z^3+uZ^2+vZ+r$ and equating coefficients, we find that
+$v=(u^2-p)/2$, where $u$ satisfies the quartic equation
+$$ 
+   \tilde{g}(u) = (u^2-p)^2 -8ru -4q =0. 
+$$ 
+Manipulation now shows that 
+$$
+    \tilde{g}(u) = \frac{1}{a}g(u+b,-4a), 
+$$ 
+from which the result follows when $a\not=0$.  If $a=0$, we have
+already observed that $z=b^2$, and $h(Z)=(Z-b^2)^2$ in this case.
+
+\part2 Suppose that $g\sim g^*$ via a matrix $A$ in $\GL(2,K)$.
+Since $\GL(2,K)$ is generated by matrices of the form
+$$
+   \mat(\alpha,0;0,\delta), \quad \mat(1,\beta;0,1)
+   \quad\text{ and }\quad \mat(0,1;1,0),
+$$
+it suffices to show that $z=z^*$ (modulo squares) in these three
+cases.  In the first case, $z^*=(\alpha/\delta)^2z$; in the second, $z
+^*=z$ (clear from the definition). In the third case, direct
+calculation shows that $zz^*=w^2$ where
+$$
+  9w = 2\phi^2-2c\phi+9bd-4c^2;
+$$
+here $b$, $c$, $d$ refer as usual to the coefficients of $g$.
+
+For the converse, suppose that $zz^*$ is a square in $K(\phi)$, where
+both $z$ and $z^*$ are linear in $\phi$.  The splitting field $M$ of
+$g$ is the same as that of $g^*$, since it is the normal closure of
+$K(\phi)(\sqrt{z})$.  Let the roots of $g$ be $x_i$, $i=1,\ldots,4$.
+As observed above, the cross-ratio of the $x_i$ is equal to $\frac{z-z''}
+{z'-z''} = \frac{\phi-\phi''}{\phi'-\phi''}$, and the
+roots $y_i$ of $g^*$ have the same cross-ratio; hence there is a
+matrix $A\in\GL(2,M)$, uniquely determined up to scalar
+multiple, such that $A(x_i)=y_i$ for $i=1,\ldots,4$.
+
+Finally we must show that $A$ can be taken to have entries in $K$, for
+then it is easily seen that $g\sim g^*$ via $A^{-1}$.  We may scale $A$ so
+that one of its entries is~1; then it suffices to show that for all
+$\sigma\in\Gal(M/K)$ we have $A^\sigma=A$ (up to scalar multiple, and
+hence exactly, since $1^\sigma=1$).  Now $\sigma$ acts on the $x_i$
+via some permutation $\pi\in S_4$: $x_i^\sigma=x_{\pi(i)}$.  Using the
+explicit expressions for the $x_i$ and $y_i$ in terms of $\sqrt{z}$,
+$\sqrt{z ^*}$ and their conjugates as in (\xfromz), and the fact that
+$z=w^2z^*$ for some $w\in K(\phi)$, it follows that $\sigma$ acts on
+the $y_i$ via the {\it same\/} permutation: $y_i^\sigma=y_{\pi(i)}$.
+Now applying $\sigma$ to the four equations $A(x_i)=y_i$, we obtain
+$A^\sigma(x_{\pi(i)})=y_{\pi(i)}$ for all $i$, and hence (permuting
+the equations), $A^\sigma(x_i)=y_i$ for all $i$.  By uniqueness of $A$
+up to scalar multiple, we have $A^\sigma=A$ as required.
+\qed\enddemo
+
+Using this proposition, we can derive a simple test for whether a given
+pair of quartics $g$, $g^*$ is equivalent.  We form the two cubic
+seminvariants $z$, $z^*$ and test whether $zz^*$ is a square in
+$K(\phi)$.  This condition turns out to be simply whether a third
+quartic has a root in $K$, as in Proposition \zequivprop (1).
+\newprop\zequivalg
+
+\proclaim{Proposition \zequivalg} Let $g_1$, $g_2$ be quartics over the
+field $K$, both having the same invariants $I$ and $J$.  Then $g_1\sim
+g_2$ if and only if the quartic $u^4-2pu^2-8ru+s$ has a root in $K$,
+where
+$$\align
+p &= (32a_1a_2I + p_1p_2)/3, \\
+r &= r_1r_2, \\
+\intertext{and}
+s &= ( 64I(a_1^2p_2^2 + a_2^2p_1^2 + a_1a_2p_1p_2)
+   - 256a_1a_2J(a_1p_2+a_2p_1) - p_1^2p_2^2) /27.
+\endalign
+$$
+Here, $a_i$, $p_i$ and $r_i$ are the seminvariants attached to $g_i$
+for $i=1,2$.
+\endproclaim
+
+\demo{Proof}
+We compute the minimum polynomial $h(Z)$ of $z_1z_2$, as the characteristic
+polynomial of the matrix $A_1A_2$, where $A_i$ is the characteristic
+matrix of $z_i$:
+$$
+   A_i = \frac13\left(4a_i\pmatrix0&0&-J\cr1&0&3I\cr0&1&0\endpmatrix
+       + p_i\pmatrix1&0&0\cr0&1&0\cr0&0&1\endpmatrix\right);
+$$
+here, $\pmatrix0&0&-J\cr1&0&3I\cr0&1&0\endpmatrix$ is the characteristic
+matrix of $\phi$.  Writing $h(Z)=Z^3-pZ^2+qZ-r^2$, we have $p$ and $r$
+as in the statement, and $s=p^2-4q$.  The condition that the roots
+of $h(Z)$ be squares is, as in the proof of Proposition \zequivprop
+(1), the condition that the given quartic $(u^2-p)^2-8ru-4q$ has a
+root in $K$.
+\qed\enddemo
+
+We remark that this proposition gives a very simple, algebraic test
+for equivalence of quartics, over any field.  Both the tests for
+triviality and equivalence only rely on being able to determine
+whether a certain quartic with coefficients in $K$ has a root in $K$.
+This test is much simpler to implement than the test presented in
+\cite\BSD\ and \cite\JCbook\ for $K=\Q$, and in \cite\PSthesis\ for
+real quadratic fields.   In the real quadratic case the new test also
+saves some computation time, particularly for curves of higher rank
+(where there are more possible equivalences to check), and is expected
+that the saving would be even greater for fields of higher degree.
+
+
+\subhead Interpretation in terms of Galois cohomology \endsubhead
+
+Fix a field $L$ which is Galois over $K$ with group either $S_3$ or
+$A_3$.  Let $\phi\in L$ be of degree~3 over $K$, so that $L$ is the
+Galois closure of $K(\phi)$.  There is a bijection between (a)
+$S_4${} (respectively $A_4$) extensions $M$ of $K$ containing $L$
+with $\Gal(M/L)\cong V_4$, and (b) nontrivial elements $z$ of the
+group
+$$
+  H = \ker \left( N_{K(\phi)/K} : K(\phi)^*/\left(K(\phi)^*\right)^2 
+              \to K^*/\left(K^*\right)^2 \right).
+$$
+The group $H$ may be interpreted as a Galois cohomology group, namely
+\neweq\gcisom
+$$
+  H \cong H^1(\Gal(\Kbar/K),V_4) \tag\gcisom
+$$
+where the action of $\Gal(\Kbar/K)$ on $V_4$ is via its quotient
+$\Gal(L/K)$ which acts on $V_4$ by permuting its nontrivial elements. 
+
+We briefly indicate the construction of the isomorphism (\gcisom).
+Given $z_1=z\in K(\phi)$ with square norm representing a nontrivial
+element of $H$, with conjugates $z_2$ and $z_3$, for each
+$\sigma\in\Gal(\Kbar/K)$ we have $z_i^\sigma =
+z_{\overline{\sigma}(i)}$ where $\sigma\mapsto\overline{\sigma}$ is
+the quotient map $\Gal(\Kbar/K)\to\Gal(L/K)$, and we have identified
+$\Gal(L/K)$ with $S_3$ (or $A_3$).  Now for $i=1,2,3$, fix a square
+root $\sqrt{z_i}\in\Kbar$; then for $\sigma\in\Gal(\Kbar/K)$ we have
+$$
+  (\sqrt{z_i})^\sigma =
+  \epsilon_i(\sigma)\sqrt{z_{\overline{\sigma}(i)}}
+$$ 
+where $\epsilon_i(\sigma)=\pm1$ and
+$\epsilon_1(\sigma)\epsilon_2(\sigma)\epsilon_3(\sigma)=+1$ since
+$\sqrt{z_1}\sqrt{z_2}\sqrt{z_3}\in K$.   Now
+$$
+   \left\{(\epsilon_1,\epsilon_2,\epsilon_3)\in\{\pm1\}^3\mid
+\epsilon_1\epsilon_2\epsilon_3=+1\right\} \cong V_4,
+$$
+and the map
+$\sigma\mapsto(\epsilon_1(\sigma),\epsilon_2(\sigma),\epsilon_3(\sigma))$
+is the desired $1$-cocycle in $H^1(\Gal(\Kbar/K),V_4)$.
+
+Conversely, given a nontrivial $1$-cocycle in
+$H^1(\Gal(\Kbar/K),V_4)$, its restriction to $\Gal(\Kbar/L)$ is just a
+homomorphism $\Gal(\Kbar/L)\to V_4$, since $\Gal(\Kbar/L)$ acts
+trivially on $V_4$ by definition, and is in fact a surjective
+homomorphism.  Hence its kernel cuts out a $V_4$ extension $M$ of $L$
+which is Galois over $K$.  This in turn determines a well-defined
+class $z$ in $H$ as required.
+
+For these cohomology computations it is worth noticing that the
+restriction map
+$$
+H^1(\Gal(\Kbar/K),V_4) \to H^1(\Gal(\Kbar/L),V_4)
+$$
+is injective, since (by the restriction-inflation exact sequence) its
+kernel is $H^1(S_3,V_4)$ which is trivial, as a
+simple direct calculation shows.
+
+\medskip
+
+To summarise this section, we have shown that there exists a bijection
+between (a) quartics $g$ over $K$ with invariants $I$, $J$, modulo
+$\GL(2,K)$-equivalence; and (b) nonzero elements $z\in K(\phi)$ which
+are linear in $\phi$ and whose norms are squares in $K$, modulo
+squares in $K(\phi)$.  The bijection is defined by associating to a
+quartic $g$ with seminvariants $a$ and $p$ the cubic seminvariant $z
+=(4a\phi+p)/3$.  Each of these sets in turn can be identified with a
+subset of the Galois cohomology group $H^1(\Gal(\Kbar/K),V_4)$,
+depending on the specific generator $\phi$ for $K(\phi)$, or
+equivalently on the specific invariants $I$ and $J$.  We will return
+to this in Section \GStructure.
+
+In the next section we will introduce the third ingredient, which
+relates both these sets to the group of points on an elliptic curve
+defined over $K$.
+
+
+\beginsection{\Descent}
+\head\Descent. 2-Descent on Elliptic Curves \endhead
+
+We keep the notation of the previous sections: $I$ and $J$ are
+elements of the field $K$ satisfying $\Delta=4I^3-J^2\not=0$, and
+$F(X)=X^3-3IX+J$ is irreducible with root $\phi$.  Set
+$\Ft(X)=-27F(-X/3)$, and let $\EIJ$ be the elliptic curve
+\neweq\EIJdef
+$$
+   \EIJ:\quad Y^2 = \Ft(X) = X^3 -27IX-27J. \tag\EIJdef
+$$
+There is a close connection between (equivalence classes of) quartics
+$g$ with invariants $I$, $J$ and arithmetic properties of $\EIJ(K)$.
+Since the invariants $I$ and $J$ will remain fixed throughout, we will
+sometimes drop the subscript and refer to the elliptic curve simply
+as~$E$.
+
+The syzygy (\semisyz) may be expressed as 
+$$ 
+   (27r)^2 = (4a)^3 \Ft\left(\frac{3p}{4a}\right), 
+$$ 
+so that 
+$$
+   (X,Y)=\left(\frac{3p}{4a},\frac{27r}{(4a)^{3/2}}\right)
+$$ 
+is a point on the curve $E$.  (We will also use projective
+coordinates on $E$, in which this point is
+$(X:Y:Z)=(6p\sqrt{a}:27r:8a\sqrt{a})$.)  This point is not $K$-rational
+unless $a$ is a square in $K$.  This leads to the fundamental
+question: is there a quartic equivalent to $g$ whose leading
+coefficient is a square?  If this is the case, we call the quartic $g$
+{\it soluble\/}.  
+
+Associated to the quartic $g$ is the plane curve $\CC$:
+\neweq\CCdef
+$$ 
+    \CC:\quad Y^2 = g(X) = aX^4+bX^3+cX^2+dX+e. \tag\CCdef 
+$$ 
+This affine curve is nonsingular, and has genus one. If $a\not=0$ it
+has a double point at infinity, which can be desingularised by taking
+the affine curve\neweq\CCdefa
+$$
+   \CC^*:\quad V^2 = g(1,U) = eU^4+dU^3+cU^2+bU+a \tag\CCdefa 
+$$ 
+and identifying the points $(X,Y)$ on $\CC$ with $X\not=0$ with the
+points $(U,V)$ on $\CC^*$ with $U\not=0$ via $(U,V)=(1/X,Y/X^2)$.  The
+double point at infinity on the projective closure of $\CC$ is
+replaced by the two points $(0,\pm\sqrt{a})$ on $\CC^*$, which are
+$K$-rational if and only if $a$ is a square in $K$.  For simplicity we
+will use $\CC$ to denote the desingularised projective curve, bearing
+in mind that it has two points at infinity which are rational if and
+only if $a$ is a square.
+
+The following result is now straightforward.
+\newprop\ratpt
+
+\proclaim{Proposition \ratpt} The curve $\CC$ has a $K$-rational point
+if and only if there is a quartic equivalent to $g$ whose leading
+coefficient is a square.
+\endproclaim
+
+\demo{Proof} If $a$ is a square then the points at infinity on $\CC$
+are $K$-rational.  Conversely, if $\CC$ has a $K$-rational point, we
+may apply a projective transformation to send its $X$-coordinate to
+infinity, thereby replacing $g$ by an equivalent quartic whose leading
+coefficient is a square.\qed
+\enddemo
+
+The seminvariant syzygy (\semisyz) only determined a rational point on
+$\EIJ(K)$ when $a$ was a square.  Using the covariant syzygy
+(\covarsyz), we can define a rational map $\CC\to E$ defined over
+$K$. This can be derived by taking a rational point on $\CC(K)$,
+mapping the $X$-coordinate to infinity, thus replacing the quartic $g$
+by a quartic whose leading coefficient is a square, and writing down
+the corresponding seminvariant syzygy.
+\newprop\ratmapprop
+
+\proclaim{Proposition \ratmapprop} The map 
+$$
+  \xi:\quad (x:y:z) \mapsto (6yzg_4(x,z) : 27g_6(x,z) : (2yz)^3)
+$$
+is a rational map from $\CC$ to $\EIJ$ of degree~$4$.
+\endproclaim
+
+\demo{Proof}
+The covariant syzygy (\covarsyz) may be written
+$$
+   (27g_6(X,Z))^2 = (4g(X,Z))^3 \Ft\left(\frac{3g_4(X,Z)}{4g(X,Z)}\right);
+$$
+given $y^2z^2 = g(x,z)$ and substituting, this becomes
+$$
+   \left(\frac{27g_6(x,z)}{(2yz)^3}\right)^2 = 
+                   \Ft\left(\frac{3g_4(x,z)}{(2yz)^2}\right), 
+$$
+so that $(6yzg_4(x,z) : 27g_6(x,z) : (2yz)^3) \in E(K)$ as required.
+
+To see that the degree is~4, given $(X:Y:Z)$ on $E(K)$ in
+projective coordinates, $(x:z)$ must be a solution to the quartic
+equation $4Xg(x,z)-3Zg_4(x,z)$, and then $y$ is uniquely determined. 
+
+Note that for $i=1,2,3,4$ we have $\xi((x_i:0:1)) = (0:1:0)$, the
+point at infinity on $E$.
+\qed\enddemo 
+
+In our applications, we will only be interested in those quartics $K$
+which are soluble, so that the curve $\CC$ has a $K$-rational point
+and is thus itself an elliptic curve.  
+
+For $i\in\{1,2,3,4\}$ we also have a map $\theta_i$ from $\CC$ to
+$E$ which is a birational isomorphism defined over $K(x_i)$ .
+Since $g\sim\Ft$ it is easy to see that a transformation
+$A\in\GL(2,K(x_1))$ such that $A(x_1)=\infty$ takes the other roots
+$x_j$ for $2\le j\le4$ to the roots of $\Ft$ in some order; these
+roots are $-3\phi$ and its conjugates.  Hence $\theta_1$ takes
+$(x_1,0)$ on $\CC$ to the point at infinity on $E$, and the other
+points $(x_j,0)$ (for $j>1$) to the three points $(-3\phi,0)$ of
+order~2 on $E$.  Similarly for the conjugate maps $\theta_j$.  
+We set $\theta=\theta_1$.  The relation between $\theta$
+and $\xi$ is given by the following result.
+
+\newprop\comdiagprop
+\proclaim{Proposition \comdiagprop} 
+\part1 The following diagram, in which the horizontal map is
+multiplication by~$2$ on $E$, commutes.  \neweq\comdiag 
+$$
+\matrix\format\r&\c\quad&\c\quad&\l\\
+     & E      &\buildrel{[2]}\over\longrightarrow & E     \\
+\\
+\theta&\left\uparrow\vrule height10pt depth10pt width0pt\right. &\quad\longnearrow\xi   \\
+\\
+             &\CC                                                  \\
+\endmatrix
+\tag\comdiag
+$$
+\comment
+\CD  E @>[2]>> E \\ @A\theta AA \\ \CC \\ \endCD
+\endcomment
+
+\part2
+Let $P\in E(\Kbar)$ and let $[2]^{-1}(P) = \{Q_1,Q_2,Q_3,Q_4\}
+\subset E(\Kbar)$; then $\xi^{-1}(P) = \{\theta^{-1}(Q_i)\mid 1\le
+i\le 4\}$.  If in fact $P\in E(K)$, then (with a suitable numbering)
+$Q_i$ is defined over $K(x_i)$ for $1\le i\le4$.
+
+\part3
+For each $\sigma\in\Gal(\Kbar/K)$, there exists $T_\sigma\in E[2]$
+such that $\theta^\sigma(R)=\theta(R)+T_\sigma$ for all
+$R\in\CC(\Kbar)$. 
+
+\part4
+The image of $\CC(K)$ under $\xi$ is a complete coset of $[2]E(K)$
+in $E(K)$.
+\endproclaim
+
+\demo{Proof} 
+
+\part1 Define $\mu=\xi\circ\theta^{-1}:E\to E$.  Then $\mu$ has
+degree~4, and $\mu$ maps the four 2-torsion points $E[2]$ to~0, so
+$\mu$ must be multiplication by~2 on $E$.
+
+\part2 For $R\in\CC(\Kbar)$ we have $\xi(R)=P \iff [2]\circ\theta(R)=P
+\iff \theta(R) = Q_i$ for some $i$.  If $P\in E(K)$ then if we set
+$Q_i=\theta_i(P)$, we have $Q_i\in E(K(x_i))$ since $\theta_i$ is
+defined over $K(x_i)$.  The result follows, since the four fields
+$K(x_i)$ are distinct (under our permanent assumption that the cubic
+polynomial $F(X)$ is irreducible over $K$).
+
+\part3 Fix $\sigma\in G=\Gal(\Kbar/K)$.  Consider the map $\CC\to E$
+defined by $R\mapsto\theta^\sigma(R)-\theta(R)$.  The image is
+contained in $E[2]$ since $[2](\theta^\sigma(R)-\theta(R)) =
+[2]\theta^\sigma(R) - [2]\theta(R) = \xi^\sigma(R) - \xi(R) = 0$,
+since both $[2]$ and $\xi$ are defined over $K$.  But maps between
+curves are either constant or surjective; it follows that $T_\sigma =
+\theta^\sigma(R)-\theta(R)\in E[2]$ is independent of $R$.
+
+\part4 Let $R_1$, $R_2\in\CC(K)$.  Then for all $\sigma\in G$,
+$(\theta(R_2)-\theta(R_1))^\sigma - (\theta(R_2)-\theta(R_1)) =
+(\theta^\sigma(R_2)-\theta(R_2)) - (\theta^\sigma(R_1)-\theta(R_1)) =
+T_\sigma-T_\sigma = 0$ (using (3)).  Hence $\theta(R_2)-\theta(R_1)\in
+E(K)$, so $\xi(R_2)-\xi(R_1) = [2](\theta(R_2)-\theta(R_1)) \in
+2E(K)$.  Thus the image of $\CC(K)$ under $\xi$ is contained in a
+single coset of $2E(K)$ in $E(K)$.
+
+Conversely, if $R\in\CC(K)$ with $P=\xi(R)\in E(K)$, then let $Q\in
+E(K)$ and set $R'=\theta^{-1}(\theta(R)+Q)$.  Then $\xi(R') =
+[2](\theta(R)+Q) = \xi(R)+2Q = P+2Q$, and $R'\in\CC(K)$ since 
+$\theta^\sigma(R') = \theta^\sigma\theta^{-1}(\theta(R)+Q) =
+\theta(R)+Q+T_\sigma = \theta^\sigma(R) + Q  = (\theta(R)+Q)^\sigma =
+(\theta(R'))^\sigma = \theta^\sigma((R')^\sigma)$, and hence
+$R'=(R')^\sigma$ for all $\sigma\in G$.\qed
+\enddemo
+
+\remark{Remark} A diagram such as (\comdiag) is called a {\it
+$2$-covering\/} of $\EIJ$.  There is a notion of equivalence of
+2-coverings, which here corresponds exactly to replacing the quartic
+$g$ defining $\CC$ with an equivalent quartic.  Thus there is an
+injection from equivalence classes of quartics with invariants $I$ and
+$J$ to 2-coverings of the elliptic curve $\EIJ$.  Unfortunately, this
+is not in general a bijection: there exist 2-coverings which cannot be
+represented by quartics in this way.  However, when $K$ is a number
+field, then all 2-coverings which are everywhere locally soluble are
+representable by quartics (see Lemma 1 of \cite\BSD), and this is the
+case of most interest to us.  We discuss this question further in the
+next section.
+\endremark
+
+Finally in this section, we have a result which will have important
+implications for the efficient practical implementation of a
+$2$-descent algorithm over number fields.
+
+\newprop\extfield
+\proclaim{Proposition \extfield}
+With the same notation as above, let $K'$ be an extension field of
+$K$.  Then there is a bijection between
+\part{i} points $Q\in E(K')$ with $[2]Q=P$; and
+\part{ii} roots of $g(X)$ in $K'$.
+\endproclaim
+
+\demo{Proof}
+This follows immediately from Proposition \comdiagprop (2).
+\qed
+\enddemo
+
+For example, if $K$ is a subfield of $\R$ (such as $\Q$) we can take
+$K'=\R$ here.  If $\Delta<0$, then $E(\R)$ is connected and isomorphic
+to the circle group, hence 2-divisible with one 2-torsion point.  It
+follows that in this case all quartics will have exactly two real
+roots.  These are the ``Type 3'' quartics of \cite\BSD.  On the other
+hand, if $\Delta>0$ then $E(\R)$ has two components, the connected
+component of the identity $E^0(\R)=[2]E(\R)$ and the ``egg-shaped''
+component $E(\R)-E^0(\R) = E(\R)-[2]E(\R)$.  All the 2-torsion is real
+in this case.  Thus the quartics are of two types here: ``Type 2''
+quartics with four real roots, giving points on $E(K)\cap E^0(\R)$,
+and ``Type 1'' quartics with no real roots, giving points on $E(K)-
+E^0(\R)$.  If $E(K)\subset E^0(\R)$, then there will be no Type 1
+quartics, while otherwise there is a bijection between the (soluble)
+Type 1 quartics and the soluble Type 2 quartics.  We can make use of
+this observation in a practical algorithm, where we search separately
+for quartics of each type depending on the sign of the discriminant
+$\Delta$.
+
+Similar comments apply to the $p$-adic completions of $K$.  In the
+sequel to this paper we will discuss such implementation details more
+fully.
+
+\beginsection{\GStructure}
+\head\GStructure. Galois Cohomology and Group Structure \endhead
+
+It is easy to see that the map $\sigma\mapsto T_\sigma$ used in the
+proof of Proposition~\comdiagprop\ is a cocycle, representing an
+element of the Galois cohomology group $H^1(\Gal(\Kbar/K),E[2])$, and
+is in fact the image of $P=\xi(R)$ under the connecting homomorphism
+$\delta$ in the long exact sequence of Galois cohomology:
+$$
+   0 \hookrightarrow E(K)/2E(K) \overset\delta\to\longrightarrow H^1(\Gal(\Kbar/K),E[2])
+                                \longrightarrow H^1(\Gal(\Kbar/K),E)[2].
+$$
+This cocycle is independent of $R\in\CC(K)$; changing $\theta$ to a
+different isomorphism $\CC\to E$ which makes (\comdiag) commute has the
+effect of replacing the cocycle $T_\sigma$ by a cohomologous cocycle:
+in fact, any such isomorphism must have the form $\theta^\tau$ for
+some $\tau\in\Gal(\Kbar/K)$, and the effect of replacing $\theta$ by
+$\theta^\tau$ is to replace $T_\sigma$ by $T_\sigma +
+(T_\tau^\sigma-T_\tau)$.
+
+There is a bijection between the set of equivalence classes of
+2-coverings of $E$ and $H^1(\Gal(\Kbar/K),E[2])$.  In the application
+to 2-descent, one is only interested in the subgroup of
+$H^1(\Gal(\Kbar/K),E[2])$ coming from $K$-rational points on $E$ (the
+image of $\delta$). These correspond to 2-coverings $\CC$ which are
+soluble (meaning $\CC(K)\not=\emptyset$); such cocycles become trivial
+in $H^1(\Gal(\Kbar/K),E)$, as is evident from their representation as
+the coboundary $Q^\sigma-Q$ with $Q=\theta(R)\in E(\Kbar)$.  When $K$
+is a number field, one can often only determine the 2-coverings which
+are everywhere locally soluble (meaning $\CC(K_\P)\not=\emptyset$ for
+all completions $K_\P$ of $K$ at primes $\P$ of $K$, including the
+infinite primes).  As remarked above, these are all represented by
+quartics.
+
+It is not true in general that the subset of elements of
+$H^1(\Gal(\Kbar/K),E[2])$ representable by quartics with a fixed pair
+of invariants $I,J$ is a subgroup (see below for an example).  This
+cohomology group does not depend on the particular elliptic curve
+$E=\EIJ$, but rather only on its 2-division field $L$; for if $E_1$
+and $E_2$ are two curves defined over $K$ with the same 2-division
+field, then the 2-torsion subgroups $E_1[2]$ and $E_2[2]$ are
+isomorphic as Galois modules for $\Gal(\Kbar/K)$, so we may identify
+$H^1(\Gal(\Kbar/K),E_1[2])$ and $H^1(\Gal(\Kbar/K),E_2[2])$; however
+the curves will (in general) have different invariants $I,J$, and the
+subsets of those elements of $H^1(\Gal(\Kbar/K),E[2])$ which can be
+represented by quartics with each pair of invariants will be
+different.
+
+The obstruction to an arbitrary 2-covering $\CC$ of a given curve $E$
+being representable by a quartic is that, as an algebraic curve, $\CC$
+may have no positive $K$-rational divisor of degree~2.  If $\CC$ has
+such a divisor, then a straightforward application of the Riemann-Roch
+Theorem shows that $\CC$ has an equation of the form $y^2=$ quartic;
+see \cite\BSD, Lemma 2.  In \cite\BSD, Lemma 1 it is shown (though not
+by explicit equations) that this obstruction is represented by the
+non-existence of a $K$-rational point on a certain curve of genus~0
+defined over $K$, associated with the 2-covering.  Using the Galois
+theory developed in Section~\Galois, we can see this obstruction
+explicitly.
+
+To a 2-covering $\CC$ of $E$ we have associated an element of
+$H^1(\Gal(\Kbar/K),E[2])$ and also a ``cubic seminvariant'' $z\in
+K(\phi)$ of square norm, uniquely determined modulo squares.  Here the
+generator $\phi$ of the cubic field $K(\phi)$ has trace~0 and
+determines the invariants $I$ and~$J$ via its minimal equation
+$\phi^3=3I\phi-J$.  For the 2-covering to be representable by a
+quartic with invariants $I,J$, it is necessary and sufficient that we
+may choose a representative for the coset $z\left(K(\phi)^*\right)^2$
+which is linear in $\phi$.  Set $z=a+b\phi+c\phi^2$ and
+$z_1=u+v\phi+w\phi^2$ with $a$, $b$, $c$, $u$, $v$ and~$w\in K$.
+Expanding $zz_1^2$, the coefficient of $\phi^2$ is a quadratic form
+$Q(u,v,w)$ with coefficients which are functions of $I,J,a,b,c$:
+$$\multline
+   Q(u,v,w) = cu^2 + (a+3cI)v^2 + (3I(a+3cI)-bJ)w^2 \\
++ 2buv +2(3bI-cJ)vw + 2(a+3cI)uw.
+\endmultline
+$$
+Set $\alpha=3c^2I+ac-b^2$ and $\beta=ab-c^2J$, and suppose that
+$N(z)=r^2$; then with the linear change of variables
+$u_1=cu+bv+(3cI+a)w$, $v_1=\alpha v-\beta w$, $w_1=rw$, we find that 
+$$
+ \tilde{Q}(u_1,v_1,w_1) = \alpha c Q(u,v,w)
+                        = \alpha u_1^2 + v_1^2 - cw_1^2. 
+$$
+We require a nontrivial solution $(u,v,w)\not=(0,0,0)$ to
+$Q(u,v,w)=0$.  This equation is evidently the genus zero curve of
+\cite\BSD, Lemma~1.  If $K$ is a number field and $z$ represents a
+2-covering which is everywhere locally soluble, then $Q(u,v,w)=0$ will
+have points everywhere locally, and hence globally by the Hasse
+principle, so a solution will exist over $K$.  Thus we will be able to
+find $z_1\in K(\phi)$ such that $zz_1^2$ is linear in $\phi$, from
+which we may construct a quartic to represent the 2-covering as in
+Section~\Galois.
+
+We can now express the problem of whether the subset of
+$H^1(\Gal(\Kbar/K),E[2])$, consisting of cocycles for which the
+corresponding 2-covering can be represented by quartics with
+invariants $I,J$, is closed under multiplication, in purely algebraic
+terms.  Let $K(\phi)$ be a cubic extension of the field $K$.  Let $H$
+be the subgroup of $K(\phi)^*/(K(\phi)^*)^2$ consisting of those
+cosets whose representative elements $z$ have square norm in $K$.
+From Section~\Galois, we know that there is a bijection between
+(nontrivial elements of) $H$ and the set of $S_4$ (respectively,
+$A_4$) extensions $M$ of $K$ containing the Galois closure $L$ of
+$K(\phi)$, according as $\Gal(L/K)$ is isomorphic to $S_3$ or $A_3$
+respectively.  We also have a bijection between $H$ and
+$H^1(\Gal(\Kbar/K),V_4)$, where the action of $\Gal(\Kbar/K)$ on $V_4$
+is via its $S_3$ (respectively $A_3$) quotient $\Gal(\Kbar/L)$ which
+acts faithfully on $V_4$ by permuting its non-identity elements.
+
+Fixing a generator $\phi$ for $K(\phi)$ with trace~0, we determine
+elements $I$ and $J$ of $K$ such that $\phi^3=3I\phi-J$.  Then $M$ is
+the splitting field of a quartic $g(X)\in K[X]$ with invariants $I,J$
+if and only if it corresponds to an element of $H$ which has a
+representative which is linear in $\phi$.  The question is then: is
+the subset of such elements of $H$ a subgroup?  
+
+%Fixing $\phi$ fixes $I$ and~$J$ and hence the elliptic curve $\EIJ$,
+%and
+%$$
+%   H^1(\Gal(\Kbar/K),E[2]) \cong H^1(\Gal(\Kbar/K),V_4).
+%$$
+%
+
+To see that the answer to this question may be negative, let
+$\phi=\root3\of2$, and set $z_1=3(1+\phi)$ and $z_2=10(2+\phi)$.  Then
+$z_1$ and $z_2$ have square norms $3^4$ and $10^4$ respectively.
+Setting $z_3=z_1z_2 = 30(2+3\phi+\phi^2)$, we can try to adjust $z_3$
+modulo squares to eliminate the $\phi^2$ term.  This leads to the
+quadratic form
+$$\align
+  Q(u,v,w) &= u^2+6uv+2v^2+4uw+4vw+6w^2\\
+           &= (u+3v+2w)^2 + 2(w-2v)^2 - 15v^2,\\
+\endalign
+$$
+which is 2-adically and 5-adically insoluble.  Hence there are
+two quartics over $\Q$, with invariants $I=0$ and $J=-2$, for which
+there is no product with these invariants.  The associated elliptic
+curve $E$ is $Y^2=X^3+54$ with infinite cyclic Mordell-Weil group $E(\Q)$;
+the quartics are $g_1$ with coefficients
+$\frac1{108}(243,0,-54,24,-1)$, which is soluble and leads to the
+generator $(X,Y)=(3,9)$ of $E(\Q)$, and $g_2$ with coefficients
+$\frac1{90}(675,0,-90,20,-1)$ which is insoluble in $\Q_2$ and $\Q_5$.
+
+Hence, in general, the $\GL_2$-equivalence classes of quartics with a
+fixed pair of invariants $I,J$ in $K$ cannot be made into an
+elementary abelian 2-group.  However we do have a partial product,
+which can be useful.
+
+Let $g_1$, $g_2$ and~$g_3$ be three quartics all with the same
+invariants $I$ and~$J$.  We say that $g_1*g_2=g_3$ if the associated
+cubic seminvariants satisfy $z_1z_2=z_3\pmod{(K(\phi))^2}$.  Note that
+by Proposition~\zequivprop, this relation is well-defined on
+equivalence classes of quartics.  We can test the relation
+$g_1*g_2=g_3$ in practice, since the condition $z_1z_2z_3=$ square is
+equivalent to the existence of a root in $K$ of a certain fourth
+quartic over $K$ (just as Proposition~\zequivalg\ gave a test for the
+equivalence of quartics, following Proposition~\zequivprop). 
+
+Given two quartics $g_1$ and $g_2$ with invariants $I$ and $J$, when
+can we construct a ``product'' quartic $g_3$ with $g_1*g_2=g_3$?  If
+both $g_1$ and $g_2$ are soluble, then one could map each to a point on
+the elliptic curve $\EIJ$, add the points and construct the quartic
+$g_3$ from their sum.  However, it is of interest to express this
+partial group law purely algebraically, without reference to elliptic
+curves.  As we have seen, this can be done if certain conditions on
+the solubility of the corresponding homogeneous spaces hold.  More
+generally, we can always form the associated ternary quadratic form
+$Q(u,v,w)$, as in the example above, and determine whether it has a
+zero.  This is done in the next proposition, where $Q(u,v,w)$ is
+diagonalised explicitly, enabling certain cases to be dealt with
+simply.
+
+\newprop\qprod
+\proclaim{Proposition \qprod}
+Let $I,J\in K$ satisfy $4I^3-J^2\not=0$ and let $g_i(X,Y)\in K[X,Y]$
+for $i=1,2$ be quartics with invariants $I$ and $J$.  Suppose that the
+leading coefficients $a_1$, $a_2$ are equal modulo squares:
+$a_1a_2\in(K^*)^2$.  Then there exists a quartic $g_3(X,Y)$ with
+invariants $I$ and $J$ such that $g_3=g_1*g_2$.
+\endproclaim
+
+\remark{Remark} Since we are free to replace $g_1$ or $g_2$ by
+equivalent quartics, we can also form $g_1*g_2$ provided that there
+exist $(x_1,y_1)$, $(x_2,y_2)\in K\times K \setminus (0,0)$ such that
+$g_1(x_1,y_1)g_2(x_2,y_2) \in (K^*)^2$.  \endremark
+
+\demo{Proof} Let $z_i=(4a_i\phi+p_i)/3$ be the cubic seminvariant of
+$g_i$ for $i=1,2$, where $\phi^3=3I\phi-J$ as usual.  The coefficient
+of $\phi^2$ in $z_1z_2(u+v\phi+w\phi^2)^2$ is a ternary quadratic form
+$Q(u,v,w)$, and it suffices to find a non-trivial solution to
+$Q(u,v,w)=0$.  We have $N(z_i)=r_i^2$ for $i=1,2$ where $r_i\in K$.
+
+Set 
+$$\align
+\alpha&=16(a_1a_2p_1p_2+a_1^2p_2^2+a_2^2p_1^2-48Ia_1^2a_2^2), \\
+\beta &=4(a_1p_1p_2^2+a_2p_1^2p_2+64Ja_1^2a_2^2),\\
+\noalign{\text{and}}
+\gamma&=p_1^2p_2^2 + 48Ia_1a_2p_1p_2 + 64J(a_1^2a_2p_2+a_1a_2^2p_1),
+\endalign
+$$
+and introduce new variables $\tilde{u}$, $\tilde{v}$, $\tilde{w}$
+where
+$$
+\align
+\tilde{u}&=16a_1a_2u+4(a_1p_2+a_2p_1)v+(p_1p_2+48Ia_1a_2)w,\\
+\tilde{v}&=\alpha v+\beta w,\\
+\noalign{\text{and}}
+\tilde{w}&=108r_1r_2w.
+\endalign
+$$
+The seminvariant syzygy implies that 
+$$
+   \beta^2-\alpha\gamma = 16a_1a_2(27r_1^2)(27r_2^2) = (108r_1r_2)^2a_1a_2.
+$$
+Using computer algebra we then find that 
+$$
+   16\alpha a_1a_2 Q(u,v,w) = \alpha\tilde{u}^2-\tilde{v}^2+a_1a_2\tilde{w}^2.
+$$
+Hence there is a nontrivial solution when $a_1a_2$ is a square.
+\qed \enddemo
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+%
+\Refs %      REFERENCES 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ref \no \BSD \by B. J. Birch and H. P. F. Swinnerton-Dyer
+\paper Notes on Elliptic Curves I
+\jour J. Reine Angew. Math.
+\vol 212 \yr 1963 \pages 7--25
+\endref
+
+%\ref \no \Cassels \by J. W. S. Cassels
+%\paper Survey article: Diophantine equations with special reference to
+%elliptic curves
+%\jour J. London Math. Soc.
+%\vol 41 \yr 1966 \pages 193--291
+%\endref
+
+\ref \no \JCbook \by J. E. Cremona 
+\book Algorithms for Modular Elliptic Curves
+\publ Cambridge University Press
+\yr 1992
+\endref
+
+\ref \no \JCPS \by J. E. Cremona and P. Serf
+\paper Computing the rank of elliptic curves over real quadratic
+fields of class number 1
+\paperinfo preprint
+\yr 1996
+\endref
+
+\ref \no \Elliott \by E. B. Elliott
+\book An Introduction to the Algebra of Quantics (Second Edition)
+\publ Oxford University Press
+\yr 1913
+\endref
+
+\ref \no \Hilbert \by D. Hilbert
+\book Theory of Algebraic Invariants
+\publ Cambridge University Press
+\yr 1993
+\endref
+
+\ref \no \PSthesis \by P. Serf
+\book The rank of elliptic curves over real quadratic number fields of
+class number 1
+\bookinfo Doctoral Thesis, Universit\"at des Saarlandes
+\yr 1995
+\endref
+
+\endRefs
+\enddocument

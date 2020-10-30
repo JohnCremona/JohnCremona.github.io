@@ -1,0 +1,83 @@
+%
+% TABLE 3 
+%
+\input book.def
+\advance\pageno by\chaponepages
+\advance\pageno by\chaptwopages
+\advance\pageno by\appendixpages
+\advance\pageno by\chapthreepages
+\advance\pageno by\chapfourpages
+\advance\pageno by\tabonepages
+\advance\pageno by\tabtwopages
+\topmatter
+\title\chapter\nofrills{Table 3}  Hecke eigenvalues \endtitle
+\endtopmatter
+\document
+%\openup2pt
+%\raggedbottom
+
+This table is largely self-explanatory.  There is one row for each 
+rational newform $f$ for $\G0(N)$ for $N\le1000$; forms at the same level
+are given an identifying letter as in Table~1, together with the Antwerp 
+code for $N\le200$.  The other columns contain the Hecke eigenvalues of 
+$f$ for primes up to 100: either $T_p$, when $p\ndiv N$, or $W_q$ when 
+$q\div N$.  The latter are indicated in the table simply as $+$ or $-$ to 
+distinguish them.   Where the largest prime divisor $q$ of $N$ is greater 
+than $100$, the extra value $\eps_q$ is entered in the right-most column: 
+there is only ever at most one such prime $q>100$.
+
+\vfill\eject
+
+
+% MACROS FOR THE TABLE
+
+\def\gap#1{\omit\vrule height#1pt&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\cr}
+\def\fivegap{\gap3}
+ 
+\def\begintable#1\endtable#2#3{
+%\line{}\vfill
+\vbox{\offinterlineskip
+\halign to \hsize {
+   \tabskip0pt\strut\vrule##\tabskip2pt plus1fil minus0.1pt  &%
+   \hfill##\tabskip0pt&%
+   \hfill##\hfill&%
+   \hfill##\hfill\tabskip2pt plus1fil minus0.1pt &\vrule##&%
+   \hfill$##$&\hfill$##$&\hfill$##$&\hfill$##$&\hfill$##$&%
+   \hfill$##$&\hfill$##$&\hfill$##$&\hfill$##$&\hfill$##$&%
+   \hfill$##$&\hfill$##$&\hfill$##$&\hfill$##$&\hfill$##$&%
+   \hfill$##$&\hfill$##$&\hfill$##$&\hfill$##$&\hfill$##$&%
+   \hfill$##$&\hfill$##$&\hfill$##$&\hfill$##$&\hfill$##$&%
+   \vrule##&\hfill$##$\hfill&\tabskip0pt\vrule##\cr
+   \noalign{\hrule}
+   \gap2
+&&&&&2&3&5&7&11&13&17&19&23&29&31&37&41&43&47&53&59&61&67&71&73&79&83&89&97&&W_q&\cr
+   \gap2
+   \noalign{\hrule}
+   \gap2
+   #1
+   \gap2
+   \noalign{\hrule}
+  }}
+\vfill\line{}
+\def\firstc{#2}\def\lastc{#3}
+\eject
+}
+
+
+%adjust page size to ease congestion, and reduce point size
+%
+\advance\hsize by40pt
+\advance\hoffset by-20pt
+\eightpoint
+\catcode`\@=11
+\def\rightheadline{\hfill TABLE 3: HECKE EIGENVALUES \firstc--\lastc\hfill
+\llap{\folio}} 
+\def\leftheadline{\rlap{\folio} \hfill TABLE 3: HECKE EIGENVALUES \firstc--\lastc
+\hfill}
+\headline={\def\chapter#1{}%\chapterno@. }%
+  \def\\{\unskip\space\ignorespaces}\headlinefont@
+  \ifodd\pageno \rightheadline \else \leftheadline\fi}
+\catcode`\@=\active
+
+\input table3.dat
+\bye

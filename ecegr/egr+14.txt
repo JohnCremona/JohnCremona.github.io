@@ -1,0 +1,58 @@
+d=14  a=sqrt(14) eps=15+4a
+======================================================================
+Minimal models: 
+
+E1: [ a + 1, a, a + 1, 24*a - 72, -113*a + 447 ]
+    j = 16581375 = 255^3
+    D=-3eps^3
+    rank=0
+    torsion=2
+
+E2: [ a + 1, a, 1, -18*a - 65, 41*a + 153 ]
+    j = 16581375 = 255^3
+    D=eps^3
+    rank=0
+    torsion=2
+
+E3: [ a + 1, a, a + 1, 4*a + 3, a + 21 ]
+    j = -3375 = -15^3
+    D=-eps^-3
+    rank=0
+    torsion=2
+
+E4: [ a + 1, a, 1, 2*a + 10, 2*a + 7 ]
+    j = -3375 = -15^3
+    D=-eps^3
+    rank=0
+    torsion=2
+
+Conjugate pairs: [ [ 1, 2 ], [ 3, 4 ] ]
+
+Twists by -eps: [ [ 1, 2 ], [ 3, 4 ] ]
+
+1 Isogeny Class:
+
+             E1 -<2>- E3        
+	     |        |
+	    <7>      <7> 
+	     |	      |
+	     E2 -<2>- E4 
+ 
+
+Magma definitons:
+
+Q:=RationalField();
+Qx<x>:=PolynomialRing(Q);
+K<a>:=NumberField(x^2-14);
+E1:=EllipticCurve( [ a + 1, a, a + 1, 24*a - 72, -113*a + 447 ]);
+E2:=EllipticCurve( [ a + 1, a, 1, -18*a - 65, 41*a + 153 ]);
+E3:=EllipticCurve( [ a + 1, a, a + 1, 4*a + 3, a + 21 ]);
+E4:=EllipticCurve( [ a + 1, a, 1, 2*a + 10, 2*a + 7 ]);
+
+Sage definitions:
+
+K.<a> = QuadraticField(14)
+E1=EllipticCurve( [ a + 1, a, a + 1, 24*a - 72, -113*a + 447 ])
+E2=EllipticCurve( [ a + 1, a, 1, -18*a - 65, 41*a + 153 ])
+E3=EllipticCurve( [ a + 1, a, a + 1, 4*a + 3, a + 21 ])
+E4=EllipticCurve( [ a + 1, a, 1, 2*a + 10, 2*a + 7 ])

@@ -1,0 +1,159 @@
+Curves with everywhere good reduction over Q(sqrt(d)) as found by
+egrosNF.m on 31/08/05:
+
+Real quadratic fields Q(sqrt(d)), 1<d<100:
+
+d    6 7 14 26 29 33 37 38 41 65 77 79
+#    6 4  2  2  2  2  1  2  3  8  2  2
+
+======================================================================
+d=6  see ~/.html/eecgr/egr+6.txt
+======================================================================
+d=7,  a=sqrt(7) eps=8+3a
+======================================================================
+
+d=14
+
+[
+    Elliptic Curve defined by y^2 = x^3 + (16146020*$.1 - 60412875)*x + (-83998057924*$.1 + 314291953906) over
+    Number Field with defining polynomial x^2 - 14 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + (17980*$.1 - 67275)*x + (3121444*$.1 - 11679374) over Number Field
+    with defining polynomial x^2 - 14 over the Rational Field
+]
+
+d=26
+
+[
+    Elliptic Curve defined by y^2 = x^3 + (45630*$.1 + 232713)*x + (-61098570*$.1 - 311543388) over Number Field
+    with defining polynomial x^2 - 26 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + (182520*$.1 + 930852)*x + (-488788560*$.1 - 2492347104) over Number
+    Field with defining polynomial x^2 - 26 over the Rational Field
+]
+
+d=29
+
+[
+    Elliptic Curve defined by y^2 = x^3 + 1/2*(-405*$.1 - 2133)*x + (-3780*$.1 - 19926) over Number Field with
+    defining polynomial x^2 - 29 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + (1620*$.1 + 8721)*x + (782460*$.1 + 4213674) over Number Field with
+    defining polynomial x^2 - 29 over the Rational Field
+]
+
+d=33
+
+[
+    Elliptic Curve defined by y^2 = x^3 + (-812160*$.1 - 4665504)*x + (-979745760*$.1 - 5628210896) over Number
+    Field with defining polynomial x^2 - 33 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + (-384*$.1 - 2208)*x + (10080*$.1 + 57904) over Number Field with
+    defining polynomial x^2 - 33 over the Rational Field
+]
+
+d=37
+
+[
+    Elliptic Curve defined by y^2 = x^3 + (-5184*$.1 - 31536)*x + (381024*$.1 + 2317680) over Number Field with
+    defining polynomial x^2 - 37 over the Rational Field
+]
+
+d=38
+
+K<a>:=NumberField(x^2-38);
+E1:=EllipticCurve(
+[
+    a,
+    a + 1,
+    a + 1,
+    4*a + 15,
+    4*a + 21
+]
+);
+E2:=conjugate of E1
+assert Norm(Conductor(E1)) eq 1;
+
+j = 8000: 2 curves
+
+
+
+d=41
+j = 
+-20400*a + 132353
+24565*a + 157216
+[
+    Elliptic Curve defined by y^2 = x^3 + (8858160*$.1 - 56719899)*x + (36194517360*$.1 - 231757991370) over
+    Number Field with defining polynomial x^2 - 41 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + (-8858160*$.1 - 56719899)*x + (-36194517360*$.1 - 231757991370) over
+    Number Field with defining polynomial x^2 - 41 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 - 459*x + (1728*$.1 - 7290) over Number Field with defining polynomial
+        x^2 - 41 over the Rational Field
+]
+
+d=65
+
+[
+    Elliptic Curve defined by y^2 = x^3 + (-31983588115724372400*$.1 - 257867679183027752475)*x +
+        (-279556684887680357791379382000*$.1 - 2253858311316940336344108386250) over Number Field with defining
+    polynomial x^2 - 65 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + 1/2*(13992819800629412925*$.1 - 113941532662268076675)*x +
+        (28805671922548144975125240375*$.1 - 232401732489879061918750475625) over Number Field with defining
+    polynomial x^2 - 65 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + (-74499188400*$.1 - 600649706475)*x + (-25305205058406000*$.1 -
+        204017109314996250) over Number Field with defining polynomial x^2 - 65 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + 1/2*(32593394925*$.1 - 265403358675)*x + (2607462007707375*$.1 -
+        21036783645320625) over Number Field with defining polynomial x^2 - 65 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + (518616*$.1 + 4084101)*x + (-889426440*$.1 - 7159882842) over Number
+    Field with defining polynomial x^2 - 65 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + 1/2*(176264613*$.1 - 1421072667)*x + (-1196834453325*$.1 +
+        9649187326611) over Number Field with defining polynomial x^2 - 65 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + (-400890168*$.1 - 3232079739)*x + (11611106403624*$.1 +
+        93611732568102) over Number Field with defining polynomial x^2 - 65 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + 1/2*(-1102059*$.1 - 5250987)*x + (511420203*$.1 + 2646043659) over
+    Number Field with defining polynomial x^2 - 65 over the Rational Field
+]
+
+d=77
+
+[
+    Elliptic Curve defined by y^2 = x^3 + 1/2*(-5*$.1 - 45)*x + (8*$.1 + 70) over Number Field with defining
+    polynomial x^2 - 77 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + 1/2*(5*$.1 - 45)*x + (-8*$.1 + 70) over Number Field with defining
+    polynomial x^2 - 77 over the Rational Field
+]
+
+d=79
+
+[
+    Elliptic Curve defined by y^2 = x^3 + (3507916857120*$.1 - 31179047121027)*x + (10505681291628974880*$.1 -
+        93376537806342345282) over Number Field with defining polynomial x^2 - 79 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + (3507916857120*$.1 - 31179047121027)*x + (-10505681291628974880*$.1 +
+        93376537806342345282) over Number Field with defining polynomial x^2 - 79 over the Rational Field
+]
+
+Imaginary quadratic fields Q(sqrt(d)), 0>d>-100:
+
+
+d    -65
+#      8
+
+
+d=-65
+
+[
+    Elliptic Curve defined by y^2 = x^3 + (15514200*$.1 - 95024475)*x + (-74326707000*$.1 + 114708116250) over
+    Number Field with defining polynomial x^2 + 65 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + 7757100*x - 830466000*$.1 over Number Field with defining polynomial
+        x^2 + 65 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + (15514200*$.1 - 95024475)*x + (74326707000*$.1 - 114708116250) over
+    Number Field with defining polynomial x^2 + 65 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + 7757100*x + 830466000*$.1 over Number Field with defining polynomial
+        x^2 + 65 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + (6660472327306200*$.1 - 40795393004750475)*x +
+        (-821116752841156623579000*$.1 + 1267226273588656521026250) over Number Field with defining polynomial
+        x^2 + 65 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + 3330236163653100*x - 9174488858560409202000*$.1 over Number Field with
+    defining polynomial x^2 + 65 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + (6660472327306200*$.1 - 40795393004750475)*x +
+        (821116752841156623579000*$.1 - 1267226273588656521026250) over Number Field with defining polynomial
+        x^2 + 65 over the Rational Field,
+    Elliptic Curve defined by y^2 = x^3 + 3330236163653100*x + 9174488858560409202000*$.1 over Number Field with
+    defining polynomial x^2 + 65 over the Rational Field
+]

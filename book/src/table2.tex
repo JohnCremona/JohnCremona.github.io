@@ -1,0 +1,106 @@
+%
+%  TABLE 2
+%
+\input book.def
+\advance\pageno by\chaponepages
+\advance\pageno by\chaptwopages
+\advance\pageno by\appendixpages
+\advance\pageno by\chapthreepages
+\advance\pageno by\chapfourpages
+\advance\pageno by\tabonepages
+%
+\topmatter
+\title\chapter\nofrills{Table 2}  Mordell--Weil generators \endtitle
+\endtopmatter
+\document
+%\openup2pt
+\raggedbottom
+
+This table contains an entry for the strong Weil curve in each isogeny
+class
+\footnote{This is the first curve in the class except for class 990H,
+where we give a generator for the curve 990H3.}  of positive rank.
+For each we give the $(x,y)$ coordinates of generators of the
+Mordell--Weil group (modulo torsion) with respect to the minimal
+equation of Table~1. In a few cases the coordinates are not integral,
+in which case we give them in the form $(a/c^2, b/c^3)$ with
+$a,b,c\in\Z$ and $\gcd(a,b,c)=1$.
+
+\vfill\eject
+\advance\vsize by 11pt
+\advance\voffset by -0.5 truein
+
+\catcode`\@=11
+\def\rightheadline{\hfill TABLE 2: MORDELL--WEIL GENERATORS
+\firstc--\lastc\hfill \llap{\folio}} 
+\def\leftheadline{\rlap{\folio} \hfill TABLE 2: MORDELL--WEIL GENERATORS \firstc--\lastc
+\hfill}
+\headline={\def\chapter#1{}%\chapterno@. }%
+  \def\\{\unskip\space\ignorespaces}\headlinefont@
+  \ifodd\pageno \rightheadline \else \leftheadline\fi}
+\catcode`\@=\active
+
+%
+%  MACROS FOR THE TABLE
+%
+\newdimen\tabwidth
+\tabwidth\hsize
+\divide\tabwidth by3
+\advance\tabwidth by-5pt
+
+\def\gap#1{\omit&height #1pt &&&&&&&&\cr}
+\def\topline{\noalign{\hrule}\gap2}
+\def\hline{\gap2\noalign{\hrule}\gap2}
+\def\smallhline{\gap1\noalign{\hrule}\gap1}
+\def\botline{\gap2\noalign{\hrule}}
+%
+\def\headings{&&\multispan3\hfil Curve\hfil&&x&&y&\cr}
+%
+\def\tabletitle(#1)#2-#3:{\leftline{\bf Table 2.#1: Generators #2--#3.}
+                          \medskip}
+%
+\newbox\ltab
+\newbox\mtab
+\newbox\rtab
+%
+\def\settable#1{\offinterlineskip
+\halign to \tabwidth{\tabskip 0pt
+##\strut&\vrule##\tabskip 5pt plus 1fil minus 4pt &%      left border   |   2
+\hfill##\tabskip1pt&%                                     curve             1
+\hfil##\hfil&%                                            id               1
+\hfil##\hfil\tabskip 5pt plus 1fil minus 4pt&%            (id)              1
+\vrule##&%                                                              |   1
+\hfill$##$\hfill&%                                              x           1
+\vrule##&%                                                              |   1
+\hfill$##$\hfill&%                                              y           1
+\vrule##\tabskip0pt\cr%                                   right border  |   1                           |   1
+\topline                                                               %~~~~~~~~
+\headings                                                              %   10
+\smallhline                                                            %~~~~~~~~
+#1                % body of table
+\botline
+}                 % end of \halign
+}                 % end of \def\settable
+%
+\def\setltab#1{\setbox\ltab\vtop{\settable{#1}}}
+\def\setmtab#1{\setbox\mtab\vtop{\settable{#1}}}
+\def\setrtab#1{\setbox\rtab\vtop{\settable{#1}}}
+%
+\def\tablepage#1,#2-#3.{
+                       %\tabletitle(#1)#2-#3:
+                        \vfill
+                        \line{\box\ltab\hfill\box\mtab\hfill\box\rtab}
+                        \vfill
+                        \def\firstc{#2}\def\lastc{#3}
+                        \eject
+                       }
+\def\twogens(#1,#2),(#3,#4){\displaystyle\left\{{#1\atop#3}\right. &&%
+                            \displaystyle\left. {#2\atop#4}\right\}
+                           }
+
+%
+%
+%  END OF TABLE 2 DEFS
+%
+\input table2.dat
+\enddocument

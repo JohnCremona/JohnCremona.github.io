@@ -1,0 +1,148 @@
+Index of files in gicurves/data
+
+Data for "z1" i.e. Q(sqrt(-1))
+==============================
+
+z1curves.dat  curves over Q(sqrt(-1)) in "raw data" format;  each line
+	      contains ra1 ia1 ra1 ia2 ra3 ia3 ra4 ia4 ra5 ia6
+	      where a1=ra1+i*ia1 etc
+	      One curve per isogeny class;  42 curves
+
+allz1curves.dat
+	      Same but isogenous curve included; 166 curves
+
+z1eqns.dat
+	      Human-readable list of those 166 curves with conductors
+z1eqns.m
+	      Magma-readable list of those 166 curves with conductors
+
+z1gens.dat
+	      For 10 rank 1 curves, raw data containing the
+	      generators.  2 lines per curve: conductor on first, then
+	      the ai, then x,y,z projective coords of a generator;
+	      all as a pair of integers re im to denote re+i*im
+
+z1rank1bsd.out
+	      10 rank 1 curves, BSD data:
+     Conductor
+     Curve coefficients [a1,a2,a3,a4,a6]
+     Omega = complex period
+     Regulator = canonical height of a generator
+     Product of c_p (BSD fudge factors)
+     |Torsion|
+     bsd = BSD-redicted value of L'(E,1)
+
+	
+z1primes.dat
+	      A raw data list of primes in Z[i]
+
+z1stars.dat
+	      39 curves in raw data format.  Not sure which!
+
+Data for "z2" i.e. Q(sqrt(-2))
+==============================
+
+Same set of files as for z1
+Integral basis used:  1, sqrt(-2)
+
+z2curves.dat
+allz2curves.dat
+z2eqns.dat
+z2eqns.m
+z2gens.dat
+z2primes.dat
+z2stars.dat
+z2rank1bsd.out	12 curves	
+
+Data for "z3" i.e. Q(sqrt(-3))
+==============================
+
+Same set of files as for z1
+Integral basis used:  1, (1+sqrt(-3))/2
+
+z3curves.dat
+allz3curves.dat
+z3eqns.dat
+z3eqns.m
+z3gens.dat
+z3primes.dat
+z3stars.dat
+z3rank1bsd.out	 5 curves
+
+Data for "z7" i.e. Q(sqrt(-7))
+==============================
+
+Same set of files as for z1
+Integral basis used:  1, (1+sqrt(-7))/2
+
+z7curves.dat
+allz7curves.dat
+z7eqns.dat
+z7eqns.m
+z7gens.dat
+z7primes.dat
+z7stars.dat
+z7rank1bsd.out	 4 curves
+
+Data for "z11" i.e. Q(sqrt(-11))
+==============================
+
+Same set of files as for z1
+Integral basis used:  1, (1+sqrt(-11))/2
+
+z11curves.dat
+allz11curves.dat
+z11eqns.dat
+z11eqns.m
+z11gens.dat
+z11primes.dat
+z11q.dat	A subset of 4 of the curves in allz11curves.dat
+z11stars.dat
+z11rank1bsd.out	 5 curves
+
+Data for "z19" i.e. Q(sqrt(-19))
+==============================
+
+Subset of same files as for z1
+Integral basis used:  1, (1+sqrt(-19))/2
+
+z19curves.dat
+z19eqns.dat
+allz19curves.dat
+
+Data for "z43" i.e. Q(sqrt(-43))
+==============================
+
+Subset of same files as for z1
+Integral basis used:  1, (1+sqrt(-43))/2
+
+z43curves.dat
+z43eqns.dat
+allz43curves.dat
+
+Data for "z67" i.e. Q(sqrt(-67))
+==============================
+
+Subset of same files as for z1
+Integral basis used:  1, (1+sqrt(-67))/2
+
+z67curves.dat
+z67eqns.dat
+allz67curves.dat
+
+Miscellaneous other data files
+==============================
+
+basicsolution.dat	Data from Laska's thesis, concerning...
+mlcurves.dat		} Curves over Z[i] with good reduction away
+mlcurves2.dat		} from 1+i and 3
+mlcurves3.dat		}
+
+foundcurves.dat		Curves found later (included in previous lists) 
+stroekerlist.dat	Curves over Z[i] from Stroeker's thesis (good
+			reduction away from 1+i)
+
+temp.dat		Some curves
+
+tracefrob4list.dat	Coded list of trace of Frobenius over F_4
+tracefrob9list.dat	Coded list of trace of Frobenius over F_9

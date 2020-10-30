@@ -1,0 +1,3185 @@
+% ALGORITHMS FOR MODULAR ELLIPTIC CURVES       Last change: 10/96
+%
+% CHAPTER 3  ELLIPTIC CURVE ALGORITHMS
+%
+% Use AmSTeX 2.0
+%
+\input book.def
+\advance\pageno by\chaponepages
+\advance\pageno by\chaptwopages
+\advance\pageno by\appendixpages
+%
+\topmatter
+%
+\title\chapter{3} Elliptic curve algorithms \endtitle
+%
+\endtopmatter
+%
+\document
+%\openup 2pt 
+%\raggedbottom % for drafts only
+%
+\def\chapno{3}
+\newsec{\Notation}   % 3.1 Terminology and notation
+\newsec{\TateAlg}    % 3.2 The Kraus--Laska--Connell algorithm and 
+                     %     Tate's algorithm
+\newsec{\Torsion}    % 3.3 The Mordell--Weil group I: finding torsion points
+\newsec{\Heights}    % 3.4 Heights and the height pairing
+\newsec{\Findinf}    % 3.5 The Mordell--Weil group II: generators
+\newsec{\Rank}       % 3.6 The Mordell--Weil group III: the rank
+\newsec{\Periods}    % 3.7 The period lattice
+\newsec{\Isogenies}  % 3.8 Finding isogenous curves
+\newsec{\TwistsEtc}  % 3.9 Twists and complex multiplication
+
+%
+% CHAPTER 3 SECTION 1
+%
+\beginsection{\Notation}
+\head\Notation\ Terminology and notation \endhead
+
+For reference in the following sections, we collect here the notation,
+terminology and formulae concerning elliptic curves which we will use
+throughout this chapter.
+
+An elliptic curve $E$ defined over $\Q$ has an equation or \und{model} 
+of the form \neweq\curveeq
+$$
+  E\colon\qquad   y^2+a_1xy+a_3y = x^3+a_2x^2+a_4x+a_6  \tag \curveeq
+$$
+where the coefficients $a_i\in\Q$.   We call such an equation a
+\und{\W\ equation} for $E$, and denote this model by 
+$[a_1,a_2,a_3,a_4,a_6]$.  We say that (\curveeq) is \und{integral} or
+\und{defined over~$\Z$} if all the $a_i$ are in~$\Z$.  From these
+coefficients we derive the auxiliary quantities
+$$\align
+                       b_2&=a_1^2+4a_2,                     \\
+                       b_4&=a_1a_3+2a_4,                    \\
+                       b_6&=a_3^2+4a_6,                     \\
+                       b_8&=a_1^2a_6-a_1a_3a_4+4a_2a_6+a_2a_3^2-a_4^2, \\
+\xtext{the \und{invariants}}
+                       c_4&=b_2^2-24b_4,                    \\
+                       c_6&=-b_2^3+36b_2b_4-216b_6,         \\
+\xtext{the \und{discriminant}}
+                      \Delta&=-b_2^2b_8-8b_4^3-27b_6^2+9b_2b_4b_6,   \\
+\xtext{and the \und{$j$-invariant}}
+                       j&=c_4^3/\Delta,                     \\
+  \endalign
+$$  
+which are related by the identities
+$$
+   4b_8=b_2b_6-b_4^2 \qquad\text{and}\qquad 1728\Delta=c_4^3-c_6^2.
+$$
+The discriminant $\Delta$ must be non-zero for the curve defined by
+equation (\curveeq) to be non-singular and hence an elliptic curve.
+The $j$-invariant is (as its name suggests) invariant under
+isomorphism; elliptic curves with the same $j$ are called
+\und{twists}: they are isomorphic over an algebraic extension, but not
+necessarily over $\Q$.  The invariants $c_4$ and $c_6$ are sufficient
+to determine $E$ up to isomorphism (over $\Q$) since $E$ is isomorphic
+to
+$$
+   Y^2 = X^3 - 27c_4X - 54c_6.
+$$
+
+The most general isomorphism from $E$ to a second curve $E'$ given by an 
+equation of the form (\curveeq), which we usually think of as a change of 
+coordinates on $E$ itself, is $T(r,s,t,u)$, given by \neweq{\transformxy}
+$$
+    \aligned
+                x &= u^2x' + r          \\
+                y &= u^3y' + su^2x' + t \\        
+    \endaligned                         \tag\transformxy 
+$$
+where $r,s,t\in\Q$ and $u\in\Q^*$.  The effect of $T(r,s,t,u)$ on the
+coefficients $a_i$ is given by \neweq{\transabc}
+$$
+  \aligned
+        u  a_1' &= a_1+2s                               \\
+        u^2a_2' &= a_2-sa_1+3r-s^2                      \\
+        u^3a_3' &= a_3+ra_1+2t                          \\
+        u^4a_4' &= a_4-sa_3+2ra_2-(t+rs)a_1+3r^2-2st    \\
+        u^6a_6' &= a_6+ra_4+r^2a_2+r^3-ta_3-t^2-rta_1   \\
+%\noalign{\smallskip}
+%        u^6b_6' &= b_6+2rb_4+r^2b_2+4r^3                \\
+%        u^4b_4' &= b_4+rb_2+6r^2                        \\
+%        u^2b_2' &= b_2+12r                              \\
+%\noalign{\smallskip}
+%        u^4c_4' &= c_4                                  \\
+%        u^6c_6' &= c_6                                  \\
+%        u^{12}\Delta' &= \Delta                         \\
+%        j' &= j.                                        \\
+  \endaligned                                            \tag\transabc  
+$$ 
+so that 
+$$ 
+   u^4c_4' = c_4, \qquad 
+   u^6c_6' = c_6, \qquad 
+   u^{12}\Delta' = \Delta \quad\text{and}\quad 
+   j' = j.  
+$$ 
+The transformations $T(0,0,0,u)$ we will refer to as scaling
+transformations; these have the effect of dividing each coefficient
+$a_i$ by $u^i$, and similarly for each of the other quantities,
+according to its weight.  Here $a_i$, $b_i$ and $c_i$ have weight~$i$,
+while $\Delta$ has weight~12 and $j$ has weight~0.  By applying
+$T(0,0,0,u)$ for suitable $u$ we can always transform to an integral
+model; all the invariants are then integral, except (possibly) for
+$j$.  Among such integral models, those for which the positive integer
+$|\Delta|$ is minimal are called \und{global minimal models} for $E$.
+We will give in the next section a simple algorithm for finding such a
+model, given the invariants $c_4$ and $c_6$ of any model.  Clearly,
+isomorphisms between minimal models must have $u=\pm1$ and
+$r,s,t\in\Z$.  We may normalize so that $a_1, a_3\in\{0,1\}$ and
+$a_2\in\{-1,0,1\}$, by suitable choice of $s$, $r$ and $t$ (in that
+order), as may be seen from (\transabc).  Such an equation will be
+called \und{reduced}, and it is not hard to show that it is unique:
+the only transformation other than the identity $T(0,0,0,1)$ from a
+reduced model to any another reduced model is the transformation
+$T(0,-a_1,-a_3,-1)$, which takes any model to itself; this is just the
+negation map $(x,y)\mapsto (x,y-a_1x-a_3)$ from the curve to itself.
+Thus every elliptic curve $E$ defined over $\Q$ has a \und{unique}
+reduced minimal model.  This fact makes it very easy to recognize
+curves: in Table~1 we give the coefficients of such a model for each
+of the curves there.
+
+Given integers $c_4$ and $c_6$, two questions arise: is there a curve
+over $\Q$ with these invariants, and is it minimal?  Clearly we must
+have $c_4^3-c_6^2=1728\Delta$ with $\Delta\not=0$.  A solution to the
+first problem is given by Kraus in Proposition~2 of \cite\Kraus, which
+states the following.  \newprop{\conditions}
+
+\proclaim{Proposition \conditions} Let $c_4$, $c_6$ be integers such that
+$\Delta=(c_4^3-c_6^2)/1728$ is a non-zero integer.  In order for there
+to exist an elliptic curve $E$ with a model {\rm(\curveeq)} defined over
+$\Z$ having invariants $c_4$ and $c_6$, it is necessary and sufficient
+that
+\part{1}$c_6\not\equiv\pm9\pmod{27}$; 
+\part{2}either $c_6\equiv-1\pmod4$, or $c_4\equiv0\pmod{16}$ and 
+$c_6\equiv0,8\pmod{32}$.
+\endproclaim
+
+The conditions of Proposition~\conditions\ will be referred to as
+\und{Kraus's conditions}.  If we are given integers $c_4$ and $c_6$
+satisfying these conditions, we can recover the coefficients $a_i$ of
+the reduced model of the curve with $c_4$ and~$c_6$ as invariants,
+using the formulae already given in Chapter~2, Section~14, which we
+repeat here for convenience:
+$$\align
+  b_2 &= -c_6 \mod 12 \in \{-5,\ldots,6\};\\
+  b_4 &= (b_2^2-c_4)/24;\\
+  b_6 &= (-b_2^3+36b_2b_4-c_6)/216;\\
+\noalign{\smallskip}
+  a_1 &= b_2 \mod2\in\{0,1\};\\
+  a_3 &= b_6 \mod2\in\{0,1\};\\
+  a_2 &= (b_2-a_1)/4;\\
+  a_4 &= (b_4-a_1a_3)/2;\\
+  a_6 &= (b_6-a_3)/4.\\
+  \endalign
+$$
+To see this, we may assume that we are seeking coefficients of a
+reduced model;  then $b_2\in\{-4,-3,0,1,4,5\}$, and we have
+$-c_6\equiv b_2^3\equiv b_2\pmod{12}$.  The rest is easy; provided
+that $c_4$ and~$c_6$ satisfy Kraus's conditions, all the divisions
+will be exact.
+
+In the following section we answer the second question by giving an
+algorithm for computing the reduced coefficients of a \und{minimal}
+model for any curve $E$, given either integral invariants satisfying
+Kraus's conditions, or any integral model for $E$.  We simply determine
+the maximal integer $u$ such that $c_4'=c_4/u^4$ and $c_6'=c_6/u^6$
+satisfy Kraus's conditions, and then compute the reduced coefficients
+$a_i'$ from these.  As with many questions concerning elliptic curves,
+most of the work goes into determining the powers of 2 and 3 which
+divide $u$.
+
+We will assume without further discussion that on any given curve $E$,
+points may be added and multiples taken, using standard formulae.  The
+Mordell--Weil group of all rational points on $E$ will be denoted
+$E(\Q)$ as usual.  If $n$ is a positive integer, we denote by
+$E(\Q)[n]$ the subgroup of rational points of order dividing $n$,
+which is the kernel of the multiplication map from $E$ to itself.
+
+%
+% CHAPTER 3 SECTION 2
+%
+\beginsection{\TateAlg}
+\head\TateAlg\ The Kraus--Laska--Connell algorithm and Tate's algorithm 
+\endhead
+ 
+In this section we give two algorithms. The first was originally given
+by Laska in \cite{\Laska}, and finds a minimal model for a curve $E$,
+starting from an integral equation.  Essentially the algorithm was to
+test all positive integers $u$ such that $u^{-4}c_4$ and $u^{-6}c_6$
+are integral, to see if they are the invariants of a curve defined
+over $\Z$.  Using Kraus's conditions (see Proposition~\conditions\
+above), this procedure can be simplified, since it is possible to
+compute in advance the exponent $d_p$ of each prime $p$ in the minimal
+discriminant, and hence compute $u$ at the start.  The usual formulae
+then give the coefficients $a_i$ of the reduced model.  Our
+formulation of the resulting algorithm over $\Z$ is similar to that
+given in \cite\Connell, where more general rings are considered: in
+particular an explicit algorithm is given there for finding local
+minimal models over arbitrary number fields, and hence global minimal
+models where they exist.  Over $\Z$, the algorithm is extremely
+simple.
+
+In the pseudocode below,
+%\footnote{The syntax for our pseudocode is essentially that of
+%Algol68, and should be self-explanatory.} 
+
+{\tt ord(p,n)} gives the power of the prime {\tt p} which divides the 
+non-zero integer {\tt n}; 
+
+{\tt floor(x)} gives the integral part of the real number {\tt x};
+
+{\tt a mod p} gives the residue of {\tt a} modulo {\tt p} lying in the
+range $-\frac12p<a\le\frac12p$; in particular, when $p=2$ or~3 this
+gives a residue in $\{0,1\}$ or $\{-1,0,1\}$ respectively.  Also {\tt
+inv(a,p)} gives the inverse of {\tt a} modulo {\tt p}, assuming that
+{\tt gcd(a,p)=1}.
+
+\beginalg{The Laska--Kraus--Connell Algorithm}
+
+\+INPUT:   &&&c4, c6 (integer invariants of an elliptic curve E).\cr
+\+OUTPUT:  &&&a1, a2, a3, a4, a6 (coefficients of a reduced minimal model for E).\cr
+%
+\smallskip \lineno=0
+%
+\nline BEGIN\cr
+\nline \D=(c4\3-c6\2)/1728;\cr
+%
+\smallskip
+\comm{Compute scaling factor $u$}
+\smallskip
+%
+\nline u = 1; g = gcd(c6\2,\D);\cr
+\nline p\_list = prime\_divisors(g);\cr
+\nline FOR p IN p\_list DO\cr
+\nline BEGIN\cr
+\nline &d = floor(ord(p,g)/12);\cr
+\nline &IF p=2 THEN\cr
+\nline &&a = c4/2\pow{(4*d)} mod 16; b = c6/2\pow{(6*d)} mod 32;\cr
+\nline &&IF (b mod 4 \NEQ\ -1) AND NOT (a=0 AND (b=0 OR b=8)) \cr
+\nline &&THEN d = d-1\cr
+\nline &&FI\cr
+\nline &ELIF p=3 THEN IF ord(3,c6)=6*d+2 THEN d = d-1 FI \cr
+\nline &FI;\cr
+\nline &u = u*p\pow{d}\cr
+\nline END;\cr
+%
+\smallskip
+\comm{Compute minimal equation}
+\smallskip
+%
+\nline c4 = c4/u\4; c6 = c6/u\6;\cr
+\nline b2 = -c6 mod 12;  b4 = (b2\2-c4)/24; b6 = (-b2\3+36*b2*b4-c6)/216;\cr
+\nline a1 = b2 mod 2;\cr
+\nline a3 = b6 mod 2;\cr
+\nline a2 = (b2-a1)/4;\cr
+\nline a4 = (b4-a1*a3)/2;\cr
+\nline a6 = (b6-a3)/4\cr
+\nline END\cr
+
+\endalg
+
+Next we turn to Tate's algorithm itself.  The standard reference for
+this is Tate's `letter to Cassels' \cite\Tate, which appeared in the
+Antwerp IV volume \cite\Antwerp.  There is also a full account in the
+second volume of Silverman's book \cite{\Silverd, Section IV.9}.  It may be
+applied to an integral model of a curve $E$ and a prime $p$, to give
+the following data:
+
+$\bullet$ The exponent $f_p$ of $p$ in the conductor $N$ of $E$ (see below);
+
+$\bullet$ the Kodaira symbol of $E$ at $p$, which classifies the type
+of reduction of $E$ at $p$ (see \cite{\Neron} or \cite{\Silverd,
+Section IV.9}); these are: I$_0$ for good reduction; I$_n$ ($n>0$) for
+bad multiplicative reduction; and types I$^*_n$, II, III, IV, II$^*$,
+III$^*$ and IV$^*$ for bad additive reduction.
+
+$\bullet$ the local index $c_p=[E(\Q_p):E^0(\Q_p)]$, where $E^0(\Q_p)$
+is the subgroup of the group $E(\Q_p)$ of $p$-adic points of $E$,
+consisting of those points whose reduction modulo $p$ is non-singular.
+(That this index is finite is implied by the correctness of the
+algorithm, as observed by Tate in
+\cite\Tate.)
+
+In addition, the algorithm detects whether the given model is non-minimal 
+at $p$, and if so, returns a model which is minimal at $p$.  Thus by
+applying it in succession with all the primes dividing the discriminant of 
+the original model, one can compute a minimal model at the same time as 
+computing the conductor and the other local reduction data.  In practice 
+this makes the Laska--Kraus--Connell algorithm redundant, though much 
+simpler to implement and use if all one needs is the standard model for a 
+curve $E$.
+
+The conductor $N$ of an elliptic curve $E$ defined over $\Q$ is defined to
+be 
+$$  N = \prod_pp^{f_p}
+$$
+where $f_p=\ord_p(\Delta)+1-n_p$ and $n_p$ is the number of
+irreducible components on the special fibre of the minimal N\'eron
+model of $E$ at $p$.  This N\'eron model is a more sophisticated
+object than we wish to discuss here (see \cite{\Neron} or
+\cite\Silverd\ for details): one has to consider $E$ as a scheme over
+Spec$(\Z_p)$, and then resolve the singularity at $p$, to obtain a
+scheme whose generic fibre is $E/\Q_p$ and whose special fibre is a
+union of curves over $\Z/p\Z$.  In terms of a minimal model for $E$
+over $\Z$, all may be computed very simply except when $p=2$ or $p=3$
+as follows:
+
+$f_p=0$ if $p\ndiv\Delta$;
+
+$f_p=1$ if $p\div\Delta$ and $p\ndiv c_4$ (then $n_p=\ord_p(\Delta)$);
+
+$f_p\ge2$ if $p\div\Delta$ and $p\div c_4$; moreover, $f_p=2$ in this case when
+$p\not=2,3$.
+
+To obtain the value of $f_p$ in the remaining cases, and to obtain the Kodaira
+symbol and the local index $c_p$, we use Tate's algorithm itself.
+
+In \cite\Tate, the algorithm is given for curves defined over an
+arbitrary discrete valuation ring.  To apply it to a curve defined
+over the ring of integers $R$ of a number field $K$ at a prime ideal
+$\frak p$, one would in general have to work in the localization of
+$R$ at $\frak p$; here we can work entirely over $\Z$, since $\Z$ is a
+principal ideal domain.  We have added to the presentation in
+\cite\Tate\ the explicit coordinate transformations $T(r,s,t,u)$ which
+are required during the course of the algorithm to achieve
+divisibility of the coefficients $a_i$ by various power of $p$. In
+practice one would ignore the transformations which had taken place
+while processing each $p$, unless a scaling by $p$ had taken place on
+discovering that the model was non-minimal.  The most complicated part
+of the algorithm is the branch for reduction type I$^*_m$, where one
+successively refines the model $p$-adically until certain auxiliary
+quadratics have distinct roots modulo $p$.  This requires careful
+book-keeping.  The presentation given here closely follows our own
+implementation of the algorithm, which in turn owes much to an
+earlier Fortran program written by Pinch.  The following
+sub-procedures are used:
+
+{\tt compute\_invariants} computes the $b_i$, $c_i$ and $\Delta$ from the 
+coefficients $a_i$.  Note that $c_4$, $c_6$ and $\Delta$ do not change 
+unless a scaling is required, since all other transformations have $u=1$.
+
+{\tt transcoord(r,s,t,u)} applies the coordinate transformation formulae of 
+the previous section to obtain new values for the $a_i$ and other 
+quantities.  All calls to this procedure have $u=1$ except when rescaling
+a non-minimal equation.  In each case we first compute suitable values of 
+$r$, $s$ and $t$; usually this requires a separate branch if $p=2$ or 
+$p=3$.
+
+{\tt quadroots(a,b,c,p)} returns {\tt TRUE} if the quadratic congruence
+$ax^2+bx+c\equiv0\pmod{p}$ has a solution, and {\tt FALSE} otherwise.  
+This is used in determining the value of the index $c_p$.
+
+{\tt nrootscubic(b,c,d,p)} returns the number of roots of the 
+cubic congruence $x^3+bx^2+cx+d\equiv0\pmod{p}$.
+
+\beginalg{Tate's Algorithm}
+
+\+INPUT:  &&&a1, a2, a3, a4, a6 (integer coefficients of E); p (prime).\cr
+\+OUTPUT: &&&Kp&(Kodaira symbol)\cr
+\+        &&&fp&(Exponent of p in conductor)\cr
+\+        &&&cp&(Local index)\cr
+%
+\smallskip \lineno=0
+%
+\nline BEGIN\cr
+\nline compute\_invariants(b2,b4,b6,b8,c4,c6,\D);\cr
+\nline n = ord(p,\D);\cr
+%
+\smallskip
+\comm{Test for type I$_0$}
+\smallskip
+%
+\nline IF n=0 THEN Kp = "I0"; fp = 0; cp = 1; EXIT FI;\cr
+%
+\smallskip
+\comm{Change coordinates so that $p\mid a_3, a_4, a_6$}
+\smallskip
+%
+\nline IF p=2 THEN\cr
+\nline &IF p\DIV b2 \cr
+\nline &THEN r = a4 mod p; t = r*(1+a2+a4)+a6 mod p\cr
+\nline &ELSE r = a3 mod p; t = r+a4 mod p\cr
+\nline &FI\cr
+\nline ELIF p=3 THEN\cr
+\nline &IF p\DIV b2 THEN r = -b6 mod p ELSE r = -b2*b4 mod p FI;\cr
+\nline &t = a1*r+a3 mod p\cr
+\nline ELSE\cr
+\nline &IF p\DIV c4 THEN r = -inv(12,p)*b2 ELSE r = -inv(12*c4,p)*(c6+b2*c4) FI;\cr
+\nline &t = -inv(2,p)*(a1*r+a3);\cr
+\nline &r = r mod p; t = t mod p\cr
+\nline FI;\cr
+\nline transcoord(r,0,t,1);\cr
+%
+\smallskip
+\comm{Test for types I$_n$, II, III, IV}
+\smallskip
+%
+\nline IF p\NDIV c4 THEN\cr
+\nline &IF quadroots(1,a1,-a2,p) THEN cp = n ELIF 2\DIV n THEN cp = 2 ELSE cp = 1 FI;\cr 
+\nline &Kp = "In"; fp = 1; EXIT\cr
+\nline FI;\cr
+\nline IF p\2\NDIV a6 THEN Kp = "II";  fp = n;   cp = 1; EXIT; \cr
+\nline IF p\3\NDIV b8 THEN Kp = "III"; fp = n-1; cp = 2; EXIT; \cr
+\nline IF p\3\NDIV b6 THEN \cr
+\nline &IF quadroots(1,a3/p,-a6/p\2,p) THEN cp = 3 ELSE cp = 1 FI;\cr
+\nline &Kp = "IV";  fp = n-2; EXIT\cr
+\nline FI;\cr
+%
+\smallskip
+\comm{Change coordinates so that $p\mid a_1,a_2$; $p^2\mid a_3,a_4$; $p^3\mid a_6$}
+\smallskip
+%
+\nline IF p=2\cr
+\nline THEN s = a2 mod 2; t = 2*(a6/4 mod 2)\cr
+\nline ELSE s = -a1*inv(2,p); t = -a3*inv(2,p)\cr
+\nline FI;\cr
+\nline transcoord(0,s,t,1);\cr
+%
+\smallskip
+\comm{Set up auxiliary cubic $T^3 + bT^2 + cT + d$}
+\smallskip
+%
+\nline b = a2/p; c = a4/p\2; d = a6/p\3;\cr
+\nline w = 27*d\2-b\2*c\2+4*b\3*d-18*b*c*d+4*c\3;\cr
+\nline x = 3*c-b\2;\cr
+%
+\smallskip
+\comm{Test for distinct roots: type I$^*_0$}
+\smallskip
+%
+\nline IF p\NDIV w THEN Kp = "I*0"; fp = n-4; cp = 1+nrootscubic(b,c,d,p); EXIT\cr
+%
+\smallskip
+\comm{Test for double root: type I$^*_m$}
+\smallskip
+%
+\nline ELIF p\NDIV x THEN \cr
+%
+\smallskip
+\comm{Change coordinates so that the double root is $T\equiv0$}
+\smallskip
+%
+%
+\nline &IF p=2 THEN r = c ELIF p=3 THEN r = b*c ELSE r = (b*c-9*d)*inv(2*x,p) FI;\cr
+\nline &r = p*(r mod p);\cr
+\nline &transcoord(r,0,0,1);\cr
+%
+\smallskip
+\comm{Make $a_3$, $a_4$, $a_6$ repeatedly more divisible by $p$}
+\smallskip
+%
+\nline &m = 1; mx = p\2; my = p\2; cp = 0;\cr
+\nline &WHILE cp=0 DO\cr
+\nline &BEGIN\cr
+\nline &&xa2 = a2/p; xa3 = a3/my; xa4 = a4/(p*mx); xa6 = a6/(mx*my);\cr
+\nline &&IF p\NDIV (xa3\2+4*xa6) THEN\cr
+\nline &&&IF quadroots(1,xa3,-xa6,p) THEN cp = 4 ELSE cp = 2 FI\cr
+\nline &&ELSE \cr
+\nline &&&IF p=2 THEN t = my*xa6 ELSE t = my*((-xa3*inv(2,p)) mod p) FI;\cr
+\nline &&&transcoord(0,0,t,1);\cr
+\nline &&&my = my*p; m = m+1;\cr
+\nline &&&xa2 = a2/p; xa3 = a3/my; xa4 = a4/(p*mx); xa6 = a6/(mx*my);\cr
+\nline &&&IF p\NDIV (xa4\2-4*xa2*xa6) THEN\cr
+\nline &&&&IF quadroots(xa2,xa4,xa6,p) THEN cp = 4 ELSE cp = 2 FI\cr
+\nline &&&ELSE\cr
+\nline &&&&IF p=2 THEN r = mx*(xa6*xa2 mod 2) \cr
+\nline &&&&ELSE r = mx*(-xa4*inv(2*xa2,p) mod p) \cr
+\nline &&&&FI;\cr
+\nline &&&&transcoord(r,0,0,1);\cr
+\nline &&&&mx = mx*p; m = m+1\cr
+\nline &&&FI\cr
+\nline &&FI\cr
+\nline &END;\cr
+\nline &fp = n-m-4; Kp = "I*m"; EXIT\cr
+%
+\smallskip
+%
+\nline ELSE \cr
+%
+\smallskip
+\comm{Triple root case: types II$^*$, III$^*$, IV$^*$ or non-minimal}
+\comm{Change coordinates so that the triple root is $T\equiv0$}
+\smallskip
+%
+\nline &IF p=3 THEN rp = -d ELSE rp = -b*inv(3,p) FI;\cr
+\nline &r = p*(rp mod p);\cr
+\nline &transcoord(r,0,0,1);\cr
+\nline &x3 = a3/p\2; x6 = a6/p\4; \cr
+%
+\smallskip
+\comm{Test for type IV$^*$}
+\smallskip
+%
+\nline &IF p\NDIV (x3\2+4*x6) THEN\cr
+\nline &&IF quadroots(1,x3,-x6,p) THEN cp = 3 ELSE cp = 1 FI;\cr
+\nline &&Kp = "IV*"; fp = n-6; EXIT\cr
+\nline &ELSE\cr
+%
+\smallskip
+\comm{Change coordinates so that $p^3\mid a_3$, $p^5\mid a_6$}
+\smallskip
+%
+\nline &&IF p=2 THEN t = x6 ELSE t = x3*inv(2,p) FI;\cr
+\nline &&t = -p\2*(t mod p);\cr
+\nline &&transcoord(0,0,t,1);\cr
+%
+\smallskip
+\comm{Test for types III$^*$, II$^*$}
+\smallskip
+%
+\nline &&IF p\4\NDIV a4 THEN Kp = "III*"; fp = n-7; cp = 2; EXIT\cr
+\nline &&ELIF p\6\NDIV a6 THEN Kp = "II*"; fp = n-8; cp = 1; EXIT\cr
+\nline &&ELSE\cr
+%
+\smallskip
+\comm{Equation non-minimal: divide each $a_i$ by $p^i$ and start again}
+\smallskip
+%
+\nline &&&transcoord(0,0,0,p); restart\cr
+\nline &&FI\cr
+\nline FI\cr
+\nline END\cr
+
+\endalg
+
+In Table 1 we will give the local reduction data for each curve at each `bad'
+prime (dividing the discriminant of the minimal model).  We also give the
+factorization of the minimal discriminant and of the denominator of $j$, as in
+the earlier tables.  To save space we omit the $c_4$ and $c_6$
+invariants, which are easily computable from the coefficients $a_i$.
+
+%
+% CHAPTER 3 SECTION 3
+%
+\beginsection{\Torsion}
+\head\Torsion\ Computing the Mordell--Weil group I: finding torsion points 
+\endhead
+
+In this and the next three sections we will discuss the question of
+determining the Mordell--Weil group $E(\Q)$ of rational points on an
+elliptic curve $E$ defined over $\Q$.  This group is finitely
+generated, by Mordell's Theorem, and hence has the structure
+$$
+  E(\Q) = T \times F
+$$
+where $T$ is the finite torsion subgroup $E(\Q)_{\text{tors}}$ of
+$E(\Q)$ consisting of the points of finite order, and $F$ is free
+abelian of some rank $r\ge0$:
+$$
+     F \cong \Z^r.
+$$
+The problem of computing $E(\Q)$ thus subdivides into several parts:
+
+$\bullet$ computing the torsion $T$;
+
+$\bullet$ computing the rank $r$;
+
+$\bullet$ finding $r$ independent points of infinite order;
+
+$\bullet$ computing a $\Z$-basis for the free part $F$.
+
+A related task is to compute the regulator $R(E(\Q))$ (defined below);
+for this and for the latter two steps we will also need to compute the
+canonical height $\canht(P)$ of points $P\in E(\Q)$, and hence the
+height pairing $\canht(P,Q)$.
+
+In this section we will treat the easiest of these problems, that of
+finding the torsion points.  In fact, these can be found as a
+byproduct of the more general search for points on the curve, since
+their naive height can be bounded (see the remark before
+Lemma~3.5.2).  However, it is also useful to have a self-contained
+method for determining the torsion.
+
+Using the fact that $E(\R)$ is isomorphic either to the circle group
+$S^1$ (when $\Delta<0$) or to $S^1\times C_2$ (when $\Delta>0$), where
+$C_k$ denotes a cyclic group of order $k$, together with the fact that
+all finite subgroups of $S^1$ are cyclic, we see that $T$ is
+isomorphic either to $C_k$ or to $C_{2k}\times C_2$ for some $k\ge1$,
+the latter only being possible when $\Delta$ is positive.  The number
+of possible values of $k$ is finite: by a theorem of Mazur
+\cite{\MazurTa},\cite{\MazurTb}, a complete list of possible
+structures of $T$ is
+$$\align
+    C_k &\qquad\text{for}\qquad 1\le k\le10 \quad\text{or}\quad k=12; \cr
+    C_{2k}\times C_2 &\qquad\text{for}\qquad 1\le k\le 4.
+  \endalign
+$$
+
+To determine the torsion subgroup of an elliptic curve defined over
+$\Q$, we may use a form of the Lutz--Nagell Theorem.  (The situation
+is more complicated over number fields other than $\Q$, on account of
+the ramified primes.)  The first step is to find a model for the curve
+in which all torsion points are integral.  For this it suffices to
+complete the square (if necessary) to eliminate the $xy$ and $y$
+terms, at the expense of a scaling by $u=2$.  Then for $P=(x,y)$ a
+torsion point, we can use the fact that both $P$ and $2P$ are integral
+to bound $y$.  For the first step, the following result may be found
+in \cite{\Langc, Section III.1} and \cite{\Knapp, Theorem 5.1}.  The
+original form of this result, due independently to Lutz \cite{\Lutz}
+and Nagell \cite{\Nag}, was for curves of the form $y^2=x^3+ax+b$,
+with no $x^2$ term.  While such an equation may be obtained by
+completing the cube, this would involve a further scaling of
+coordinates, and so would lead to larger numbers.  If $a_1=a_3=0$ we
+can apply the following result directly; otherwise, put $a=b_2$,
+$b=8b_4$ and $c=16b_6$.  \newprop{\LutzNaga}
+
+\proclaim{Proposition \LutzNaga}Let $E$ be an elliptic curve defined over $\Q$,
+given by an equation \neweq{\eqnabc}
+$$
+  y^2 = f(x) = x^3+ax^2+bx+c  \tag\eqnabc
+$$
+where $a,b,c\in\Z$.  If $P=(x,y)\in E(\Q)$ has finite order, then
+$x, y\in\Z$.
+\endproclaim
+
+Next we bound the $y$ coordinate of a torsion  point $P=(x,y)$ (see
+\cite{\Langc, Theorem 1.4}).  \newprop{\LutzNagb}
+
+\proclaim{Proposition \LutzNagb}Let $E$ be as in {\rm (\eqnabc)}.
+If $P=(x_1,y_1)$ has finite order in $E(\Q)$ then either $y_1=0$ or
+$y_1^2\div\Delta_0$, where
+$$
+   \Delta_0 = 27c^2+4a^3c+4b^3-a^2b^2-18abc.
+$$
+\endproclaim
+\demo{Proof} If $2P=0$ then $y_1=0$, since $-P=(x_1,-y_1)$.  Otherwise
+$2P=(x_2,y_2)$ with $x_2,y_2\in\Z$ by Proposition \LutzNaga.  Using
+the addition formula on $E$ we find that $2x_1+x_2=m^2-a$ where
+$m=f'(x_1)/2y_1$ is the slope of the tangent to $E$ at $P$.  Hence
+$m\in\Z$, so that $y_1\div f'(x_1)$.  Using $y_1^2=f(x_1)$, this
+implies that $y_1^2|\Delta_0$, since
+$$
+  \Delta_0 = (-27f(x)+54c+4a^3-18ab)f(x) + (f'(x)+3b-a^2)f'(x)^2. \qed
+$$
+\enddemo
+
+This gives us a finite number of values of $y$ to check; for each, we
+attempt to solve the cubic for $x\in\Z$, to obtain all torsion points
+on $E$. Note that we are actually determining all points $P$ such that
+both $P$ and $2P$ are integral (in the possibly scaled model for $E$),
+which includes all torsion points, but may also include points of
+infinite order.  To determine whether a given integral point has
+finite or infinite order, we simply compute multiples $mP$
+successively until either $mP=0$, in which case $P$ has order $m$, or
+$mP$ is not integral, in which case $P$ has infinite order.  This does
+not take long, as the maximum possible order for a torsion point is 12
+by Mazur's theorem.  If we find points of infinite order at this stage
+we keep a note of them for later use (see Section \Findinf).
+
+The quantity $\Delta_0$ is related to the discriminant $\Delta$ of the
+curve (\eqnabc) by $\Delta=-16\Delta_0$.  If this is large, there may
+be many values of $y_0$ to check when we apply the preceding
+Proposition to determine the torsion on a given curve.  It is possible
+to save time by using a further result, which states that for an odd
+prime~$p$ of good reduction (that is, $p\ndiv2\Delta$), the reduction
+map from $E(\Q)_{\tor}$ to $E(\Z/p\Z)$ is injective.  For more
+details, and worked examples, see either \cite{\Silvera, Section
+VIII.7} or \cite{\Knapp, Section V.1}.
+
+If we want to know the structure of $T$ and not just its order, note
+that from Mazur's theorem the only ambiguous cases are when $T$ has
+order $4k=4$, 8 or 12 and $\Delta>0$; we can always tell apart the
+groups $C_{4k}$ and $C_2\times C_{2k}$ as the former has only one
+element of order 2 while the latter has three, and this number is the
+number of rational (integer) roots of $f(x)$.
+
+To solve the cubic equations $f(x)=y^2$ for $x$, given $y$, we use the
+classical formula of Cardano (see any algebra textbook) to find the
+complex roots (which we also need in computing the periods in section
+\Periods\ below), and if any of these are real and close to integers
+we check them using exact integer arithmetic.  Testing all divisors of
+the constant term can be too time-consuming, as it involves
+factorization of the numbers $y^2-c$ which may be very large.
+
+Here is the algorithm in pseudocode; for simplicity we only give it
+for curves with no $xy$ or $y$ terms; in the general case, one works
+internally with points on a scaled model (including the calculation of
+the order), converting back to the original model on output.  Since we
+know in advance that no point will have order greater than 12, when
+computing the order of a point we simply use repeated addition until
+we reach a non-integral point or the identity {\tt O}.  The subroutine
+{\tt order(P)} returns 0 for a point of infinite order.  Also: {\tt
+square\_part(\D)} returns the largest integer whose square divides \D;
+{\tt integer\_roots} returns a list of the integer roots of a cubic
+with integral coefficients; and {\tt integral(x)} tests whether its
+(rational) argument is integral.
+
+
+\beginalg{Algorithm for finding all torsion points}
+%
+\+INPUT:   &&&a,b,c (integer coefficients of a nonsingular cubic).\cr
+\+OUTPUT:  &&&A list of all torsion points on y\2=x\3+ax\2+bx+c, with orders.\cr % \smallskip \lineno=0
+\smallskip\lineno=0
+%
+\nline BEGIN\cr
+\nline \D=27*c\2+4*a\3*c+4*b\3-a\2*b\2-18*a*b*c; \cr
+\nline y\_list=positive\_divisors(square\_part(\D)) $\cup$ \{0\}; \cr
+\nline FOR y IN y\_list DO \cr
+\nline BEGIN \cr
+\nline &x\_list=integer\_roots(x\3+a*x\2+b*x+c-y\2); \cr
+\nline &FOR x IN x\_list DO \cr
+\nline &BEGIN \cr
+\nline &&P=point(x,y); \cr
+\nline &&n=order(P); \cr
+\nline &&IF n>0 THEN OUTPUT P,n FI \cr
+\nline &END \cr
+\nline END \cr
+\nline END \cr
+%
+\smallskip
+\comm{Subroutine to compute order of a point}
+\smallskip\lineno=0
+%
+\+SUBROUTINE order(P) \cr
+\nline BEGIN \cr
+\nline n=1; Q=P; \cr
+\nline WHILE integral(x(Q)) AND Q$\not=$O DO \cr
+\nline BEGIN \cr
+\nline &n = n+1; Q = Q+P \cr
+\nline END; \cr
+\nline IF Q$\not=$O THEN n=0 FI; \cr
+\nline RETURN n \cr
+\nline END \cr
+
+\endalg
+
+%
+% CHAPTER 3 SECTION 4
+%
+\beginsection{\Heights}
+\head\Heights\ Heights and the height pairing\endhead
+
+
+In this section we will show how to compute the canonical height
+$\canht(P)$ of a point $P\in E(\Q)$, and hence the height pairing 
+$$
+   \canht(P,Q)=\frac{1}{2}(\canht(P+Q)-\canht(P)-\canht(Q)).
+$$
+We will use this in the following section to find dependence relations
+among finite sets of points of infinite order, when we are computing a 
+$\Z$-basis $\{P_1,\ldots,P_r\}$ for the free abelian group $E(\Q)/T$.
+Also, the regulator $R(E)$ is given by the determinant of the height
+pairing matrix:
+$$
+   R(E) = \left|\det(\canht(P_i,P_j))\right|.
+$$
+The canonical height $\canht$ is a real-valued quadratic form on $E(\Q)$. It
+differs by a bounded amount (with a bound dependent on $E$ but not on the point
+$P$) from the naive or Weil height $h(P)$.  For a point
+$P=(x,y)=(a/c^2,b/c^3)\in E(\Q)$ with $a,b,c\in\Z$ and $\gcd(a,c)=1=\gcd(b,c)$,
+the latter is defined to be 
+$$
+    h(P) = \log \max\{|a|,c^2\}.
+$$
+Now the canonical height may be defined as $\canht(P)=\lim_{n
+\to\infty}4^{-n}h(2^nP)$, but this is not practical for  computational
+purposes.  For the theory of heights on elliptic curves, see \cite{\Silvera,
+Chapter VIII}.  Later (in the next section) we will need an explicit bound on
+the difference between $\canht(P)$ and $h(P)$.
+
+The height algorithms in this section are taken from Silverman's paper
+\cite\Silverb.  The \und{global height} $\canht(P)$ is defined as a
+sum of \und{local heights}:\neweq{\htsuma}
+$$
+   \canht(P) = \sum_{p\le\infty}\canht_p(P). \tag\htsuma
+$$
+Here the sum is over all finite primes $p$ and the `infinite prime' $\infty$
+coming from the real embedding of $\Q$.  (Over a general number field, there
+would in general be several of these infinite primes, including complex ones,
+and the local heights need to be multiplied by certain multiplicities: see
+\cite\Silverb).  
+
+A remark about normalization\footnote{I am grateful to Gross for
+explaining this to me, after I found that apparently the two sides of
+the \BSD\ conjecture disagreed by a factor of $2^r$!}: the canonical
+height must be suitably normalized.  In the literature there are two
+normalizations used, one of which is double the other and is the one
+appropriate for the \BSD\ conjecture (resulting in a regulator $2^r$
+times as large).  In Silverman's paper he uses the other (smaller)
+normalization.  Thus all the formulae here are double those in the
+paper \cite\Silverb.
+
+The following proposition, which is Theorem 5.2 of \cite{\Silverb}
+(for curves over general number fields) specialized to the case of a
+curve defined over $\Q$, also applies to a curve defined over $\Q_p$
+and to a point $P=(x,y)\in E(\Q_p)$. In the proposition, we refer to
+the functions $\psi_2$ and $\psi_3$ defined on $E$ by
+$$
+  \psi_2(P) = 2y+a_1x+a_3, \qquad\text{and}\qquad
+  \psi_3(P) = 3x^4+b_2x^3+3b_4x^2+3b_6x+b_8;
+$$
+thus, $\psi_2$ vanishes at the 2-torsion points of $E$ and $\psi_3$ at
+the 3-torsion. \newprop{\SilverTheorem}
+
+\proclaim{Proposition \SilverTheorem}  Let $E$ be an elliptic curve defined
+over $\Q$ given by a standard Weierstrass equation {\rm(\curveeq)}
+which is minimal at $p$, and let $P=(x,y)\in E(\Q)$.
+\part{a} If 
+$$
+  \ord_p(3x^2+2a_2x+a_4-a_1y)\le0 \qquad\text{or}\qquad
+  \ord_p(2y+a_1x+a_3)\le0
+$$
+then 
+$$
+  \canht_p(P) = \max\{0,-\ord_p(x)\}\log p.
+$$
+\part{b} Otherwise, if $\ord_p(c_4)=0$ then set $N=\ord_p(\Delta)$ and
+$M=\min\{\ord_p(\psi_2(P),\frac12N\}$; then
+$$
+   \canht_p(P) = \frac{M(M-N)}{N}\log p.
+$$
+\part{c}Otherwise, if $\ord_p(\psi_3(P))\ge3\ord_p(\psi_2(P))$ then
+$$
+   \canht_p(P) = -\frac23\ord_p(\psi_2(P))\log p.
+$$
+\part{d}Otherwise
+$$
+   \canht_p(P) = -\frac14\ord_p(\psi_3(P))\log p.
+$$
+\endproclaim
+
+The first case in Proposition \SilverTheorem\ covers primes $p$ where
+the point $P$ has good reduction (including all primes where $E$ has
+good reduction, as well as those where the reduced curve is singular
+but $P$ does not reduce to the singular point).  In the other three
+cases, $P$ has singular reduction, and the reduction of $E$ at $p$ is
+multiplicative, additive of types IV or IV$^*$, and additive of types
+III, III$^*$ and I$^*_m$ respectively.
+
+Hence for each point $P$, the local height $\canht_p(P)=0$ if $p$
+divides neither the discriminant~$\Delta$ nor~$c$, where $c^2$ is the
+denominator of the $x$-coordinate of the point $P$.  In all cases,
+$\canht_p(P)$ is a rational multiple of $\log(p)$.  The total
+contribution from the primes dividing $c$ in the global height
+$\canht(P)$ is therefore (from case (a) of the Proposition) simply
+$2\log(c)$, and we have the following formula, better for practical
+computation than (\htsuma) since we do not have to factorize
+$c$:\neweq{\htsumb}
+$$
+   \canht(P) = \canht_{\infty}(P) + 2\log(c) 
+                + \sum_{p\div\Delta, p\ndiv c}\canht_p(P).\tag\htsumb
+$$
+This formula appears in \cite\Silvere, where it is shown how to
+compute $\canht(P)$ using little (or no) factorization of $\Delta$,
+which can be useful in certain situations.  We refer the reader to
+\cite\Silvere\ for details.
+
+An algorithm for computing the local height at a finite prime~$p$ is
+given by the following:
+
+\beginalg{Silverman's algorithm for computing local heights: finite primes}
+ 
+\+INPUT:   && a1, a2, a3, a4, a6 (integer coefficients of a minimal model for
+$E$).\cr
+\+         && x,y (rational coordinates of a point $P$ on $E$).\cr
+\+         && p (a prime).\cr
+\+OUTPUT:  && the local height of $P$ at p.\cr
+%
+\smallskip \lineno=0
+%
+\nline BEGIN\cr
+\nline compute\_invariants(b2,b4,b6,b8,c4,\D);\cr
+\nline N = ord(p,\D);\cr
+\nline A = ord(p,3*x\2+2*a2*x+a4-a1*y);\cr
+\nline B = ord(p,2*y+a1*x+a3);\cr
+\nline C = ord(p,3*x\4+b2*x\3+3*b4*x\2+3*b6*x+b8);\cr
+\nline M = min(B,N/2);\cr
+%
+\smallskip
+%
+\nline IF A $\le$ 0 OR B $\le$ 0 THEN L = max(0,-ord(p,x))\cr
+\nline ELSE IF ord(p,c4)=0 THEN L = M*(M-N)/N\cr
+\nline ELSE IF C $\ge$ 3*B THEN L = -2*B/3\cr
+\nline ELSE L = -C/4\cr
+\nline FI;\cr
+\nline RETURN L*log(p)\cr
+\nline END\cr
+
+\endalg
+
+We must also compute the local component of the height at the infinite
+prime, $\canht_{\infty}(P)$.  The method here originated with Tate,
+but was amended by Silverman in \cite\Silverb\ to improve convergence,
+and to apply also to complex valuations.  Tate in \cite\Tateht\
+expressed $\canht_{\infty}(P)$ as a series
+$$
+  \canht_{\infty}(P) = \log|x| + \frac14\sum_{n=0}^{\infty}4^{-n}c_n
+$$
+where the coefficients $c_n$ are bounded provided that no point on
+$E(\R)$ has $x$-coordinate zero. Of course, over $\R$ one can shift
+coordinates to ensure that this condition holds, but the resulting
+series can have poor convergence properties, and this trick will not
+work over $\C$.  Silverman's solution is to use alternately the
+parameters $x$ and $x'=x+1$, switching between them (and between the
+two associated series $c_n$ and $c_n'$) whenever $|x|$ or $|x'|$
+becomes small (less than $1/2$).  The series of coefficients $c_n$ is
+obtained by repeated doubling of the point $P$, working with $t=1/x$
+or $t'=1/x'$ as local parameter.  The result is a new series of the
+above type in which the error in truncating before the $N$th term is
+$O(4^{-N})$, with an explicit constant.  In fact (see \cite{\Silverb,
+Theorem 4.2}) the error is less than $\frac1210^{-d}$, giving a result
+correct to $d$ decimal places, if
+$$
+  N \ge \frac53d + \frac12 + 
+ \frac34\log(7+\frac43\log H+\frac13\log\max\{1,|\Delta|^{-1}\})
+$$
+where
+$$
+  H = \max\{4,|b_2|,2|b_4|,2|b_6|,|b_8| \}.
+$$
+The last term vanishes for curves defined over $\Z$, since then we have 
+$|\Delta|>1$.
+
+In the algorithm which we now give, the quantities {\tt b2', b4', b6'}
+and {\tt b8'} are those associated with the shifted model of $E$ with 
+$x'=x+1$; the switching flag {\tt beta} indicates which model we are 
+currently working on; {\tt mu} holds the current partial sum; {\tt f} holds the
+negative power of~4.
+
+\beginalg{Silverman's algorithm for computing local heights: real component}
+
+\+INPUT:   && a1, a2, a3, a4, a6 (integer coefficients of a minimal model for
+$E$).\cr
+\+         && x (x-coordinate of a point $P$ on $E$).\cr
+\+         && d (number of decimal places required).\cr
+\+OUTPUT:  && the real local height of $P$.\cr
+%
+\smallskip \lineno=0
+%
+\nline BEGIN\cr
+\nline compute\_invariants(b2,b4,b6,b8);\cr
+\nline H = max(4,|b2|,2*|b4|,2*|b6|,|b8|);\cr
+\nline b2' = b2-12; b4' = b4-b2+6; b6' = b6-2*b4+b2-4; b8' = b8-3*b6+3*b4-b2+3;\cr
+\nline N = ceiling((5/3)*d + (1/2) + (3/4)*log(7+(4/3)*log(H)));\cr
+\nline IF |x|<0.5 THEN t = 1/(x+1); beta = 0 ELSE t = 1/x; beta = 1 FI;\cr
+\nline mu = -log|t|; f = 1;\cr
+%
+\smallskip
+%
+\nline FOR n = 0 TO N DO\cr
+\nline BEGIN\cr
+\nline &f = f/4; \cr
+\nline &IF beta=1 THEN \cr
+\nline &&w = b6*t\4+2*b4*t\3+b2*t\2+4*t; \cr
+\nline &&z = 1-b4*t\2-2*b6*t\3-b8*t\4; \cr
+\nline &&zw = z+w \cr
+\nline &ELSE \cr
+\nline &&w = b6'*t\4+2*b4'*t\3+b2'*t\2+4*t; \cr
+\nline &&z = 1-b4'*t\2-2*b6'*t\3-b8'*t\4; \cr
+\nline &&zw = z-w \cr
+\nline &FI;\cr
+\nline &IF |w| $\le$ 2*|z| \cr
+\nline &THEN mu = mu+f*log|z|;  t = w/z \cr
+\nline &ELSE mu = mu+f*log|zw|; t = w/zw; beta = 1-beta \cr
+\nline &FI\cr
+\nline END;\cr
+\nline RETURN mu\cr
+\nline END\cr
+
+\endalg
+
+Finally, to compute the global height $\canht(P)$, we simply add to
+the infinite local height $\canht_{\infty}(P)$ the finite local
+heights $\canht_p(P)$ for all primes $p$ dividing either $\Delta$ or
+the denominator of $x(P)$.  Using (\htsumb) this leads to the
+following algorithm.
+
+\beginalg{Algorithm for computing global canonical heights}
+ 
+\+INPUT:   && a1, a2, a3, a4, a6 (integer coefficients of a minimal model for
+$E$).\cr
+\+         && P=(x,y) (a rational point $P$ on $E$).\cr
+\+OUTPUT:  && the global canonical height $\canht(P)$ of $P$.\cr
+%
+\smallskip \lineno=0
+%
+\nline BEGIN\cr
+\nline \D = discr(a1,a2,a3,a4,a6);\cr
+\nline d = denom(x);\cr
+\nline h = real\_height(P) + log(d);\cr
+\nline p\_list = prime\_divisors(\D);\cr
+\nline FOR p IN p\_list DO\cr
+\nline BEGIN\cr
+\nline &IF p\NDIV d THEN h = h + local\_height(p,P) FI\cr
+\nline END;\cr
+\nline RETURN h\cr
+\nline END\cr
+
+\endalg
+
+
+%
+% CHAPTER 3 SECTION 5
+%
+\beginsection{\Findinf}
+\head\Findinf\ The Mordell--Weil group II: generators\endhead
+\newprop{\Silverbound}
+
+In this section we will show how we look for rational points of
+infinite order on an elliptic curve $E$.  In compiling the tables, we
+usually knew the rank $r$ in advance so that we knew how many
+independent points to expect to find (and only looked for such points
+when we knew that $r>0$); however, this procedure is also useful as an
+open-ended search when we do not know the rank, as obviously it can
+provide us with a lower bound for $r$.
+
+The procedure divides into two parts.  First, we have a searching
+routine which looks for points up to some bound on the naive height
+(equivalently, some bound on the numerator and denominator of the
+$x$-coordinate).  As this routine finds points, it gives them to the
+second routine, which has at each stage a $\Z$-basis for a subgroup
+$A$ of $E(\Q)/T$: initially $A=0$.  This second routine uses the
+height pairing to determine one of three possibilities: the new point
+$P$ may be independent of those already found and can then be added to
+our cumulative list of independent points; the rank of $A$ is thus
+increased by~1. Secondly, $P$ may be an integral combination of the
+current basis (modulo torsion) and can then be ignored. Finally, if a
+multiple $kP$ of $P$ is an integral combination of the current basis
+for some $k>1$, we can find a basis for a new subgroup $A$ which
+contains the old $A$ with index $k$.  Even when we know the rank $r$
+in advance, we do not stop as soon as we have a subgroup $A$ of rank
+$r$, since $A$ might still have finite index in $E(\Q)/T$.  To close
+this final gap we use explicit bounds for the difference between the
+naive and canonical heights, such as Silverman's result (Proposition
+\Silverbound) below.
+
+The algorithm we use for the second procedure is a very general one,
+which can be used in many other similar situations; for example, as
+part of an algorithm for finding the unit group of a number field,
+where the first routine somehow finds units.  Our algorithm is
+essentially the same as the `Algorithm for enlarging sublattices' in
+the book by Pohst and Zassenhaus \cite{\PZass, Chapter 3.3}.
+
+A rational point $P$ on $E$ (given by a standard Weierstrass equation)
+may be written uniquely as $P = (x,y)=(a/c^2,b/c^3)$ with integers
+$a$, $b$, and $c$ satisfying $\gcd(a,c)=\gcd(b,c)=1$ and $c\ge1$.  The
+naive or Weil height of $P$ is $h(P)=\log\max\{|a|,c^2\}$. Initially,
+we find the point of order~2 in $E(\R)$ with minimal $x$-coordinate
+$x_0$; this gives a lower bound for the $x$-coordinates of all real
+points on $E$.  We then search for points $P$ with naive height up to
+some bound $B$ by looping through positive integers $c\le\exp(B/2)$
+and through $a$ coprime to $c$ in the range
+\footnote{If $E(\R)$ has three points of order two, with
+$x$-coordinates $x_0<x_1<x_2$, then we also omit those $a$ for which
+$c^2x_1<a<c^2x_2$.}  $\max\{c^2x_0,-\exp(B)\}\le a\le\exp(B)$.  Given
+$a$ and $c$, we attempt to solve the appropriate quadratic equation
+for $b\in\Z$.  To speed up this procedure, we use a quadratic sieve:
+for each denominator $c$ we precompute for about 10 auxiliary sieving
+primes~$p$ the residue classes modulo~$p$ to which $a$ must belong if
+the equation for $b$ is to be soluble modulo~$p$. Each candidate value
+of $a$ can then first be checked to see if it is admissible modulo
+each sieving prime before the more time-consuming step of attempting
+to solve for $b$.  This improvement to the search results in a major
+time saving in most cases, though for most of the curves in our tables
+on which we expected to find points of infinite order, such a point
+was found very quickly anyway. (In some cases we had already found
+such a point during the search for torsion points.)   In practice it
+may be better to use composite moduli for the sieving.
+
+Each point $P$ found by this search is passed to the second procedure,
+which tests whether it has infinite order, discarding it if not.  At
+the general stage we will have $k$ independent points $P_i$ for $1\le
+i\le k$ (initially $k=0$) which generate a subgroup~$A$ of rank~$k$,
+and will have stored the $k\times k$ height pairing matrix
+$M=(h(P_i,P_j))$ and its determinant $R$.  Now we set $P_{k+1}=P$ and
+compute $\canht(P_i,P_{k+1})$ for $i\le k+1$ to obtain a new height
+pairing matrix of order $k+1$.  If the determinant of this new matrix
+is non-zero, the new point is independent of the previous ones and we
+add it to the current list of generators, increment $k$, replace $R$
+by the new determinant, and go on with the point search.  If the new
+determinant is zero, however, we use the values $h(P_i,P)$ to express
+$P_{k+1}$ as a linear combination of the $P_i$ for $i\le k$, with
+approximate real coefficients: in fact we have
+$$
+   a_1P_1 + a_2P_2 + \ldots + a_kP_k + a_{k+1}P_{k+1} = 0 
+                                         \quad\text{(modulo torsion)}
+$$ 
+where for $1\le i\le k+1$ the coefficient $a_i$ is the $(i,k+1)$
+cofactor of the enlarged matrix, which we will have stored during the
+computation of the new determinant.  In particular, $a_{k+1}$ is (up
+to sign) the previous value of~$R$, and hence is non-zero.  
+%
+Next we find rational approximations to these floating-point
+coefficients $a_i$ (using continued fractions, or MLLL if available),
+%
+and clear denominators to obtain a new equation of the same form with
+coprime integer coefficients $a_i$, which we can check holds exactly.
+In this relation we still have $a_{k+1}\not=0$ (the first $k$ points
+are independent).  The simplest case now is when $a_{k+1}=\pm1$, for
+then $P_{k+1}$ is redundant and can be discarded.  Similarly, if
+$a_i=\pm1$ for some $i\le k$, then we may discard $P_i$, replacing it
+by $P_{k+1}$, and gaining index $|a_{k+1}|$.  In general let $a_i$ be
+the minimal non-zero coefficient (in absolute value); if $|a_i|>1$, we
+find a coefficient $a_j$ not divisible by $a_i$ (which must exist
+since the coefficients are coprime) and write $a_j=a_iq+b$ where
+$0<b<|a_i|$.  Now since
+$$
+  a_iP_i+a_jP_j = a_iP_i + (a_iq+b)P_j = a_i(P_i+qP_j) + bP_j 
+$$ 
+we may replace the generator $P_i$ by $P_i+qP_j$, replace the
+coefficient $a_j$ by $b$ (which is smaller than $|a_i|$), and replace
+$i$ by $j$.  After a finite number of steps we obtain a minimal
+coefficient $a_i=1$ and can discard the current generator $P_i$,
+leaving a new set of $k$ independent generators which generate a group
+larger than before by a finite index equal to the original value of
+$|a_{k+1}|$.
+
+In this way, we will be able to find a $\Z$-basis for the subgroup $A$
+of the Mordell--Weil group (modulo torsion) which is generated by the
+points of naive height less than the bound~$B$.  Often we know the
+rank $r$ of our curve in advance, so that we can increase $B$ until
+$A$ has rank~$r$.  Then $A$ has finite index in $E(\Q)$, and we must
+enlarge it to give the whole of $E(\Q)$.  There are various methods
+one can use here, all of which rely on having explicit bounds for the
+difference between the naive and canonical heights on the curve $E$.
+The simplest general bound here is a result of Silverman (see
+\cite{\Silverc}).  One can certainly often obtain better bounds for
+individual curves, and there are also more complicated results which
+apply in general and which usually give much better bounds, such as
+the main result of \cite{\SSpaper}.
+
+For simplicity we will only give Silverman's version of the bound.  In
+the following proposition,
+\footnote{When referring to \cite\Silverc, recall that our $\canht$ is
+double Silverman's; also, the constant 1.922 appearing here is a
+(normalized) correction, due to Bremner, of the constant in Silverman's paper.}
+the height of a rational number $a/b$ with $\gcd(a,b)=1$ is
+$h(a/b)=\log\max\{|a|,|b|\}$, and $\log^+(x)=\log\max\{1,|x|\}$ for
+$x\in\R$.
+
+\proclaim{Proposition \Silverbound}
+Let $E$ be an elliptic curve defined by a standard Weierstrass equation over 
+$\Z$, with discriminant $\Delta$ and $j$-invariant $j$.  Set $2^*=2$ if 
+$b_2\not=0$, or $2^*=1$ if $b_2=0$.  Define
+$$
+ \mu(E) = \frac{1}{6}\left(\log|\Delta| + \log^+(j)\right) + \log^+(b_2/12) + \log(2^*).
+$$
+Then for all $P\in E(\Q)$,
+$$
+    -\frac1{12}h(j)-\mu(E)-1.922 \le \canht(P)-h(P) \le \mu(E)+2.14.
+$$
+\endproclaim
+
+This result is easiest to apply in the rank 1 case, as follows.
+Suppose we have a rational point $P$ of infinite order on $E$, of
+height $\canht(P)$. If $P$ is not a generator it is a multiple $P=kQ$
+(modulo torsion) of some generator $Q$, where $k\ge2$, so that
+$\canht(Q)\le\frac{1}{4}\canht(P)$. By the preceding proposition we
+can bound the naive height of $Q$ and adjust the bound $B$ in our
+search accordingly. If a further search up to this bound finds no more
+points, then $P$ was a generator after all; otherwise we are sure to
+find a generator.
+
+Similar techniques are possible in higher rank situations, using
+estimates from the geometry of numbers.  See the papers \cite{\Zimmer}
+and \cite{\SSpaper} for more details.
+
+We may also remark that since $P$ has finite order if and only if
+$\canht(P)=0$, the proposition implies that all torsion points have
+naive height $h(P)\le\frac{1}{12}h(j)+\mu(E)+1.922$, giving us another
+way of finding all the rational torsion points.
+
+For the general case, the following simple result\footnote{Attributed
+in \cite\Silverc\ to Zagier, it is also exercise 5 on page 84 of
+Cassels' book \cite{\Cassels}.} may be used.  \newprop{\Zbasisbound}
+
+\proclaim{Lemma \Zbasisbound} Let $B>0$ be such that
+$$
+  S  =  \{ P\in E(\Q) \mid \canht(P) \le B \}
+$$
+contains a complete set of coset representatives for $2E(\Q)$ in
+$E(\Q)$.  Then $S$ generates $E(\Q)$.  \endproclaim \demo{Proof} Let
+$A$ be the subgroup of $E(\Q)$ modulo torsion generated by the points
+in $S$.  Suppose that $A$ is a proper subgroup; then we may choose
+$Q\in E(\Q)-A$ with $\canht(Q)$ minimal, since $\canht$ takes a
+discrete set of values.  By hypothesis, there exist $P\in A$ and $R$
+such that $Q=P+2R$; certainly $R\not\in A$, so that $\canht(R)\ge
+\canht(Q)$ by minimality.  Now using the fact that $\canht$ is
+quadratic and non-negative we obtain a contradiction:
+$$\align
+          \canht(P) &=   \frac12(\canht(Q+P)+\canht   (Q-P))-\canht(Q)  \\
+                    &\ge \frac12\canht(2R)-\canht(Q)                    \\
+                    &=   2\canht(R)-\canht(Q) \ge \canht(Q) > B.\qed     \\
+  \endalign
+$$
+\enddemo
+
+We have two ways of using this in practice.  First of all, it is
+possible to obtain from the two-descent procedure which we use to
+determine the rank (see the next section), a set of coset
+representatives for $E(\Q)$ modulo $2E(\Q)$.  Computing the heights of
+these points we can find a $B$ for which the Lemma holds, to which we
+add the maximum difference between naive and canonical heights from
+the preceding proposition to get a bound on the naive heights of a set
+of generators.
+
+Alternatively, assuming that we know the rank $r$, we first run our
+search until we find $r$ independent points $P_i$.  Now it is easy to
+check whether a point $P$ is twice another: if any subset of the $P_i$
+sums to $2Q$ for some $Q$ we replace one of the $P_i$ in the sum by
+$Q$ and gain index~2.  After a finite number of steps (since we are in
+a finitely-generated group) we obtain independent points which are
+independent modulo~2, and proceed as before.
+
+Again, we have only presented here the most straightforward strategies
+for enlarging a set of~$r$ independent points in $E(\Q)$ to a full
+$\Z$-basis; this is a topic of active research, with new ideas being
+developed rapidly: see the paper \cite{\SSpaper} for some recent
+advances.
+
+Putting the pieces together, we can determine a set of generators for
+$E(\Q)$ modulo torsion, and then compute the regulator, provided that
+we know its rank.  If we do not know the rank, we at least can obtain
+lower bounds for the rank.  Together with the torsion points found in
+section \Torsion, we will have determined the Mordell--Weil group
+$E(\Q)$ explicitly.  Computing the rank is the subject of the next
+section.
+
+%
+% CHAPTER 3 SECTION 6
+%
+\beginsection{\Rank}
+\head\Rank\ The Mordell--Weil group III: the rank\endhead
+
+For an elliptic curve $E$ defined over the rationals, the rank of the
+Mordell--Weil group $E(\Q)$ is by far the hardest of the elementary
+quantities associated with $E$ to compute, both theoretically and in
+terms of implementation.  Strictly speaking, the two-descent
+algorithms we will describe are not algorithms at all, as they are not
+guaranteed to terminate in all cases.  One part of the procedure
+involves establishing whether or not certain curves of genus one have
+rational points, when they are known to have points everywhere locally
+(that is, over $\R$ and over the $p$-adic field $\Q_p$ for all primes
+$p$): there is no known algorithm to decide this in general.
+Moreover, even without this difficulty, for curves with large
+coefficients and no rational points of order two, the general
+two-descent algorithm takes too long to run in practice.  For
+simplicity, we will refer to the procedures as rank algorithms,
+although their output in certain cases will be bounds on the rank
+rather than its actual value.
+
+We originally decided to implement a general two-descent procedure in
+order to check that the modular curves we had computed did have their
+rank equal to the analytic rank, which we knew, as described in the
+previous chapter.  This was a somewhat thankless task, as it involved
+a large programming effort, and a large amount of computer time to run
+the resulting program, in order to verify that approximately 2500
+numbers did in fact have the values 0, 1 or~2 which we were already
+sure were correct. Since the project started, the major theoretical
+advances by Kolyvagin, Rubin and others meant that all the cases of
+rank~0 or~1 were known anyway, which left just 18 cases of conjectured
+rank~2 to verify.  In the end we were able to verify these cases, and
+to check all but a few dozen of the rank~0 or~1 curves; we also
+obtained extra information by the two-descent procedure, such as the
+$2$-rank of the \TS\ group \Sha, and a set of coset representatives for
+$E(\Q)/2E(\Q)$.
+
+Since the original implementation, the algorithm has been much
+improved in many ways (notably the syzygy sieve in the search for
+quartics, the systematic use of group structure in the $2$-isogeny case,
+and the use of quadratic sieving in searching for rational points on
+homogeneous spaces: see below for details).  Our program {\tt mwrank},
+\footnote{Available from the author's ftp site: see the Introduction
+for details.}  based on the algorithm, now works well on a much larger
+set of curves, including some of fairly high rank such as a curve of
+Fermigier \cite\Ferm\ with rank~13 and $2$-torsion (see the example
+below), and several curves with no $2$-torsion and ranks 6,~7 and~8.
+However, curves with extremely large coefficients, such as Nagao's
+curve of rank (at least)~21 (see \cite\Nagao), are beyond the reach of
+this algorithm owing to the enormous search regions required.  One can
+also use the program {\tt mwrank} to find points on curves which are
+too large to find by the search methods of the previous section.
+
+We will not describe here the theory of two-descent, which is the
+basis of the algorithm, in great detail.  Roughly speaking, one has an
+injective homomorphism from $E(\Q)/2E(\Q)$ into a finite elementary
+abelian $2$-group, the $2$-Selmer group, and attempts to determine the
+image; if this has order $2^t$ then the rank of $E(\Q)$ is $t$, $t-1$
+or $t-2$ according to whether the number of points of order $2$ in
+$E(\Q)$ is 0, 1 or 3 (respectively).  This procedure applies to
+arbitrary curves, and is called \und{general two-descent}.  When $E$
+has a rational point $P$ of order two, there is a rational $2$-isogeny
+$\phi:E\to E' = E/\left<P\right>$ and a dual isogeny $\phi':E'\to E$.
+We may then proceed differently, using a procedure we call
+\und{two-descent via $2$-isogeny}: we embed each of $E'/\phi(E)$ and
+$E/{\phi'}(E')$ into finite subgroups of $\Q^*/(\Q^*)^2$, which are
+easy to write down.  This is in contrast to the general two-descent,
+where one has to work hard to find the Selmer group itself.  A full
+description of two-descent can be found in the standard references
+such as the books by Silverman
+\cite\Silvera, Husem\"oller
+\cite\Husemoller, Knapp
+\cite\Knapp, or Cassels 
+\cite\Cassels, but the descriptions given there
+are only easy to apply when $E$ has all its $2$-torsion rational.  For
+the general case where there are no rational points of order~2, the
+main reference is one of the original papers \cite\BirchSD\ by Birch
+and Swinnerton--Dyer on their Conjecture, and we followed that paper
+closely in writing the first version of our program.  More detail on
+the invariant theory, which has resulted in substantial improvements
+to the general two-descent algorithm, can be found in the paper
+\cite\JCinvariants; a very full description of the algorithm, together
+with its extension to real quadratic number fields (see also
+\cite\JCPS), can be found in Serf's thesis \cite\PSthesis.
+
+Both algorithms involve the classification of certain curves,
+associated with the given elliptic curve $E$, called \und{principal
+homogeneous spaces}.  These are twists of $E$: curves of
+genus~1 isomorphic to~$E$ over an extension field, but not
+(necessarily) over $\Q$ itself; they need not have rational points, so
+need not themselves be elliptic curves.  When they do have rational
+points, these map to rational points on $E$; the maps $H\to E$ are
+called \und{$2$-coverings} and have degree 4 (in the general
+two-descent) or 2 (in the $2$-isogeny descent).  The homogeneous spaces
+which arise in both algorithms have equations of the form
+\neweq\phseqn
+$$
+   H: \qquad   y^2 = g(x) = ax^4+bx^3+cx^2+dx+e \tag\phseqn 
+$$
+where $g(x)$ is a quartic polynomial with rational coefficients.  For
+brevity we will usually refer to these principal homogeneous spaces simply as
+\und{quartics}.  The invariants $I$ and $J$ of $g(x)$ (see below for
+their definition) are related to the invariants $c_4$ and $c_6$ of
+either $E$ or the $2$-isogenous curve~$E'$.  In the case of descent via
+$2$-isogeny, $g(x)$ will in fact be a quadratic in $x^2$.  We will be
+interested in whether the quartic $H$ has points over $\Q$ or
+one of its completions, the $p$-adics $\Q_p$ or the reals $\R$.  Such
+a point will either be an affine point $(x,y)$ satisfying the equation
+(\phseqn), or one of the two points at infinity on the projective
+completion of $H$, which are rational if and only if $a$ is a square.
+
+In all cases, a quartic with a (global) rational point $(x,y)$ will
+lead to a rational point on the original curve~$E$, and the set of all
+the rational points thus obtained will cover the cosets of $2E(\Q)$ in
+$E(\Q)$; thus we will be able to determine the rank of $E(\Q)$, and at
+the same time obtain a set of points which generates a subgroup of the
+Mordell-Weil group $E(\Q)$ of odd, finite index.  Quartics with no
+global rational point which are everywhere locally soluble arise from
+non-trivial elements in the \TS\ group of~$E$ (or of $E'$); if these
+exist, we will only obtain upper and lower bounds for the rank.  This
+is because we currently have no general procedure for proving that a
+quartic with no rational points does have none.  In practice,
+moreover, it is often impossible to distinguish between such a quartic
+and one with rational points which are all very large, and hence
+outside the search region; this happens when a curve has some very
+large generators, and in such cases also we may only be able to give
+bounds for the rank.  Further work on these questions is clearly
+needed, and is currently the focus of much active research.
+
+Since the covering maps $H\to E$ have degree 2 or 4, the rational
+points on $H$ tend to be smaller (in the sense of naive height) than
+the rational points they map to on $E$; this makes them easier to find
+by search.  Here is an example of this: the curve $y^2=x^3-673$ has
+rank~2, with generators $P_1=(29,154)$ and $P_2=(33989323537/61761^2,
+-1384230292401340/61761^3)$.  The second generator, which would take a
+very long time to find by searching on the curve itself, is obtained
+from the rational point $(x,y) = (191/97,123522/97^2)$ on the quartic
+with coefficients $(a,b,c,d,e) = (-2,4,-24,164,-58)$.  This is much
+easier to find: our program takes less than a second to find the rank
+and both generators of this curve (but in this time it does not prove
+that they are generators, only that they generate a subgroup of finite
+odd index in the Mordell-Weil group).
+
+Before we describe the two main two-descent algorithms, we will
+present algorithms for determining local solubility and for
+attempting to determine global solubility of a quartic equation such
+as (\phseqn), as these are used in both the algorithms.
+
+\subhead Checking local solubility \endsubhead
+
+Here we present an algorithm for determining the local solubility of a
+curve of the form (\phseqn), where $g(x)$ is a square-free quartic
+polynomial with integer coefficients.  It is easy to generalize this
+algorithm in two ways: firstly, one might be interested in polynomials
+of higher degree (when studying curves of higher genus, for example);
+secondly, working over a general number field $K$, one would replace
+the $p$-adic field $\Q_p$ here with the appropriate completion of~$K$.
+These extensions are quite straightforward.
+
+Solubility at the infinite prime (that is, over the reals) is easily
+determined.  If $g(x)$ has a real root then it certainly takes
+positive values, so that $H$ has real points; if $g(x)$ has no real
+roots, then the values of $g(x)$ have constant sign, and we merely
+have to check that~$a>0$.
+
+Regarding the finite primes, we first observe that there are only a
+finite number which need checking in each case, for if $p$ is an odd
+prime not dividing the discriminant of $g$, then $H$ certainly has
+points modulo~$p$ which are nonsingular and hence lift to $p$-adic
+points.  For the other primes, we present an algorithm first given in
+\cite\BirchSD.  
+
+It suffices to determine solubility in $\Z_p$ for either $g(x)$ or
+$g^*(x)=ex^4+dx^3+cx^2+bx+a$, and in the latter case we may assume
+$x\in p\Z_p$.  Given $x_k$ modulo $p^k$, one tries to lift to a
+$p$-adic point $(x,y)$ with $x\equiv x_k\pmod{p^k}$.  In
+\cite\BirchSD, conditions are given for this to be possible; more
+precisely, one of three possibilities may occur (given $k$ and~$x_k$):
+either a lifting is definitely possible, and we may terminate the
+algorithm with a positive result; or it is definitely not possible,
+and we reject this value of~$x_k$; or it is impossible to decide
+without considering $x_k$ modulo a higher power of $p$.  The test for
+this lifting is given below in the two subroutines called {\tt lemma6}
+and {\tt lemma7}, named after the corresponding results in
+\cite\BirchSD.  This leads to a recursive algorithm which is
+guaranteed to terminate since in any given case there is an exponent
+$k$ such that it is possible
+\footnote{In fact, if $k>\ord_p(\disc(g))$, and also $k\ge2$ when
+$p=2$, then the third possibility cannot occur in algorithms {\tt
+lemma6} and {\tt lemma7}.} to determine $p$-adic solubility by
+considering solubility modulo $p^k$.  All this is an exercise in
+Hensel's Lemma; the prime $p=2$ needs to be considered separately.
+For the details, we refer to the pseudocode below, or to
+\cite\BirchSD.  Further information on local solubility may be found
+in \cite\SSthesis\ and \cite\SSpaper.
+
+Here is the pseudocode for these algorithms.  Note that for any given
+elliptic curve, all the homogeneous spaces considered will have the
+same discriminant as the curve (up to a power of~2), so that in
+practice we would not need to factorize the discriminant of each
+quartic.
+
+\beginalg{Algorithm for determining local solubility of a quartic}
+\+INPUT:   &&&a, b, c, d, e &&&(integer coefficients of a quartic g(x))\cr %
+\+OUTPUT:  &&&TRUE/FALSE &&&(solubility of y\2=g(x) in $\R$ and in
+$\Q_p$ for all $p$)\cr 
+\smallskip
+\lineno=0 
+\nline BEGIN\cr
+\nline IF NOT R\_soluble(a,b,c,d,e) THEN RETURN FALSE FI;\cr
+\nline IF NOT Qp\_soluble(a,b,c,d,e,2) THEN RETURN FALSE FI;\cr
+\nline $\Delta$ = discriminant(a,b,c,d,e);\cr
+\nline p\_list = odd\_prime\_factors($\Delta$);\cr
+\nline FOR p IN p\_list DO\cr
+\nline BEGIN\cr
+\nline &IF NOT Qp\_soluble(a,b,c,d,e,p) THEN RETURN FALSE FI\cr
+\nline END;\cr
+\nline RETURN TRUE\cr
+\nline END\cr
+%
+\medskip
+\comm{Subroutine for determining real solubility}
+\smallskip\lineno=0 
+%
+\+SUBROUTINE R\_soluble(a,b,c,d,e)\cr
+\+INPUT:   &&&a, b, c, d, e &&&(integer coefficients of a quartic g(x))\cr %
+\+OUTPUT:  &&&TRUE/FALSE &&&(solubility of y\2=g(x) in $\R$)\cr 
+\smallskip
+%
+\nline BEGIN\cr
+\nline IF a>0 THEN RETURN TRUE FI;\cr
+\nline x\_list = real\_roots(a*x\4+b*x\3+c*x\2+d*x+e=0);\cr
+\nline IF length(x\_list)>0 THEN RETURN TRUE FI;\cr
+\nline RETURN FALSE\cr
+\nline END\cr
+%
+\medskip
+\comm{Subroutine for determining $p$-adic solubility}
+\smallskip\lineno=0 
+%
+\+SUBROUTINE Qp\_soluble(a,b,c,d,e,p)\cr
+\+INPUT:   &&&a, b, c, d, e &&&(integer coefficients of a quartic g(x))\cr %
+\+         &&&p &&&(a prime)\cr
+\+OUTPUT:  &&&TRUE/FALSE &&&(solubility of y\2=g(x) in $\Q_p$)\cr 
+\smallskip
+%
+\nline BEGIN\cr
+\nline IF Zp\_soluble(a,b,c,d,e,0,p,0) THEN RETURN TRUE FI;\cr
+\nline IF Zp\_soluble(e,d,c,b,a,0,p,1) THEN RETURN TRUE FI;\cr
+\nline RETURN FALSE\cr
+\nline END\cr
+%
+\medskip
+\comm{Recursive $\Z_p$-solubility subroutine}
+\smallskip
+%
+\+SUBROUTINE Zp\_soluble(a,b,c,d,e,x\_k,p,k)\cr
+\+INPUT:   &&&a, b, c, d, e &&&(integer coefficients of a quartic g(x))\cr %
+\+         &&&p &&&(a prime)\cr
+\+         &&&x\_k &&&(an integer)\cr
+\+         &&&k &&&(a non-negative integer)\cr
+\+OUTPUT:  &&&TRUE/FALSE &&&(solubility of y\2=g(x) in $\Z_p$, with x$\equiv$x\_k (mod p$^k$))\cr
+%\+         &&&&&&&\cr 
+\smallskip
+\lineno=0
+\nline BEGIN\cr
+\nline IF p=2 \cr
+\nline THEN code = lemma7(a,b,c,d,e,x\_k,k) \cr
+\nline ELSE code = lemma6(a,b,c,d,e,x\_k,p,k) \cr
+\nline FI;\cr
+\nline IF code=+1 THEN RETURN TRUE FI;\cr
+\nline IF code=-1 THEN RETURN FALSE FI;\cr
+\nline FOR t = 0 TO p-1 DO\cr
+\nline BEGIN \cr
+\nline &IF Zp\_soluble(a,b,c,d,e,x\_k+t*p$^k$,p,k+1) THEN RETURN TRUE FI\cr
+\nline END;\cr
+\nline RETURN FALSE\cr
+\nline END\cr
+%
+\medskip
+\comm{$\Z_p$ lifting subroutine: odd $p$}
+\smallskip
+\lineno=0
+%
+\+SUBROUTINE lemma6(a,b,c,d,e,x,p,n)\cr
+\nline BEGIN\cr
+\nline gx = a*x\4+b*x\3+c*x\2+d*x+e;\cr
+\nline IF p\_adic\_square(gx,p) THEN RETURN +1 FI;\cr
+\nline gdx = 4*a*x\3+3*b*x\2+2*c*x+d;\cr
+\nline l = ord(p,gx); m = ord(p,gdx);\cr
+\nline IF (l$\ge$m+n) AND (n>m) THEN RETURN +1 FI;\cr
+\nline IF (l$\ge$2*n) AND (m$\ge$n) THEN RETURN 0 FI;\cr
+\nline RETURN -1 \cr
+\nline END \cr
+%
+\medskip
+\comm{$\Z_2$ lifting subroutine}
+\smallskip
+\lineno=0
+\+SUBROUTINE lemma7(a,b,c,d,e,x,n)\cr
+\nline BEGIN\cr
+\nline gx = a*x\4+b*x\3+c*x\2+d*x+e;\cr
+\nline IF p\_adic\_square(gx,2) THEN RETURN +1 FI;\cr
+\nline gdx = 4*a*x\3+3*b*x\2+2*c*x+d;\cr
+\nline l = ord(p,gx); m = ord(p,gdx);\cr
+\nline gxodd = gx; WHILE even(gxodd) DO gxodd = gxodd/2; \cr
+\nline gxodd = gxodd (mod 4);\cr
+\nline IF (l$\ge$m+n) AND (n>m) THEN RETURN +1 FI;\cr
+\nline IF (n>m) AND (l=m+n-1) AND even(l) THEN RETURN +1 FI;\cr
+\nline IF (n>m) AND (l=m+n-2) AND (gxodd=1) AND even(l) THEN RETURN +1 FI;\cr
+\nline IF (m$\ge$n) AND (l$\ge$2*n) THEN RETURN 0 FI;\cr
+\nline IF (m$\ge$n) AND (l=2*n-2) AND (gxodd=1) THEN RETURN 0 FI;\cr
+\nline RETURN -1\cr
+\nline END\cr
+\endalg
+
+A few further remarks on these algorithms: firstly, only trivial
+changes need to be made to the algorithms {\tt Qp\_soluble} and {\tt
+Zp\_soluble} to make them apply to more general equations of the form
+$y^2=g(x)$ where $g(x)$ is a non-constant squarefree integer
+polynomial.  This is relevant for work on curves of higher genus, and
+was observed by S.~Siksek.  Secondly, extensions to more general
+$p$-adic fields are also useful in studying curves over number fields,
+and again the extensions of Lemma~6 and Lemma~7 in
+\cite\BirchSD\ are not difficult.  See the theses \cite\SSthesis\ and
+\cite\PSthesis\ for details of such extensions.
+
+Lastly, D.~Simon observed that in our application of the algorithms
+{\tt lemma6} and {\tt lemma7}, we only care whether there is a
+solution, not necessarily that there is a solution congruent to the
+given $x\pmod{p^k}$; hence line~6 of subroutine {\tt lemma6} and
+line~8 of subroutine {\tt lemma7} can both be replaced by:
+
+{\tt
+\+&IF l>2*m THEN RETURN +1 FI.\cr
+}
+
+
+\subhead Checking global solubility \endsubhead
+
+To determine whether an equation (\phseqn) has a rational point is
+much harder than the corresponding local question.  All we can do at
+present is search (efficiently) for a point up to a certain height,
+after checking that there is no local obstruction.  The only
+satisfactory way known at present to decide on the existence of
+rational points on these homogeneous spaces is to carry out so-called
+higher descents; as mentioned above, this is the subject of current
+work (see \cite\Nigeletal, for example), and we will not consider it
+further here.
+
+Our strategy is to look first for a small rational point, using a very
+simple procedure with low overheads; if this fails, we check for local
+solubility; if this passes, we start a much more thorough search for a
+global point, using a quadratic sieving procedure rather similar to
+the one described in the previous section for finding points on the
+elliptic curve itself.  (In fact, such a sieve-assisted search may be
+used to find rational points on any curve given by an equation of the
+form $y^2=g(x)$ where $g(x)$ is a polynomial in~$x$.) The philosophy
+here is that there is no point in looking hard for rational points
+unless one is sure of local solubility, but also that there is no
+point in checking local solubility when there is an obvious global
+point.
+
+%\def\legendre#1#2{\left(\dfrac{#1}{#2}\right)}
+\def\legendre#1#2{(\frac{#1}{#2})}
+To carry out the sieve-assisted search, for each possible denominator
+of~$x$ one precomputes, for each of several sieving moduli $m$, the
+residues to which the numerator of $x$ must belong if the right-hand
+side of the equation is to be a square modulo~$m$.  In addition, it is
+easy to see that for every odd prime~$p$ dividing the denominator of
+the $x$-coordinate of a rational point, we must have
+$\legendre{a}{p}=+1$; so provided that the leading coefficient~$a$ is
+not a square (in which case the points at infinity are rational
+anyway), we precompute a list of primes~$p$ for which
+$\legendre{a}{p}=-1$, and discard possible denominators divisible by
+any of these primes.  For $p=2$ a similar condition holds.
+\footnote{I am grateful to J. Gebel for this idea, which saves
+considerable time in practice.}  One also obviously restricts the
+search to ranges of~$x$ for which $g(x)$ is positive; depending on the
+number of real roots of~$g$ and the sign of~$a$, this splits the
+search into up to three intervals.  Finally, in the case of
+two-descent via $2$-isogeny, where the quartics are polynomials in
+$x^2$ and thus even, we may restrict to positive~$x$.
+
+For reasons of space, we will only give here the code for a simple
+point search with no sieving.  
+
+\beginalg{Algorithm for searching for a rational point on a quartic:
+simple version}
+\+INPUT:   &&&a, b, c, d, e &&&(integer coefficients of a quartic g(x))\cr
+\+         &&&k1, k2 &&&(lower and upper bounds)\cr
+\+OUTPUT:  &&&TRUE/FALSE &&&(solubility of y\2=g(x) in $\Q$ with x=u/w\cr
+\+         &&&           &&& and k1${}\le{}$|u|+w${}\le{}$k2)\cr 
+\smallskip\lineno=0
+%
+\nline BEGIN\cr
+\nline FOR n = k1 TO k2 DO\cr
+\nline BEGIN\cr
+\nline &IF n=1 THEN\cr
+\nline &&IF square(a) RETURN TRUE FI;\cr
+\nline &&IF square(e) RETURN TRUE FI\cr
+\nline &ELSE\cr
+\nline &&FOR u = 1 TO n-1 DO\cr
+\nline &&BEGIN\cr
+\nline &&&IF gcd(u,n)=1 \cr
+\nline &&&THEN\cr
+\nline &&&&w = n-u;\cr
+\nline &&&&IF square(a*u\4+b*u\3w+c*u\2w\2+d*uw\3+e*w\4) RETURN TRUE FI;\cr
+\nline &&&&IF square(a*u\4-b*u\3w+c*u\2w\2-d*uw\3+e*w\4) RETURN TRUE FI\cr
+\nline &&&FI\cr
+\nline &&END\cr
+\nline &FI\cr
+\nline END; \cr
+\nline RETURN FALSE\cr
+\nline END\cr
+%
+\endalg
+\bigskip
+
+We will now describe the two main two-descent algorithms: two-descent
+via $2$-isogeny for use when $E$ has a rational point of order~2, and
+general two-descent in the general case.  We only use general
+two-descent when there is no point of order~2, so that the first method
+does not apply.  The situation is not appreciably simpler when $E$ has
+all three of its points of order two rational than when there is just
+one rational point of order two, and so we will not bother to consider
+this case separately.
+
+\subhead Method 1: descent using $2$-isogeny \endsubhead
+
+Suppose that $E$ has a rational point $P$ of order~2.  By a change of
+coordinates we may assume that $E$ has equation
+$$
+ E: \quad y^2=x(x^2+cx+d)
+$$
+where $P=(0,0)$, and $c,d\in\Z$.  Explicitly, in terms of a \W\
+equation, let $x_0$ be a root of the cubic $x^3+b_2x^2+8b_4x+16b_6$,
+and set $c=3x_0+b_2$, $d=(c+b_2)x_0+8b_4$.  If $a_1=a_3=0$, then we
+can avoid a scaling factor of~2 by letting $x_0$ be a root of
+$x^3+a_2x^2+a_4x+a_6$, and setting $c=3x_0+a_2$, $d=(c+a_2)x_0+a_4$.
+The $2$-isogenous curve $E' = E/\left<P\right>$ has equation
+$$
+   E': \quad y^2=x(x^2+c'x+d')
+$$
+where 
+$$
+   c'=-2c  \qquad\text{and}\qquad d'=c^2-4d.
+$$
+The nonsingularity condition on $E$ is equivalent to $dd'\not=0$.  The
+$2$-isogeny $\phi\colon E\to E'$ has kernel $\{0,P\}$ and in general
+maps $(x,y)$ to $\left(\frac{y^2}{x^2},\frac{y(x^2-d)}{x^2}\right)$.
+The dual isogeny $\phi'\colon E'\to E$ maps $(x,y)$ to
+$\left(\frac{y^2}{4x^2},\frac{y(x^2-d')}{8x^2}\right)$.
+
+For each factorization $d=d_1d_2$, with $d_1$ square-free, we consider
+the homogeneous space
+$$
+   H(d_1,c,d_2): \quad  v^2=d_1u^4+cu^2+d_2.
+$$
+Let $n_1=n_1(c,d)$ be the number of factorizations of~$d$ for which
+the quartic $H(d_1,c,d_2)$ has a rational point, and $n_2=n_2(c,d)$
+the number for which the quartic has a point everywhere locally.
+Define $n_1'=n_1(c',d')$ and $n_2'=n_2(c',d')$ similarly.  Then it is
+not hard to show by rather explicit calculation (see below and the
+references given) that $E(\Q)/{\phi'}(E'(\Q))$ is isomorphic to the
+subgroup of $\Q^*/(\Q^*)^2$ generated by the factors
+$d_1$ for which $H(d_1,c,d_2)$ has a rational point.  Thus
+$$
+     \left|E(\Q)/{\phi'}(E'(\Q))\right| = n_1,
+$$
+which must therefore be a power of 2, say $n_1=2^{e_1}$; similarly,
+$$
+     \left|E'(\Q)/\phi(E(\Q))\right| = n_1' = 2^{e_1'}.
+$$
+It then follows (see below) that\neweq{\rankeqn}
+$$
+   \rk(E(\Q))=\rk(E'(\Q))= e_1 + e_1' - 2. \tag\rankeqn
+$$
+
+With luck one will find rational points on all the quartics which have
+them everywhere locally; then $n_1=n_2$, and there is no ambiguity in
+the result.  However there will be cases in which the number
+$\tilde{n}_1$ of quartics on which we can find a rational point is
+strictly less than~$n_2$.  In such cases, we will only have upper and
+lower bounds for $n_1$, and similarly for $n'_1$, leading to upper and
+lower bounds for the rank.  This can happen for two reasons: either
+there is a rational point on some quartic, but our search bound was
+too small to find it; or the quartic has points everywhere locally but
+no global rational point.
+
+The quartics $H$ which have points everywhere locally but not globally
+come from elements of order~2 in the \TS\ groups $\Sha(E/\Q)$ and
+$\Sha(E'/\Q)$.  There is an exact sequence
+$$
+   0 \to E(\Q)/\phi'(E'(\Q)) \to S^{(\phi')}(E'/\Q) \to \Sha(E'/\Q)[\phi']\to 0
+$$
+coming from Galois cohomology; here $S^{(\phi')}(E'/\Q)$ is the Selmer
+group of order $n_2$ whose elements are represented by the homogeneous
+spaces $H(d_1,c,d_2)$ which are everywhere locally soluble, and
+$\Sha(E'/\Q)$ is the \TS\ group of $E'$. The injective map
+$E(\Q)/\phi'(E'(\Q)) \to S^{(\phi')}(E'/\Q)$ is induced by taking a
+point $(x,y)$ in $E(\Q)$ with $x\not=0$ to the space $H(d_1,c,d_2)$
+where $d_1=x$ modulo squares:  if $x=d_1u^2$ and $v=uy/x$ then
+$(u,v)$ is a rational point on $H(d_1,c,d_2)$.  The point $P=(0,0)$
+maps to $d$ modulo squares.  Conversely, if $(u,v)$ is a rational
+point on $H(d_1,c,d_2)$ then $(x,y)=(d_1u^2,d_1uv)$ is a rational
+point on $E$.  (In proving these statements, one has to check that two
+rational points on $E$ have the same $x$-coordinate modulo squares if
+and only if their difference is in $\phi'(E'(\Q))$; for example, the
+image of~$P$ is~$d$, which is a square if and only if
+$P\in\phi'(E'(\Q))$.)  It follows that $n_1$ is the order of
+$E(\Q)/\phi'(E'(\Q))$, as stated above, and hence that
+$$
+   \left|\Sha(E'/\Q)[\phi']\right| = n_2/n_1.
+$$
+Similarly, from the exact sequence
+$$
+   0 \to E'(\Q)/\phi(E(\Q)) \to S^{(\phi)}(E/\Q) \to \Sha(E/\Q)[\phi]\to 0
+$$
+with similarly defined maps, we obtain
+$$
+   \left|\Sha(E/\Q)[\phi]\right| = n'_2/n'_1.
+$$
+
+Thus the result is only genuinely ambiguous when either
+$\Sha(E/\Q)[\phi]$ or $\Sha(E'/\Q)[\phi']$ is non-trivial, so that not
+all elements of the Selmer groups are obtained from rational points on
+the elliptic curves.  This is rare for the curves in the tables, but
+obviously must be taken into account in general.  A typical situation
+is to have $n_2n_2'=16$ and $n_1n_1'\ge4$, when one suspects that
+$r=0$ with $\left|\Sha(E/\Q)[2]\right|=4$ or
+$\left|\Sha(E'/\Q)[2]\right|=4$, but where it is possible instead that
+$r=2$ and $\left|\Sha(E/\Q)[2]\right|=\left|\Sha(E'/\Q)[2]\right|=1$.
+Curve 960D1 in the tables is an example of this, although in this case
+since the curve is modular and we know that $L(E,1)\not=0$, it must
+have rank~0 by the result of Kolyvagin mentioned earlier.  We can also
+deduce this by working with the $2$-isogenous curves 960D3 and 960D2,
+where there is no ambiguity: here $n_1=n_2=n'_1=n'_2=2$, showing that
+the rank is certainly~0.  (Note that isogenous curves have the same
+rank, but not necessarily the same order of $\Sha$, which can work to
+our advantage in cases like this.)  Returning to the pair 960D1-960D2
+where we compute $n_1=n_2=1$, $n'_2=16$ and $n'_1\ge4$, now we know
+that the rank is in fact zero we can conclude that $n'_1=4$, and that
+$\left|\Sha(E/\Q)[\phi]\right|=4$.  The nontriviality of $\Sha(E/\Q)$
+in this case is confirmed by the \BSD\ conjecture, which for this
+curve predicts that $\Sha$ has order~4 (see Table~4).
+
+Local solubility of $H(d_1,c,d_2)$ is automatic for all primes $p$
+which do not divide $2dd'$; for those $p$ which do divide $2dd'$ we
+may apply the general criteria of Birch and Swinnerton-Dyer. Local
+solubility in $\R$ is easy to determine here: if $d'<0$ then we
+require $d_1>0$, while if $d'>0$ then either $d_1>0$ or
+$c+\sqrt{d'}>0$ is necessary.  Thus if either $d'<0$, or $d'>0$ and
+$c+\sqrt{d'}<0$, then we only consider positive divisors~$d_1$ of~$d$,
+and need not apply the general test for solubility in~$\R$.
+
+Each rational point $(u,v)$ on $H(d_1,c,d_2)$ maps, as observed above,
+to the point $(d_1u^2,d_1uv)$ on $E$; modulo $\phi'(E'(\Q))$, this is
+independent of the rational point $(u,v)$, and only depends on $d_1$
+modulo squares.  Similarly, a rational point $(u,v)$ on
+$H(d_1',c',d_2')$ maps to a point on $E'$, and hence via the dual
+isogeny $\phi'$ to the point
+$$
+  \left(\frac{v^2}{4u^2} , \frac{v(d_1'u^4-d_2')}{8u^3}\right)
+$$
+in $E(\Q)$.  The set of $n_1n_1'$ points in $E(\Q)$ thus determined
+(by adding the points constructed in this way) cover the cosets of
+$E(\Q)/2E(\Q)$, either once each, when $|E(\Q)[2]|=4$, which is when
+$d'$ is a square, or twice, when $d'$ is not a square and
+$|E(\Q)[2]|=2$.  Thus, when $|E(\Q)[2]|=2$ we have
+$$ 
+  \frac{n_1n_1'}{2} = |E(\Q)/2E(\Q)| = 2^{r+1},
+$$
+while if $|E(\Q)[2]|=4$ we have
+$$
+   n_1n_1' = |E(\Q)/2E(\Q)| = 2^{r+2};
+$$
+hence $2^r=n_1n_1'/4$ in both cases, proving (\rankeqn).
+
+When counting $n_1$ and~$n_2$ (and similarly, $n'_1$ and~$n'_2$), it
+is very useful to use the fact that each is a power of~2, being the
+order of an elementary abelian $2$-group.  This is particularly
+important when $d$ (or $d'$) has many distinct prime factors.  Let
+$A_0$ be the group of all divisors of $d$ modulo squares, of order
+$n_0$ (say).  Then $A_0$ is generated by $-1$ and the primes dividing
+$d$, so that $n_0=2^{e_0}$ where $e_0$ is the number of distinct
+prime factors of~$d$, plus~1.  Within $A_0$ we must determine the
+subgroups $A_1$ and $A_2$ of orders $n_1$ and $n_2$, consisting of
+those divisors $d_1$ of~$d$ for which the corresponding homogeneous
+space is everywhere locally or globally soluble, respectively.
+
+We can effectively reduce the size of the set $A_0$ of divisors to be
+searched by a factor up to~$8$ as follows: as observed above, if
+either $d'<0$, or $d'>0$ and $c+\sqrt{d'}<0$, then we need only
+consider positive divisors~$d_1$ of~$d$, cutting in two the number of
+elements of $A_0$ which may lie in $A_1$.  Secondly, we may take
+advantage of the fact that we know the rational point $(0,0)$ on $E$;
+thus we know that $d$ is in $A_2$ (though possibly just the identity
+if $d$ is a square); similarly, if $d'$ is a square then $x^2+cx+d$
+factorizes, say as $(x-x_2)(x-x_3)$, and we know that $x_2$ and~$x_3$
+also lie in $A_2$.
+
+More generally, whenever we find in the course of our systematic
+search through the elements of $A_0$ that the element $d_1$ lies in
+$A_2$, we can effectively factor out $d_1$ and reduce the number of
+remaining values to check by a factor of~2.  Of course, this requires
+careful book-keeping in the implementation; for simplicity, we omit
+these refinements from the pseudocode below, where we simply loop over
+all square-free divisors of $d$ and~$d'$.
+
+As an example of the saving that can be made, consider the curve 
+%$$   [0,36861504658225, 0, 1807580157674409809510400, 0]$$ 
+of rank~13 constructed by Fermigier in \cite\Ferm; this is of the form
+$y^2=x(x^2+cx+d)$ with
+$$
+\align
+c &= 36861504658225 \qquad\text{and}\\
+d &= 1807580157674409809510400 = 2^{15}\cdot3^4\cdot5^2\cdot7^2\cdot17\cdot23\cdot29\cdot41\cdot103\cdot113\cdot127\cdot809,\\
+\endalign
+$$
+so that $d$ has~12 distinct prime factors and $2^{13}=8192$
+square-free divisors.  Since $d$ is non-square we can cut the set in
+half, say by excluding all $d_1$ divisible by the largest prime
+factor~$809$, leaving 4096 values to test.  In our implementation, the
+results of the test are as follows:
+\item{$\bullet$}7 non-trivial values of $d_1$ give rational points after
+searching, as well as $d_1=1$ which gives the trivial point;
+\item{$\bullet$}120 further values are in the subgroup $A_2$ generated by these 7
+values and need not be tested;
+\item{$\bullet$}122 further values were tested and found to be not everywhere locally
+soluble, hence not in~$A_1$;
+\item{$\bullet$}3846 further values were discarded as being a product of an
+element of $A_2$ and an element not in $A_1$, and hence not in~$A_1$.
+
+\noindent
+Thus in this case we find that $n_1=n_2=256$, after only having to
+search for points on seven homogeneous spaces.  Working with the
+isogenous curve, we obtain $n'_1=n'_2=128$ after only searching six
+homogeneous spaces for points.  Thus $e_1=8$, $e'_1=7$ and the rank
+is~13. Note that in the course of computing this value, we have
+searched precisely 13 homogeneous spaces, and the points we thereby
+construct give 13 generators of $E(\Q)/2E(\Q)$ modulo torsion.
+Adding $P=(0,0)$ to this list gives 14 points which generate
+$E(\Q)/2E(\Q)$ (which has order $2^{14}$), and which therefore
+generate a subgroup of finite odd index in the full Mordell-Weil group
+$E(\Q)$.
+
+The situation is not always this simple, however, even for curves
+where $\Sha[2]$ is trivial, since there may be homogeneous spaces with
+rational points which are hard to find.  For example, consider
+Fermigier's curve
+%$$ [0,2429469980725060,0,275130703388172136833647756388,0]$$ 
+of rank~14 from \cite\Ferm, with $c=2429469980725060$ and
+$d=275130703388172136833647756388$ (which has 14 prime factors).  When
+we run our program using a (logarithmic) bound of~10 in the search for
+rational points on the quartics, we find $n_1\ge64$, $n'_1\ge128$,
+while $n_2=n'_2=256$.  Here the correct values are $n_1=n'_1=256$,
+giving $r=14$, but we only find $11\le r\le14$; and in the process, we
+have had to search many more homogeneous spaces for rational points.
+
+Here is the pseudo-code which implements the algorithm just described.
+The main routine aborts if either the input curve is singular (this is
+useful if one wants to apply the algorithm systematically to a range
+of inputs) or if there is no point of order two.  The latter is
+detected in lines~6--7, where an integer root to a monic cubic with
+integer coefficients is found (if it exists).  Most of the work is
+done in the subroutine {\tt count(c,d,p\_list)} which determines
+$n_2(c,d)$ and, as far as possible, $n_1(c,d)$.  Here {\tt p\_list} is
+the set of `bad' primes dividing $2dd'$ where local solubility needs
+to be checked, which we only compute once.  There are two
+calls to the subroutine {\tt rational\_point(a,b,c,d,e,k1,k2)}, which
+seeks a rational $u/w$ with $k_1\le |u|+w \le k_2$ such that $g(u/w)$
+is a rational square, where $g(x)=ax^4+bx^3+cx^2+dx+e$.  (Here $w>0$
+and $\gcd(u,w)=1$.)  In the first call we carry out a quick check for
+`small' points; then we look further, having first checked for
+everywhere local solubility.  The particular parameters {\tt lim1},
+{\tt lim2} for the search will probably be decided at run time. The
+subroutines {\tt Qp\_soluble} and {\tt rational\_point} are
+implementations of the algorithms given earlier (though in practice we
+would use a more efficient algorithm for the second call to {\tt
+rational\_point}, as explained above).
+
+\beginalg{Algorithm for computing rank: rational $2$-torsion case}
+\+INPUT:   &&&a1, a2, a3, a4, a6 &&&&(coefficients of $E$)\cr %
+\+OUTPUT:  &&&r\_min, r\_max &&&&(bounds for rank of $E$)\cr
+\+         &&&S,S' &&&&(upper bounds for $\#\Sha(E)[\phi]$ and $\#\Sha(E')[\phi']$)\cr
+\smallskip \lineno=0
+%
+\nline BEGIN\cr
+\nline IF a1=a3=0 \cr
+\nline THEN s2 = a2; s4 = a4; s6 = a6\cr
+\nline ELSE s2 = a1*a1+4*a2; s4 = 8*(a1*a3+2*a4); s6 = 16*(a3*a3+4*a6)\cr
+\nline FI; \cr
+\nline x\_list = integer\_roots(x\3+s2*x\2+s4*x+s6=0); \cr
+\nline IF length(x\_list)=0 THEN abort ELSE x0 = x\_list[1] FI; \cr
+\nline c = 3*x0+s2; d = (c+s2)*x0 + s4; \cr
+\nline c' = -2*c; d' = c\2-4*d; \cr
+\nline IF d*d'=0 THEN abort FI; \cr
+\nline p\_list = prime\_divisors(2*d*d'); \cr
+\nline (n1,n2) = count(c,d,p\_list); \cr
+\nline (n1',n2') = count(c',d',p\_list); \cr
+\nline e1 = log\_2(n1); e2 = log\_2(n2); \cr
+\nline e1' = log\_2(n1'); e2' = log\_2(n2'); \cr
+\nline r\_min = e1+e1'-2; r\_max = e2+e2'-2; \cr
+\nline S = n2'/n1'; S' = n2/n1; \cr
+\nline RETURN r\_min, r\_max, S, S' \cr
+\nline END\cr
+%
+\medskip
+\comm{Main counting subroutine}
+\smallskip\lineno=0
+%
+\+ SUBROUTINE count(c,d,p\_list)\cr
+\nline BEGIN\cr
+\nline n1 = n2 = 1; d' = c\2-4*d; \cr
+\nline d1\_list = squarefree\_divisors(d);\cr
+\nline FOR d1 IN d1\_list DO\cr
+\nline BEGIN \cr
+\nline &IF rational\_point(d1,0,c,0,d/d1,1,lim1) \cr
+\nline &THEN n1 = n1+1; n2 = n2+1 \cr
+\nline &ELSE\cr
+\nline &&IF everywhere\_locally\_soluble(c,d,d',d1,p\_list) \cr
+\nline &&THEN \cr
+\nline &&&n2 = n2+1; \cr
+\nline &&&IF rational\_point(d1,0,c,0,d/d1,lim1+1,lim2)\cr
+\nline &&&THEN n1 = n1+1 \cr
+\nline &&&FI\cr
+\nline &&FI \cr
+\nline &FI\cr
+\nline END;\cr
+\nline RETURN (n1, n2)  \cr
+\nline END\cr
+%
+\medskip
+\comm{Subroutine to check for everywhere local solubility}
+\smallskip\lineno=0
+%
+\nline SUBROUTINE everywhere\_locally\_soluble(c,d,d',d1,p\_list)\cr
+\nline BEGIN\cr
+\nline IF d'<0 AND d1<0 THEN RETURN FALSE FI;\cr
+\nline IF d'>0 AND d1<0 AND (c+sqrt(d'))<0 THEN RETURN FALSE FI;\cr
+\nline FOR p IN p\_list DO\cr
+\nline BEGIN\cr
+\nline &IF NOT Qp\_soluble(d1,0,c,0,d/d1,p) THEN RETURN FALSE FI\cr
+\nline END; \cr
+\nline RETURN TRUE\cr
+\nline END\cr
+\endalg
+
+\subhead Method 2: general two-descent \endsubhead
+
+We now turn to the general two-descent, which applies whether or not
+$E$ has a rational point of order~2.  Again, the basic idea is to
+associate to $E$ a collection of $2$-covering quartic curves (or
+homogeneous spaces) $H$.  These have equations of the form
+$$
+   H: \qquad   y^2 = g(x) = ax^4+bx^3+cx^2+dx+e \tag\phseqn 
+$$
+with $a,b,c,d,e\in\Q$, such that the \und{invariants}
+$$
+  I =  12ae-3bd+c^2 \qquad\text{and}\qquad J= 72ace+9bcd-27ad^2-27eb^2-2c^3
+$$
+are related to the $c_4$ and $c_6$ invariants of $E$ via
+$$
+   I=\lambda^4c_4 \qquad\text{and}\qquad J=2\lambda^6c_6
+$$
+for some $\lambda\in\Q^*$.  Two such quartics $g_1(x)$, $g_2(x)$ are
+\und{equivalent} if
+$$
+   g_2(x) = \mu^2 (\gamma x+\delta)^4 g_1\kern-3pt\left(\frac{\alpha
+                                 x+\beta}{\gamma x+\delta}\right) 
+$$
+for some $\alpha$, $\beta$, $\gamma$, $\delta$ and $\mu\in\Q$, with $\mu$  and
+$\alpha\delta-\beta\gamma$ non-zero.    The invariants of $g_1(x)$ and $g_2(x)$
+are then related by the scaling factor 
+$\lambda=\mu(\alpha\delta-\beta\gamma)$: 
+$$\align
+    I(g_2)&=\mu^4(\alpha\delta-\beta\gamma)^4 I(g_1), \cr
+    J(g_2)&=\mu^6(\alpha\delta-\beta\gamma)^6 J(g_1). \cr
+  \endalign
+$$ 
+We set $\Delta=4I^3-J^2=27\disc(g)$, and call $\Delta$ the
+discriminant.
+
+In particular, by scaling up the coefficients, we may assume that the
+invariants $I$ and $J$ are integral. The number of equivalence classes
+of quartics with given invariants (up to a scaling factor
+$\lambda$) which are everywhere locally soluble is finite.  One of our
+tasks will be to determine, for a given integral quartic, an
+equivalent integral one with minimal invariants.  This process is
+closely analogous to the one considered earlier in this chapter, using
+Kraus's conditions or Tate's algorithm to determine minimal models for
+elliptic curves.  Indeed, we will see below that if $c_4$ and~$c_6$
+are invariants of a minimal model for the elliptic curve~$E$, then
+$I=c_4$ and~$J=2c_6$ are also minimal, except possibly at the
+prime~$2$.  (We may lose minimality at~$2$ because the equations
+(\phseqn) we use for homogeneous spaces are not completely general,
+not having terms in $y$, $xy$ or~$x^2y$; to remove these by completing
+the square involves a scaling by a factor of~$2$.)
+
+\def\EIJ{E_{I,J}}
+\def\EIJQ{E_{I,J}(\Q)}
+We now explain the relationship between equivalence classes of soluble
+quartics with invariants $I$ and~$J$ and rational points on the
+elliptic curve.  More details of this relationship, including proofs,
+may be found in \cite\JCinvariants.  For convenience, we again start
+by making a coordinate transformation: if $c_4$ and~$c_6$ are the
+integral invariants of our curve~$E$, we set $I=c_4$ and $J=2c_6$, and
+replace $E$ by the isomorphic curve
+\neweq\EIJdef
+$$
+   \EIJ:\quad Y^2 = F(X) = X^3 -27IX-27J. \tag\EIJdef
+$$
+This is the model on which the rational points we construct will
+naturally lie; it is then a simple matter to transfer them back to the
+original model for~$E$.  For simplicity, we will still continue to
+refer to the curve simply as $E$ when this will not cause confusion.
+
+Associated to each quartic $g$ there are two so-called
+\und{covariants}, which we denote $g_4$ and~$g_6$:\neweq\gfoursixdef
+$$\aligned
+  g_4(X,Y) &= (3b^2 - 8ac) X^4 
++ 4 (bc - 6ad)             X^3Y 
++ 2 (2c^2 - 24ae - 3bd)    X^2Y^2 \\
+&\quad+ 4 (cd - 6be)            X  Y^3 
++   (3d^2-8ce)                Y^4,\\
+%
+  g_6(X,Y) &= (b^3 + 8a^2d - 4abc)   X^6 
++ 2 (16a^2e + 2abd - 4ac^2 + b^2c)  X^5 Y \\
+&\quad+ 5 (8abe + b^2d - 4acd)            X^4 Y^2
++ 20(b^2e - ad^2)                   X^3 Y^3 \\
+&\quad- 5 (8ade + bd^2 - 4bce)            X^2 Y^4 
+- 2 (16ae^2 + 2bde - 4c^2e + cd^2 ) X   Y^5 \\
+&\quad-   (d^3 + 8be^2 - 4cde)                Y^6.
+\endaligned\tag\gfoursixdef
+$$
+Wherever convenient, we will also denote by $g$ the homogenized
+polynomial $g(X,Y)=aX^4+bX^3Y+cX^2Y^2+dXY^3+eY^4$.  These three
+homogeneous polynomials satisfy an algebraic identity, or
+syzygy:\neweq\covarsyz
+$$
+   27g_6^2 = g_4^3 - 48Ig^2g_4 - 64Jg^3. \tag\covarsyz
+$$
+Later we will also need a simpler form of this syzygy; set\neweq\semidef
+$$
+   p=g_4(1,0)=3b^2-8ac \qquad\text{and}\qquad
+   r=g_6(1,0)=b^3 + 8a^2d - 4abc;               \tag\semidef
+$$
+these quantities are called \und{seminvariants} of~$g$.  Substituting
+$(X,Y)=(1,0)$ in the covariant syzygy (\covarsyz) gives an identity
+(the seminvariant syzygy) between these seminvariants:\neweq\semisyz
+$$
+  27r^2 = p^3 - 48Ia^2p - 64Ja^3. \tag\semisyz
+$$
+We will make use of this equation in our search for quartics with
+given invariants, where it will allow us to set up a quadratic sieve.
+
+It follows from the covariant syzygy (\covarsyz), by simple
+substitution, that the map\neweq\ximap
+$$
+  \xi:\quad   \left({x},{y}\right)
+      \mapsto \left(\frac{3g_4(x,1)}{(2y)^2},\frac{27g_6(x,1)}{(2y)^3}\right)
+\tag\ximap
+$$
+maps rational points $(x,y)$ on $H$ (satisfying $y^2=g(x,1)$) to
+rational points on~$\EIJ$, thus defining a rational map~$\xi$, of
+degree~4, from $H(\Q)$ to~$\EIJQ$.  We are using affine coordinates
+here; the points at infinity on $H$ map to
+$\left(\dfrac{3p}{4a},\dfrac{\pm27r}{(4a)^{3/2}}\right)$, which are
+rational if and only if $a$ is a square.
+
+We now have the following facts (see \cite\JCinvariants\ for details):
+
+$\bullet$ If $R\in H(\Q)$ with $P=\xi(R)\in\EIJQ$, then the coset of
+$P$ modulo $2\EIJQ$ is independent of~$R$, and of the particular
+quartic~$g$ up to equivalence; in fact, equivalences between quartics
+induce rational maps between the associated homogeneous spaces, and
+the covariant property of $g_4$ and $g_6$ ensures that corresponding
+rational points on the homogeneous spaces have the same image in
+$\EIJQ$.
+
+$\bullet$ Each rational point $P=(x,y)\in\EIJQ$ arises as the image of a
+rational point on some quartic~$g$ with invariants $I$ and~$J$:
+explicitly, one can take the rational point at infinity on the quartic
+with coefficients $(a,b,c,d,e)=(1,0,-x/6,y/27,I/12-x^2/432)$;  the
+equivalence class of~$g$ depends only on the coset of $P$
+modulo~$2\EIJQ$. 
+
+$\bullet$ The equivalence classes of everywhere locally soluble
+quartics with invariants $I$ and~$J$ form a finite elementary abelian
+$2$-group, isomorphic to the $2$-Selmer group $S^{(2)}(E/\Q)$.
+
+$\bullet$ The equivalence classes of soluble quartics with invariants
+$I$ and~$J$ form a finite elementary abelian $2$-group isomorphic to
+$E(\Q)/2E(\Q)$; the identity is the \und{trivial} class, consisting of
+quartics with a rational root.
+
+$\bullet$ More generally, when $E$ has no $2$-torsion, for any
+extension field~$K$ of~$\Q$ there is a bijection between the roots of
+$g(x)$ in $K$ and the solutions $Q\in\EIJ(K)$ to the equation $2Q=P$
+(where $P=\xi(R)$ for $R\in H(\Q)$ as above).  In particular,
+non-trivial quartics are irreducible in this case.  We will use this
+fact with $K=\R$ later.
+
+We therefore classify the set of equivalence classes of quartics with
+invariants $I$ and~$J$ as follows:
+\roster
+\item[0] the trivial class consists of those quartics $g(x)$ which
+have a rational root. These are elliptic curves isomorphic to $E$ over
+$\Q$.
+\item those which have a rational point: these are also elliptic curves, 
+isomorphic to~$E$ over~$\Q$.
+\item those which have points everywhere locally.
+\item those which fail to have points everywhere locally.
+\endroster
+Let the number of inequivalent quartics in the first three sets be
+$n_0=1$, $n_1$ and $n_2$.  (Those in the last set will not be used.)
+Because of the group structure, each of these numbers is a power
+of~$2$.  We write $n_i=2^{e_i}$ for $i=1,2$.
+
+As in the case of descent via $2$-isogeny, Galois cohomology gives an
+exact sequence
+$$
+   0 \to E(\Q)/2E(\Q) \to S^{(2)}(E/\Q) \to \Sha(E/\Q)[2] \to 0.
+$$
+Thus the quotient of $S^{(2)}(E/\Q)$ by the image of $E(\Q)$ is
+isomorphic to $\Sha(E/\Q)[2]$, the $2$-torsion subgroup of the \TS\
+group $\Sha(E/\Q)$.  So it is the points of order~2 in $\Sha(E/\Q)$,
+if any, which account for the possible existence of homogeneous spaces
+which have points everywhere locally but not globally, and we have
+$$
+   \left|\Sha(E/\Q)[2]\right| = n_2/n_1.
+$$
+As before, the potential practical difficulty lies in determining
+whether each homogeneous space~$H$ has a rational point, as there is
+no known algorithm to do this in general.  Again, for the vast
+majority of the curves in the tables, we found a rational
+point easily on each space which was everywhere locally soluble, which
+not only determined the rank of $E$, but also implied that the \TS\
+group had no $2$-torsion.  The only example with $n_1<n_2$ in the
+tables (for a curve with no $2$-torsion) is curve 571A1, where $n_1=1$
+and $n_2=4$; here the rank is~$0$, and $\left|\Sha(E/\Q)[2]\right|=4$;
+the \BSD\ conjecture predicts $\left|\Sha(E/\Q)\right|=4$.
+
+The steps of the algorithm are as follows: first we determine the pair
+or pairs of integral invariants $(I,J)$ such that every quartic
+associated with our curve $E$ is equivalent to one with integer
+coefficients and these invariants.  There will be either one or two
+such pairs.  For each pair $(I,J)$, we find a finite set of quartics
+with invariants $(I,J)$ such that every non-trivial, everywhere
+locally soluble quartic with these invariants is equivalent to one in
+the list.  This is the most time-consuming step, as the search region
+can be very large when $I$ and $J$ are large.  Now we must test the
+quartics in our list pairwise for equivalence, discarding those
+equivalent to earlier ones; look for rational points; and test
+everywhere local solubility.  Again, there may be quartics where we do
+not find rational points despite their having points everywhere
+locally, so that although we can always (given enough time) determine
+$n_2$, we may in some cases only find bounds on $n_1$.  Since
+$n_1=\left|E(\Q)/2E(\Q)\right|$, we can then compute the rank $r$, or
+bounds on the rank.  Usually, $E$ will have no rational $2$-torsion,
+or we would probably be using descent via $2$-isogeny, and then
+simply $2^r=n_1$.
+
+We now consider each of these steps in more detail.
+
+\subhead Step 1: Determining the invariants $(I,J)$ \endsubhead
+
+Given an integral quartic~$g$ with invariants $I$ and~$J$, we must
+consider the question of whether there exists an equivalent integral
+quartic with smaller invariants.  The smaller invariants will have the
+form $\lambda^{-4}I$, $\lambda^{-6}J$ with $\lambda\in\Q^*$.  In
+\cite{\BirchSD, Lemmas 3--5}, conditions are stated under which $g$ is
+equivalent to an integral quartic with invariants $p^{-4}I$, $p^{-6}J$
+for a prime $p$; we call such a quartic \und{$p$-reducible}, otherwise
+\und{$p$-minimal}.  Clearly a necessary condition for reducibility is
+that $p^4\div I$ and $p^6\div J$.  We say that the pair $(I,J)$ is
+\und{$p$-reducible} if every integral quartic with these invariants
+\und{which is $p$-adically soluble} is equivalent to an integral quartic
+with invariants $p^{-4}I$ and $p^{-6}J$.
+
+The question of $p$-reducibility is almost completely settled by the
+following proposition.  The result is simplest for primes greater
+than~$3$, but even for these it is important to note that the
+assumption of $p$-adic solubility is necessary for reduction to be
+possible when the divisibility conditions are satisfied.
+
+\newprop\IJreduction
+\proclaim{Proposition \IJreduction}Let $I$ and $J$ be integers such that
+$\Delta=4I^3-J^2\not=0$. 
+\roster
+\item If $p$ is a prime and $p\ge5$, then $(I,J)$ is $p$-reducible if and
+only if $p^4\div I$ and $p^6\div J$.
+\item $(I,J)$ is $3$-reducible if and only if {\it
+either\/} $3^5\div I$ and $3^9\div J$, {\it or\/} $3^4\div\div I$,
+$3^6\div\div J$ and $3^{15}\div\Delta$.
+\item $(I,J)$ is $2$-reducible if $2^6\div I$, $2^9\div J$ and
+$2^{10}\div 8I+J$.
+\endroster
+\endproclaim
+
+This proposition is stated in \cite\BirchSD\ as Lemmas~3--5, but only
+the proof of Lemma~3 (covering the case $p\ge5$) is given there.
+Complete proofs in all cases (which are elementary though somewhat
+lengthy) can be found in \cite\PSthesis.
+
+Note that for $p=2$ we only have sufficient conditions for
+reducibility.  Because of this, we will sometimes have to consider two
+pairs of invariants, a smaller pair $(I_0,J_0)$ and a larger pair
+$(16I_0,64J_0)$.  However, when searching for integral quartics with
+the larger invariants, we may assume that the quartic cannot be
+$2$-reduced, and this provides us with useful congruence conditions on
+the coefficients of such a quartic.  We state these here.
+
+\newprop\twoconditions
+\proclaim{Proposition \twoconditions}
+Let $g$ be an integral $2$-adically soluble quartic whose invariants
+satisfy $2^4\div I$ and $2^6\div J$, such that
+\roster
+\item $g$ is not equivalent to an integral quartic with invariants
+$2^{-4}I$ and~$2^{-6}J$;
+\item $g$ is not equivalent to an integral quartic with the same 
+invariants $I$ and~$J$ and smaller leading coefficient~$a$.
+%\item $g$ is $2$-adically soluble.  
+\endroster
+Then the coefficients of $g$ satisfy
+\roster
+\item"(a)" $2\ndiv a$, $2^2\div b$, $2\div c$, $2^4\ndiv e$ and $2^4\ndiv
+a+b+c+d+e$; \quad or
+\item"(b)" $2\div\div a$, $2^2\div b$, $2^2\div c$, $2^3\ndiv e$ and $2^3\ndiv a+b+c+d+e$.
+\endroster
+Moreover, if $2^6\div I$ and $2^7\div J$, then we must have
+\roster
+\item"(a')" $2\ndiv a$, $2^2\div b$, $2^2\div\div c$, $2^3\div d$, and
+$2^2\div\div e$; \quad or
+\item"(b')" $2\ndiv a$, $2^2\div b$, $2^2\div\div c-2a+3b$, $2^3\div
+d-b$ and $2^2\div\div a+c+e$.
+%%%\item"(a')" $2\ndiv a$, $2^2\div b$, $c\equiv4\pmod8$, $d\equiv0\pmod8$, and
+%%%$e\equiv4\pmod8$; \quad or
+%%%\item"(b')" $2\ndiv a$, $2^2\div b$, $c\equiv 2a-3b+4\pmod8$, $d\equiv
+%%%b\pmod8$ and $a+c+e\equiv4\pmod8$.
+\endroster
+\endproclaim
+
+The first set of conditions stated here were given in \cite\BirchSD;
+the second set are from \cite\PSthesis, which contains complete proofs
+in both cases.  
+
+Using this proposition, we may ensure that few of the quartics we find
+when searching the larger pair of invariants are equivalent to one
+with smaller invariants.  More significantly in terms of running time,
+we have extra congruence conditions to apply when searching for the
+larger invariants, which speeds up this search.
+
+%in \cite\PSthesis\ it is estimated that these congruence conditions
+%save about 60\% of the CPU time needed for the larger $(I,J)$ pair,
+%which in turn takes about 90\% of the time.
+
+It would appear that rational points in $E(\Q)$ whose quartics have
+the larger pair of invariants lie in certain components of the
+$2$-adic locus $E(\Q_2)$.  Further study of this would be very useful,
+since if the search for quartics with the larger pair of invariants could
+be eliminated or curtailed, it could result in a major saving of time
+in the algorithm.
+
+In practice, suppose that our original curve $E$ is given by a minimal
+equation, with invariants $c_4$ and $c_6$.  We set $I=c_4$ and
+$J=2c_6$.  Clearly the pair $(I,J)$ is $p$-minimal for $p\ge5$: for if
+$p^4\div I$ and $p^6\div J$ then $p^{-4}c_4$ and $p^{-6}c_6$ would be
+integral invariants of an elliptic curve, contradicting minimality
+of~$E$, and similarly the pair $(p^4I,p^6J)$ is certainly
+$p$-reducible by Proposition \IJreduction \therosteritem1.  Less
+obvious is that $(I,J)$ is also $3$-minimal; using Kraus's conditions,
+it is easy to check first that $(3^4I,3^6J)$ is certainly
+$3$-reducible (one needs here that $\ord_3(c_6)\not=2$), and then that
+$(I,J)$ itself is not $3$-reducible, using Proposition \IJreduction
+\therosteritem2.
+
+For $p=2$, the best we can do is the following.  First set $I=c_4$ and
+$J=2c_6$.  Replace $(I,J)$ by $(2^{-4}I,2^{-6}J)$ if $2^4\div I$ and
+$2^6\div J$; the resulting pair $(I,J)$ (which will not be further
+divisible by~$2$) will be the basic pair of invariants.  Then we also
+use the pair $(16I,64J)$ unless $4\div I$, $8\div J$ and
+$16\div(2I+J)$.
+
+The result of this step is then to produce either one or two pairs of
+invariants $(I,J)$.  In the latter case, the following steps must be
+carried out with both pairs separately.  
+%
+%Provided that we impose the extra congruence conditions on the quartic
+%coefficients when using the larger pair, we will not need to test
+%equivalence between quartics with different invariants.
+%
+
+\subhead Step 2: Finding the quartics with given $I$ and $J$ \endsubhead
+
+We now have a fixed pair of invariants $(I,J)$ with
+$\Delta=4I^3-J^2\not=0$, and we wish to find all integral quartics
+with these invariants, up to equivalence.  We classify the quartics
+$g(x)$ into types, according as $g(x)$ has no real roots (type~1),
+four real roots (type~2) or two real roots (type~3).  When $\Delta<0$
+only type~3 is possible, while if $\Delta>0$, only types 1 and~2 are
+possible.  For each relevant type, we now determine a finite list of
+quartics of that type with the given invariants such that every
+soluble quartic with these invariants is equivalent to at least one on
+the list.  We can ignore quartics which are negative definite (type~1
+with $a<0$), since they will not be soluble over $\R$.  For each type,
+we will determine a finite region of $(a,b,c)$-space such that every
+quartic with invariants $I$ and~$J$ is equivalent to at least one in
+this region.
+
+As observed above, the number of real roots of $g(x)$ is equal to the
+number of points $Q\in E(\R)$ satisfying $2Q=P$, where $P\in E(\R)$ is
+the image under the map~$\xi$ of any real point on the homogeneous
+space~$H$ with equation $y^2=g(x)$.  When $\Delta<0$, the real locus
+is in one component, and $E(\R)$ is isomorphic to the circle group,
+which is $2$-divisible with two $2$-torsion points, so in this case
+the equation $2Q=P$ has exactly two solutions for all $P\in E(\R)$.
+This agrees with the observation just made, that quartics with
+negative discriminant~$\Delta$ will all have exactly two real roots.
+
+Consider further the case $\Delta>0$.  Now $E(\R)$ has two components,
+the connected component of the identity $E^0(\R)$ and a second
+component which we call the `egg'.  There are four $2$-torsion
+points, and $2E(\R) = E^0(\R)$.  There are therefore two possibilities
+for a point $P\in E(\R)$ and its associated real quartic: if $P\in
+E^0(\R)$, then there are four solutions~$Q$ to $2Q=P$, and $P$ will be
+associated to a quartic of type~2 with four real roots.  On the other
+hand, if $P\notin E^0(\R)$, then there are no solutions and the
+quartic associated to~$P$ will be of type~1, with no real roots.
+
+The image of $E(\Q)$ in $E(\R)/2E(\R)$ has order~$2$ or~$1$, depending
+on whether or not there are any rational points on the egg.  Thus
+there are two sub-cases to the case $\Delta>0$: if $E(\Q)\subset
+E^0(\R)$, then there are no rational points on the egg, the index
+is~$1$, and there will be {\it no\/} soluble quartics of type~1; on
+the other hand, if $E(\Q)\not\subset E^0(\R)$, then there are rational
+points on the egg, the index is~$2$, and there are equal numbers of
+(equivalence classes of) soluble quartics of types 1 and~2.  Those of
+type~2 will lead to rational points on $E(\Q)\cap E^0(\R)$, while
+those of type~1 will lead to rational points on the egg.
+
+To take advantage of this in practice, when $\Delta>0$ we will first
+look for quartics of type~2; let the number of these be $n_1^+$, where
+$n_1/n_1^+$ is either 1 or~2.  At this stage we will already know the
+rank to within one, since if we set $r^+=\log_2(n_1^+)$ then (assuming
+no rational $2$-torsion) we have either $r=r^+$ or $r=r^++1$.  Then we
+start to look for quartics of type~1; as soon as we find one which is
+soluble, then we may abort the search for type~1 quartics at that
+point, and assert that $r=r^++1$.  On the other hand, if we complete
+the search for quartics of type~1 without finding any soluble ones,
+then we will know that $r=r^+$, and we will have proved that there are
+no rational points on the egg.  An example of the second possibility
+happens with the curve $E=[0,0,1,-529,-3042]$ (which is the
+$-23$-twist of the curve $[0,0,1,-1,0]$ with conductor~37 and rank~1),
+which has rank~1 with generator $(46,264)$ on the identity component,
+and no rational points on the egg.%
+\footnote{Thanks to Nelson Stephens for this example.}
+
+If we happened to know in advance that there were rational points on
+the egg (perhaps by a short preliminary search for such points with
+small height), then we would already know that $r=r^++1$, and we would
+not need to search for type~1 quartics at all.
+
+In order to find all integral quartics of a given type (up to
+equivalence) we proceed as follows.  First, following \cite\BirchSD,
+we determine bounds on the coefficients $a$, $b$ and~$c$.  We also set
+up a sieve based on the seminvariant syzygy (\semisyz) to speed up our
+search through this region of $(a,b,c)$-space.  For triples $(a,b,c)$
+in the region which pass the sieve, we solve for $d$ and $e$ and
+ensure that they are integral.  Finally, we check that the quartic we
+have constructed satisfies any further congruence conditions we
+require (for example, when we are using the larger pair of
+invariants).
+
+The method for bounding the coefficients which is developed in
+\cite\BirchSD\ involves using the auxiliary (resolvent) cubic equation
+\neweq\auxcubic
+$$
+     \phi^3-3I\phi+J=0 \tag\auxcubic
+$$
+which will have one real root (type 3) or three real roots (types 1
+and 2), since its discriminant is $27\Delta$.  Indeed, $\phi$ is a
+root of (\auxcubic) if and only if $(-3\phi,0)$ is a point of
+order~$2$ on the curve $\EIJ$.  
+
+In each case, the bound for $b$ arises simply from the fact that the
+quartics $g(x)$ and $g(x+k)$ are equivalent, and the coefficients
+of the latter are $(a,b+4ak,\ldots)$, so that we may assume that
+$b$ is reduced modulo~$4a$.  Also, note that the bounds on $c$ are
+effectively bounds on the seminvariant $8ac-3b^2=-p$, which is how they
+arise in \cite\BirchSD.
+
+\subsubhead Bounds for $(a,b,c)$: Type 1 \endsubsubhead
+%
+Here we may assume $a>0$ for real solubility.  Order the three real
+roots of (\auxcubic) as $\phi_1>\phi_2>\phi_3$, and set $K=(4I-\phi_1^2)/3$. 
+Then the bounds on $a$, $b$, $c$ are
+$$ \align
+   0 < {}&a \le \frac{K+K^{\frac12}\phi_1}{3K^{\frac12}+\phi_1+2\phi_2}; \cr
+   -2a< {}&b\le 2a; \cr
+  \frac{4a\phi_2+3b^2}{8a} \le {}&c \le \frac{4a\phi_1+3b^2}{8a}.\cr
+ \endalign
+$$
+
+\subsubhead Bounds for $(a,b,c)$: Type 2 \endsubsubhead
+%
+This subdivides into subtypes according as $a>0$ or $a<0$.  For
+$a>0$ we take $\phi_1>\phi_2>\phi_3$ and search the region
+$$ \align
+   0 < {}&a \le \frac{I-\phi_2^2}{3(\phi_2-\phi_3)}; \cr
+   -2a< {}&b\le 2a; \cr
+  \frac{4a\phi_2-\frac43(I-\phi_2^2)+3b^2}{8a} \le{}&c \le
+\frac{4a\phi_3+3b^2}{8a}.\cr
+ \endalign
+$$
+Then for $a<0$ we take $\phi_1<\phi_2<\phi_3$ and search over 
+$$ \align
+   0 <{} &-a \le \frac{I-\phi_2^2}{3(\phi_3-\phi_2)}; \cr
+   -2|a|< {}&b\le 2|a|; \cr
+  \frac{4a\phi_2-\frac43(I-\phi_2^2)+3b^2}{8a} \ge{} &c \ge
+\frac{4a\phi_3+3b^2}{8a}.\cr
+ \endalign
+$$
+
+\subsubhead Bounds for $(a,b,c)$: Type 3 \endsubsubhead
+%
+Here we let $\phi$ be the unique real root of (\auxcubic), and
+search
+$$ \align
+   \frac13\phi-\sqrt{\frac{4}{27}(\phi^2-I)} \le {}&a \le
+\frac13\phi+\sqrt{\frac{4}{27}(\phi^2-I)}; \cr
+   -2|a|< {}&b\le 2|a|; \cr
+  \frac{9a^2-2a\phi+\frac13(4I-\phi^2)+3b^2}{8|a|} \le {}&c.\sgn(a) \le
+\frac{4a\phi+3b^2}{8|a|}.\cr
+ \endalign
+$$
+
+\subsubhead The syzygy sieve \endsubsubhead
+%
+Recall the seminvariant syzygy
+$$
+  27r^2 = p^3 - 48Ia^2p - 64Ja^3 = s(a,p), \tag\semisyz
+$$
+say, where $p=3b^2-8ac$ and $r=b^3+8a^2d-4abc$.  For fixed $I$, $J$
+the expression $s(a,p)$ is a polynomial in $a$, $b$ and~$c$, which we
+require to be 27~times an integer square.  We can set up a quadratic
+sieve as follows: for each of several sieving moduli $m$ we create and
+initialize an $m\times m$ array indicating whether $s(a,p)$ is
+27~times a square modulo~$m$, for each pair $(a,p)$ modulo~${m}$.  We
+take one of the moduli to be~$9$ and use it to force the right-hand
+side of (\semisyz) to be divisible by~$27$; it will certainly be
+positive, as this is ensured by the bounds on ~$c$.
+
+For each $(a,b,c)$ in the region searched, we check that it passes the
+sieving test; it is then quite likely that $s(a,p)$ will be 27~times a
+square, since it is so modulo a large modulus and is positive.  We
+then test whether this is the case, discarding $(a,b,c)$ if not, and
+if so we then find $r$.  We can take $r>0$, since the quartics with
+coefficients $(a,b,c,d,e)$ and $(a,-b,c,-d,e)$ are equivalent, with
+opposite signs of their respective $r$-seminvariants.  In fact, we
+treat the triples $(a,\pm b,c)$ together in practice.
+
+Implementation note: It is worth pointing out that a large proportion
+of the running time of our algorithm is spent testing whether large
+integers are squares (given that they are positive and congruent to
+squares modulo several carefully chosen moduli), and find their
+integer square root if so.  This is needed here, and in our searches
+for rational points, both on the elliptic curve directly, and on the
+homogeneous spaces.  Hence it is crucial that we have access to
+efficient procedures for this in the multiprecision integer package we
+use.
+
+\subsubhead Solving for $d$ and $e$ \endsubsubhead
+%
+Given integers $a$, $b$, $c$, $r$ satisfying (\semisyz) with
+$p=3b^2-8ac$, we can solve for $d$ and $e$, setting
+$$
+  d = (r - b^3 + 4abc) / (8a^2)  \qquad\text{and}\qquad 
+  e = (I + 3bd - c^2)  / (12a).
+$$
+This will certainly give rational values for $d$ and $e$; we must
+check that they are integral, discarding the triple $(a,b,c)$ if not.
+If they are, we have integral coefficients $(a,b,c,d,e)$ of a quartic
+$g(x)$ with invariants $I$ and $J$ in the search region, which we add
+to our list for further processing.
+
+\subsubhead Solving for the roots of $g(x)$ \endsubsubhead
+%
+For later use, when we check for triviality, and again when we search
+for rational points on the homogeneous spaces, we will need to know
+the real roots of the quartic $g(x)$ we have constructed.  Although
+the formulae for finding the roots of quartic are well-known, we give
+them here: since we already know the roots of the resolvent cubic,
+there is very little work remaining.
+
+For $i=1,2,3$ we set $z_i=(4a\phi_i+p)/3$ where the $\phi_i$ are the
+three roots of (\auxcubic).  The product of these quantities is $r^2$
+(from (\semisyz) again), and we form their square roots with
+product~$r$ by setting $w_1=\sqrt{z_1}$, $w_2=\sqrt{z_2}$, and
+$w_3=r/(w_1w_2)$.  Then the roots of $g(x)$ are
+$$
+  \align
+    x_1 &= (\phantom{-}w_1 + w_2 - w_3 - b) / (4a), \\
+    x_2 &= (\phantom{-}w_1 - w_2 + w_3 - b) / (4a), \\
+    x_3 &= (-w_1 + w_2 + w_3 - b) / (4a), \\
+    x_4 &= (-w_1 - w_2 - w_3 - b) / (4a). \\
+  \endalign
+$$
+
+\bigskip
+
+We will not give here a pseudo-code algorithm for the search for
+quartics, as it is straightforward in principle, although in practice
+it needs careful book-keeping.  As this is the most time-consuming
+part of the whole procedure, particularly when the second, larger,
+pair of invariants must be used, it is important to make the
+implementation code as efficient as possible.  
+
+At the end of this step we will have a list of quartics with the
+desired invariants.  We now discard any which are equivalent to
+earlier ones, or are not locally soluble at some prime $p$, and try to
+find rational roots on the remainder.  In practice we may choose to
+apply these tests in a different order, such as not bothering to check
+equivalences between quartics which are not locally soluble.
+
+\subhead Step 3: Testing triviality \endsubhead
+
+For each quartic $g(x)$ in the list, we already know its roots $x$ to
+reasonable precision.  If $x$ is rational, then $ax$ is integral,
+which we can test.  If we suspect that $ax$ is equal to an integer $n$
+to within some working tolerance, we can check whether $n/a$ is a root
+of $g(x)$ using exact arithmetic.
+
+\subhead Step 3: Testing equivalence of quartics \endsubhead
+
+With each quartic we find with the right invariants, we store its
+coefficients, type, roots and seminvariants $p$ and $r$.  We also
+compute and store the number of roots of the quartic (including roots
+at infinity) modulo each of several primes not dividing its
+discriminant, as these numbers are clearly invariant under
+equivalence.\footnote{This was suggested to us by S. Siksek.}
+
+When testing equivalence of two quartics, we first check that their
+invariants and type are the same, as well as their numbers of roots
+modulo these primes.  If this is the case, we use a general test for
+equivalence (valid over any field) from \cite\JCinvariants, which we
+state here.\footnote{The algorithm presented here only applies to
+quartics.  In the First Edition we presented a different algorithm,
+described in \cite\BirchSD, which is messier to implement, but which
+generalizes more readily to more general situations, such as testing
+the equivalence of binary forms of higher degree.}
+\newprop\zequivalg
+
+\proclaim{Proposition \zequivalg} Let $g_1$ and~$g_2$ be quartics over the
+field~$K$, both having the same invariants $I$ and~$J$, and with
+leading coefficients~$a_i$ and seminvariants $p_i$ and~$r_i$ for
+$i=1,2$.  Then $g_1$ is equivalent to~$g_2$ over~$K$ if and only if
+the quartic $u^4-2pu^2-8ru+s$ has a root in~$K$, where
+$$\align
+p &= (32a_1a_2I + p_1p_2)/3, \\
+r &= r_1r_2, \qquad\text{and}\\
+s &= ( 64I(a_1^2p_2^2 + a_2^2p_1^2 + a_1a_2p_1p_2)
+   - 256a_1a_2J(a_1p_2+a_2p_1) - p_1^2p_2^2) /27.
+\endalign
+$$
+\endproclaim
+
+The quantities $p$, $r$ and~$s$ in this proposition will be integers
+when $g_1$ and $g_2$ are integral.  Converting the proposition into an
+algorithm is straightforward.
+
+\subhead Step 5: Testing local and global solubility \endsubhead
+
+This is carried out using the procedures and strategy described
+earlier.
+
+\subhead Step 6: Final computation of the rank \endsubhead
+
+\def\tn1{\tilde{n}_1}
+\def\te1{\tilde{e}_1}
+
+The number of quartics found (up to equivalence) which are everywhere
+locally soluble is $n_2$, the order of the $2$-Selmer group.  This
+must be a power of~$2$, say $n_2=2^{e_2}$, which serves as a check on
+our procedures.  The number $n_1$ with a rational point is also a
+power of~2, say $n_1=2^{e_1}$, equal to the order of $E(\Q)/2E(\Q)$.
+If we have found rational points on all $n_2$ locally soluble
+quartics, then certainly $n_1=n_2$, so that $\Sha(E/\Q)[2]$ is
+trivial, and the rank of $E(\Q)$ is $e_1-e_0$ where
+$\left|E(\Q)[2]\right|=2^{e_0}$ with $e_0=0$, $1$ or~$2$.  The rank is
+equal to the Selmer rank $e_2-e_0$ in this case.  (Usually $e_0=0$
+when we are using this method.)
+
+As before, we may not have found global points on all the locally
+soluble quartics; if the number on which we have points is $\tn1$
+with $\tn1<n_2$ then we only know that $\tn1 \le n_1 \le n_2$.  If
+$\tn1$ is not a power of~2, we will know that $n_1>\tn1$, so that at
+least some of our locally soluble quartics must have rational points
+which we have not found.  In this case, we replace $\tn1$ by the next
+highest power of~2, say $\tn1=2^{\te1}$.  Then we have bounds on
+the rank, namely
+$$
+    \te1-e_0 \le e_1-e_0 = \rk(E(\Q)) \le e_2-e_0,
+$$
+and on the order of~$\Sha(E/\Q)[2]$:
+$$
+    \left|\Sha(E/\Q)[2]\right| \le n_2/\tn1.
+$$
+
+One final point: from the Selmer conjecture, we expect the Selmer rank
+$e_2-e_0$ to differ from the actual rank $e_1-e_0$ by an even number,
+so that $e_2\equiv e_1\pmod2$.  This would also follow from
+the conjecture that $\Sha(E/\Q)$ is finite, since then its order is
+known to be a perfect square, so that $n_2/n_1$ must be a square.  So
+if we find that $e_2\not\equiv\te1\pmod2$, then we suspect that the
+rank is at least one more than our lower bound, and can output a
+comment to this effect, though of course we will not have proved that the
+rank is greater than our lower bound.  In some cases, such as for a
+modular curve where we know the sign of the functional equation, we
+may have other conjectural evidence for the parity of the rank.
+
+\subhead Step 7: Recovering points on $E$ \endsubhead
+
+Each quartic $g(x)$ for which the homogeneous space $y^2=g(x)$ has a
+rational point $R$ leads to a rational point $P=\xi(R)$ on the model
+$\EIJ$ of our curve~$E$, via the formula (\ximap) given above.  If we
+apply this formula to all the inequivalent quartics with rational
+points which we found in computing the rank of $E$, we will have a
+complete set of coset representatives for $2E(\Q)$ in $E(\Q)$,
+provided that $\tn1=n_1$.  In cases where we have rounded up $\tn1$ to
+the nearest power of~2, we will still have generators for
+$E(\Q)/2E(\Q)$, and can fill in the missing coset representatives if
+we wish.
+
+\bigskip
+
+This completes our description of algorithms for determining the
+Mordell-Weil group $E(\Q)$.
+
+%
+% CHAPTER 3 SECTION 7
+%
+\beginsection{\Periods}
+\head\Periods\ The period lattice \endhead
+
+In this section we show how to compute the complex periods for an 
+elliptic curve defined over the complex numbers.  We used this in our 
+investigation of modular curves to check that the exact integral 
+equations we found (after rounding the approximate computed values of 
+$c_4$ and $c_6$) did have the correct periods; and also in our method for 
+computing isogenous curves, which we describe in the following section.
+
+Let $E$ be an elliptic curve defined over the complex numbers $\C$,
+given by a \W\ equation.  We wish to compute periods $\lambda_1$ and
+$\lambda_2$ which are a $\Z$-basis for the period lattice $\Lambda$ of
+$E$.  We do this using Gauss's arithmetic--geometric mean (\agm)
+algorithm.  Write the equation for $E$ in the form \neweq{\agmperiods}
+$$
+ \left(y+\frac{a_1x+a_3}{2}\right)^2 = x^3 + \frac{b_2}{4}x^2 + \frac{b_4}{2}x +
+\frac{b_6}{4} = (x-e_1)(x-e_2)(x-e_3),  
+$$
+where the roots $e_i$ are found as complex floating-point approximations 
+(using Cardano's formula, say).  Then the periods are given by 
+$$
+  \aligned
+    \lambda_1&=\frac{\pi  }{\agm(\sqrt{e_3-e_1},\sqrt{e_3-e_2})},\\
+    \lambda_2&=\frac{\pi i}{\agm(\sqrt{e_3-e_1},\sqrt{e_2-e_1})}.\\
+  \endaligned \tag\agmperiods
+$$
+Notice that in general this involves the \agm\ of pairs of complex
+numbers.  This is a multi-valued function: at each stage of the \agm\
+algorithm we replace the pair $(z,w)$ by $(\sqrt{zw},\frac12(z+w))$,
+and must make a choice of complex square root.  It follows from work
+of Cox (see \cite\Cox) that while a different set of choices does lead
+to a different value for the \agm, the periods we obtain this way will
+nevertheless always be a $\Z$-basis for the full period lattice
+$\Lambda$.  We have found this to be the case in practice, where we
+always choose a square root with positive real part, or with positive
+imaginary part when the real part is zero.  The computation of
+$\lambda_1$ and $\lambda_2$ by this method is very fast, as the \agm\
+algorithm converges extremely quickly, even in its complex form.  As a
+check on the values obtained, in each case we recomputed the
+invariants $c_4$ and $c_6$ of each curve from these computed periods
+$\lambda_1$ and $\lambda_2$, using the standard formulae given in
+Chapter II; in every case we obtained the correct values (known
+exactly from the coefficients of the minimal \W\ equation) to within
+computational accuracy.
+
+If the curve is defined over $\R$, we can avoid the use of the complex
+\agm, and also arrange that $\lambda_1$ is a positive real period, as
+follows.  First suppose that all three roots $e_i$ are real; order the
+roots so that $e_3 > e_2 > e_1$, and take the positive square root in
+the above formulae.  Then we may use the usual \agm\ of positive reals
+in (\agmperiods), and thus obtain a positive real value for
+$\lambda_1$ and a pure imaginary value for $\lambda_2$.  This is the
+case where the discriminant $\Delta>0$ and the period lattice is
+rectangular.  When $\Delta<0$ there is one real root, say $e_3$, and
+$e_2=\overline{e_1}$.  If $\sqrt{e_3-e_1}=z=s+it$ with $s>0$ then
+$\sqrt{e_3-e_2}=\overline{z}=s-it$, so that
+$\lambda_1=\pi/\agm(z,\overline{z}) = \pi/\agm(|z|,s)$ which is also
+real and positive.
+
+%
+% CHAPTER 3 SECTION 8
+%
+
+\beginsection{\Isogenies}
+\head\Isogenies\ Finding isogenous curves\endhead
+
+Given an elliptic curve $E$ defined over $\Q$, we now wish to find all
+curves $E'$ isogenous to $E$ over $\Q$.  The set of all such curves is
+finite (up to isomorphism), and any two curves in the isogeny class
+are linked by a chain of isogenies of prime degree $l$.  Thus it
+suffices to be able to compute $l$-isogenies for prime $l$, if we can
+determine those $l$ for which rational $l$-isogenies exist.  The
+latter question can be rather delicate in general, and we have to have
+a completely automatic algorithmic procedure if we are to apply it to
+several thousand curves, such as we had to when preparing the tables.
+
+When the conductor $N$ of $E$ is square-free, so that $E$ has good or
+multiplicative reduction at all primes, $E$ is called semi-stable.  In
+this case, a result of Serre (see \cite{\Serre}) says that either $E$
+or the isogenous curve $E'$ has a rational point of order $l$, and so
+by Mazur's result already mentioned, $l$ can only be $2$, $3$, $5$ or
+$7$.  Moreover, if a curve $E$ possesses a rational point of order
+$l$, then the congruence $1+p-a_p\equiv0\pmod{l}$ holds for all primes
+$p$ not dividing $Nl$, so the presence of such a point is easy to
+determine, even if it is not $E$ itself but the isogenous curve $E'$
+which possesses the rational $l$-torsion, since the trace of Frobenius
+$a_p$ is isogeny-invariant.
+
+If $E$ is not semi-stable we argue as follows.  The existence of a
+rational $l$-isogeny is purely a function of the $j$-invariant $j$ of
+$E$: in fact, pairs $(E,E')$ of $l$-isogenous curves parametrize the
+modular curve $X_0(l)$ whose non-cuspidal points are given by the
+pairs $(j(E),j(E'))$.  For $l=2$, $3$, $5$, $7$ or $13$ the genus of
+$X_0(l)$ is zero, and infinitely many rational $j$ occur.  The only
+other values of $l$ for which rational $l$-isogenies occur are
+$l=11,17,19,37,43,67$, and $163$, and these occur for only a small
+finite number of $j$-invariants (see below).  The fact that no other
+$l$ occur is a theorem of Mazur (see \cite{\MazurTa} and
+\cite{\MazurTb}), related to the theorem limiting the rational torsion
+which we quoted earlier in Section \Torsion\ of this chapter.  These
+extra values occur only for curves with CM (\CM, see the next
+section), apart from $l=17$ (where $X_0(l)$ has genus~1) and the
+exotic case $l=37$ studied by Mazur and Swinnerton--Dyer in
+\cite{\MazurSD} (where $X_0(l)$ has genus~2).
+
+For isogenies of non-prime degree $m$, the degrees which occur are:
+$m\le10$, and $m=12$, 16 18, and 25 (where $X_0(l)$ has genus~0,
+infinitely many cases); and finally $m=14$, 15, 21, and 27.  The
+latter occur first for conductors $N=49$ (with CM), $N=50$, $N=162$
+and $N=27$ (with CM) respectively.  See \cite{\Antwerp, pages 78--80}\
+for more details.
+
+Thus our procedure is:
+
+\item{$\bullet$} If $N$ is square-free, try $l=2,3,5,7$ only;
+
+\item{$\bullet$} else try $l=2,3,5,7$ and $13$ in all cases; and
+
+\item{$\bullet$} if $j(E)=-2^{15}$, $-11^2$, or $-11\cdot131^3$, try also $l=11$;
+
+\item{$\bullet$} if $j(E)=-17^2\cdot101^3/2$ or $-17\cdot373^3/2^{17}$, try also $l=17$;
+
+\item{$\bullet$} if $j(E)=-96^3$, try also $l=19$;
+
+\item{$\bullet$} if $j(E)=-7\cdot11^3$ or $-7\cdot137^3\cdot2083^3$, try also $l=37$;
+
+\item{$\bullet$} if $j(E)=-960^3$, try also $l=43$;
+
+\item{$\bullet$} if $j(E)=-5280^3$, try also $l=67$;
+
+\item{$\bullet$} if $j(E)=-640320^3$, try also $l=163$.
+
+\smallskip
+Now we turn to the question of finding all curves (if any) which are 
+$l$-isogenous to our given curve $E$ for a specific prime $l$.  The 
+kernel of the isogeny is a subgroup $A$ of $E(\overline{\Q})$ which is 
+defined over $\Q$, but the points of $A$ may not be individually rational 
+points. If we have the coordinates of the points of a subgroup of $E$ of 
+order $l$ defined over $K$, we may use V\'elu's formulae in \cite\Velu\ to 
+find the corresponding $l$-isogenous curve.    Finding such coordinates 
+by algebraic means is troublesome, except when the subgroup is point-wise 
+defined over $K$, and instead we resort to a floating-point method.
+
+The case $l=2$ is simpler to describe separately. Obviously in this
+case the subgroup of order~2 defined over $\Q$ must consist of a
+single rational point $P$ of order~2 together with the identity. We
+have already found such points, if any, in computing the torsion.
+There will be 0, 1 or 3 of them according to the number of rational
+roots of the cubic $4x^3 + b_2x^2 + 2b_4x + b_6$. If $x_1$ is such a
+root, then $P=(x_1,y_1)$ has order~2, where $y_1=-(a_1x_1+a_3)/2$.  As a
+special case of V\'elu's formulae we find that the isogenous curve
+$E'$ has coefficients $[a_1',a_2',a_3',a_4',a_6'] =
+[a_1,a_2,a_3,a_4-5t,a_6-b_2t-7w]$ where
+$$
+     t=(6x_1^2+b_2x_1+b_4)/2  \qquad\text{and}\qquad  w=x_1t.
+$$
+Note that the point $(x_1,y_1)$ need not be integral even when $E$ has
+integral coefficients $a_i$, but that $4x_1$ and $8y_1$ are certainly
+integral, by the formulae given; thus the model just given for the
+isogenous curve may need scaling by a factor of~2 to make it integral.
+
+The simpler formula for a curve in the form $y^2=x^3+cx^2+dx$ and the
+point $P=(0,0)$ was given in the previous section: the formulae just
+given take the curve $[0,c,0,d,0]$ to $[0,c,0,-4d,-4cd]$, which
+transforms to $[0,-2c,0,c^2-4d,0]$ after replacing $x$ by $x-c$.  The
+relation between the two formulae is given by $c=12x_1+b_2$ and
+$d=16t$.
+
+For reference we give here similar algebraic formulae for
+$l$-isogenies for $l=3$ and $l=5$, from Laska's book \cite\Laskabook.
+In each case we assume that the curve $E$ is given by an equation of
+the form $y^2=x^3+ax+b$, and the isogenous curve~$E'$ by
+$y^2=x^3+Ax+B$.  Each subgroup of~$E$ of order~$l$ is determined by a
+rational factor of degree~$(l-1)/2$ of the $l$-division polynomial of
+degree~$(l^2-1)/2$, whose roots are the $x$-coordinates of the points
+in the subgroup. The simplest case is $l=3$, where there is just one
+$x$-coordinate, which must be rational.
+
+\subsubhead $l=3$\endsubsubhead  Let $\xi$ be a root of the 3-division
+polynomial $3x^4+6ax^2+12bx-a^2$. Then the 3-isogenous curve $E'$ is
+given by
+$$
+  \align
+              A &= -3(3a+10\xi^2)\cr
+              B &= -(70\xi^3+42a\xi+27b).\cr
+  \endalign
+$$
+
+\subsubhead $l=5$\endsubsubhead Let $x^2+h_1x+h_2$ be a rational factor of the 5-division polynomial
+$5x^{12} + 62ax^{10} + 380bx^9 -105a^2x^8 + 240abx^7 -
+(300a^3+240b^2)x^6 - 696a^2bx^5 - (125a^4+1920ab^2)x^4 -
+(1600b^3+80a^3b)x^3 - (50a^5+240a^2b^2)x^2 - (100a^4b+640ab^3)x +
+(a^6-32a^3b^2-256b^4)$. Then the 5-isogenous curve $E'$ is given by
+$$
+  \align
+              A &= -19a - 30(h_1^2-2h_2) \cr
+              B &= -55b-14(15h_1h_2-5h_1^3-3ah_1).\cr
+  \endalign
+$$
+
+A similar formula is given in \cite\Laskabook\ for $l=7$, where $A$
+and $B$ are given in terms of $a$, $b$ and the coefficients of a
+factor $x^3+h_1x^2+h_2x+h_3$ of the 7-division polynomial.  Rather
+than take up space by giving the latter here, we refer the reader to
+\cite{\Laskabook, page 72}.
+
+Now we turn to V\'elu's formulae in the case of an odd prime $l$.  Let
+$P=(x_1,y_1)$ be a point of order $l$ in $E(\overline{\Q})$, and set
+$kP=(x_k,y_k)$ for $1\le k\le (l-1)/2$. Define
+$$
+   t_k = 6x_k^2+b_2x_k+b_4  \qquad\text{and}\qquad
+   u_k = 4x_k^3+b_2x_k^2+2b_4x_k+b_6,
+$$
+and then set
+$$
+   t = \sum_{k=1}^{(l-1)/2}t_k \qquad\text{and}\qquad
+   w = \sum_{k=1}^{(l-1)/2}\left(u_k+x_k t_k\right).
+$$
+Then the isogenous curve $E'$ has coefficients 
+$[a_1,a_2,a_3,a_4-5t,a_6-b_2t-7w]$ as before.    Again, these may not be 
+integral, even when the original coefficients were; but since the $x_k$ 
+are the roots of a polynomial of degree $(l-1)/2$ with integral 
+coefficients and leading coefficient $l^2$ (the so-called $l$-division 
+equation), we must have $l^2x_k$ integral.  Thus a scaling factor of $l$ 
+will certainly produce an integral equation.
+
+We make these remarks on integrality as our method is to find the 
+coordinates $x_k$ and $y_k$ as real floating-point approximations, and 
+thus to determine the coefficients of any curves $l$-isogenous to $E$ 
+over $\R$; there will always be exactly two such curves over $\R$, but of 
+course they will not necessarily be defined over $\Q$. As we will only 
+know the coefficients $a_i'$ of the isogenous curves approximately, we 
+wish to ensure that if they are rational then they will in fact be 
+integral, so that we will be able to recognize them as such.
+
+First we find the period lattice $\Lambda$ of $E$, as described in the
+previous section.  The $\Z$-basis $\left[\lambda_1,\lambda_2\right]$
+of $\Lambda$ is normalized as follows: there are two cases to
+consider, according as $\Delta>0$ (first or `harmonic' case) or
+$\Delta<0$ (second or `anharmonic' case).  In both cases $\lambda_1$
+is real (the least positive real period); in the first case,
+$\lambda_2$ is pure imaginary, while in the second case,
+$2\lambda_1-\lambda_2$ is pure imaginary.  We can also ensure that
+$\tau=\lambda_2/\lambda_1$ is in the upper half-plane; however we can
+not simultaneously arrange that $\tau$ is in the usual fundamental
+region for $\SL(2,\Z)$, and this needs to be remembered when evaluating
+the \W\ functions below.
+
+Of the $l+1$ subgroups of $\C/\Lambda$ of order $l$, the two defined
+over $\R$ are the one generated by $z=\lambda_1/l$ (in both cases),
+and in the first case, the one generated by $z=\lambda_2/l$, or in the
+second case, the one generated by $z=(\lambda_1-2\lambda_2)/l$.  Thus
+$z/\lambda_1$ is either $1/l$, $\tau/l$, or $(1-2\tau)/l$.  Let
+$\wp(z;\tau)$ denote the
+\W\ $\wp$-function relative to the lattice $[1,\tau]$.  Then we have
+$$
+x_k = \wp(kz\lambda_1^{-1};\tau)\lambda_1^{-2} - \frac{1}{12}b_4 
+\qquad\text{and}\qquad
+y_k = \frac12\left(\wp'(kz\lambda_1^{-1};\tau)\lambda_1^{-3} - a_1x_k-a_3\right).
+$$
+Here we have had to take account of the lattice scaling 
+$[\lambda_1,\lambda_2] = \lambda_1[1,\tau]$, and also of the fact that 
+$(\wp(z),\wp'(z))$ is a point on the model of $E$ of the form 
+$y^2=4x^3-g_2x-g_3 = 4x^3-(c_4/12)x-(c_6/216)$ rather than a standard 
+model where the coefficient of $x^3$ is~1.
+
+We evaluate these points of order $l$ numerically for
+$k=1,2,\ldots,(l-1)/2$, for each of the two values of $z$ (depending
+on whether we are in case~1 or case~2).  Substituting into V\'elu's
+formulae, we obtain in each case the real coefficients $a_i'$ of a
+curve which is $l$-isogenous to $E$ over $\R$.  If these coefficients
+are close to integers we round them and check that the resulting curve
+over $\Q$ has the same conductor $N$ as the original curve $E$.  If
+not, we also test the curve with coefficients $l^ia_i'$.
+
+The resulting program finds $l$-isogenous curves very quickly for any
+given prime $l$.  We run it for all primes $l$ in the set determined
+previously, applying it recursively to each new curve found until we
+have a set of curves closed under $l$-isogeny for these values of $l$.
+Since the set of primes~$l$ for which a rational $l$-isogeny exists is
+itself an isogeny invariant, once we have finished processing the
+first curve in the class, we will already know which primes~$l$ to use
+for all the remaining curves.
+
+Some care needs to be taken with a method of computation such as this,
+where we use floating-point arithmetic to find integers.  The series
+we use to compute the periods and the \W\ function and its derivative
+all converge very quickly, so that we can compute the $a_i'$ to
+whatever precision is available, though of course in practice some
+rounding error is bound to arise.  When we test whether a
+floating-point number is `approximately an integer' in the program, we
+must make a judgement on how close is close enough.  With too relaxed
+a test, we will find too many curves are `approximately integral';
+usually these will fail the next hurdle, where we test the conductor,
+but this takes time to check (using Tate's algorithm).  On the other
+hand, too strict a test might mean that we miss some rational
+isogenies altogether, which is far more serious. In compiling the
+tables, there was only one case which caused trouble after the program
+had been finely tuned.  The resulting error resulted in a curve
+(916B1) being erroneously listed as 3-isogenous to itself in the first
+(preprint) edition of the tables; this is possible only when a curve
+has complex multiplication, which is not the case here, though it does
+not often occur even in the complex multiplication case (see the
+remarks in the next section). Unfortunately the error was not noticed
+in the automatic generation of the typeset tables, and I am grateful
+to Elkies for spotting it.\footnote{This error also somehow survived
+into the first edition of this book, despite these comments in the
+text.}  The curve $E=[0,0,0,-1013692,392832257]$ has three real points
+of order~2, two of which are equal to seven significant figures; the
+period ratio is approximately $7i$.  One of the curves 2-isogenous to
+$E$ over $\R$ has coefficients
+$[0,0,0,-1013691.999999999992,392832257.000000006]$, which are
+extremely close to those of $E$ itself.  Thus this new curve, which is
+not defined over $\Q$, passed both our original tests (the
+coefficients are extremely close to integers, and the rounded
+coefficients are those of a curve of the right conductor, namely $E$
+itself).  After this example was discovered, we inserted an extra line
+in the program, to print a warning whenever a supposedly isogenous
+curve was the original curve itself, and reran the program on all 2463
+isogeny classes (which only takes a few minutes of machine time).  The
+result was that expected, namely that 916B1 is the only curve for
+which this phenomenon occurs within the range of the
+tables\footnote{Another example of the same type occurs for curve
+1342C3, where the period ratio is approximately $9.5i$.}.  There is no
+example of a curve actually $l$-isogenous to itself with conductor
+less than 1000.
+
+Our original implementation of this algorithm in Algol68 used a
+precision of approximately 30 significant figures for its real and
+complex arithmetic, which was sufficient to find all the isogenous
+curves up to conductor~1000.  However, our implementation in C++
+misses several isogenous curves when using standard double precision,
+with approximately 15 digits (though this runs very quickly); we need
+to use a multiprecision floating-point package (such as the one
+included in {\tt LiDIA}) to obtain a satisfactory working program, though
+the resulting code runs very much slower.  In our extended
+computations to conductor~5077, we have computed the isogenies
+independently using both a C++/{\tt LiDIA} program and a PARI program, and
+the results agree.
+
+When we were initially persuaded to extend the tables to include
+isogenous curves as well as the modular curves themselves, we were
+afraid that the total number of resulting curves would be rather
+larger than it turned out to be.  On average, we found that the number
+of curves per isogeny class was 5113/2463, or just under 2.08.  We do
+not know of any asymptotic analysis, or even a heuristic argument,
+which would predict an average number of two curves per class.
+However, it is dangerous to generalize from the limited amount of data
+which we have available.  In the extended computations to
+conductor~$5077$, the ratio slowly diminishes; for all curves up to
+this conductor, the ratio is $31570/17583 = 1.795$.
+
+%
+% CHAPTER 3 SECTION 9
+%
+\beginsection{\TwistsEtc}
+\head\TwistsEtc\ Twists and complex multiplication \endhead
+
+\subhead Traces of Frobenius \endsubhead
+
+If $E$ is given by a standard minimal \W\ equation over $\Z$, then for all
+primes $p$ of good reduction the trace of Frobenius $a_p$ is given by 
+$$
+  a_p = 1+p-\left|E({\Bbb F}_p)\right|.
+$$
+If $E$ has bad reduction at $p$, this same formula gives the correct value
+for the $p$th Fourier coefficient of the $L$-series of $E$.
+
+Since in our applications we never needed to compute $a_p$ for large
+primes $p$, we used a very simple method to count the number of points
+on $E$ modulo $p$.  First, for all primes $p$ in the desired range
+(say $3\le p\le1000$; $p=2$ would be dealt with separately), we
+precompute the number $n(t,p)$ of solutions to the congruence
+$s^2\equiv t\pmod{p}$.  Then we simply compute 
+$$
+ a_p = p -
+\sum_{x=0}^{p-1} n(4x^3 + b_2x^2 + 2b_4x + b_6,p).  
+$$ 
+This was sufficient for us to compute $a_p$ for all $p<1000$ for all
+the curves in the table, which we did to compare with the
+corresponding Hecke eigenvalues.  For large $p$, there are far more
+efficient methods, such as the baby-step giant-step method or Schoof's
+algorithm (see \cite{\Schoof}).  Details of these may be found in
+\cite\Cohenbook.  More recently, even better algorithms have been
+developed, by Atkin, Elkies, Morain, M\"uller and others.  For
+example, Morain and Lercier in 1995 successfully computed the number
+of points on the curve $[0,0,0,4589,91228]$ over ${\Bbb F}_p$ for
+$p=10^{499}+153$, a prime with 500 decimal digits.  This took 4200 hours
+of computer time.
+
+\subhead Twists \endsubhead
+
+A twist of a curve $E$ over $\Q$ is an elliptic curve defined 
+over $\Q$ and isomorphic to $E$ over $\overline{\Q}$ but not necessarily 
+over $\Q$ itself.  Thus the set of all twists of $E$ is the set of all 
+curves with the same $j$-invariant as $E$.  These can be simply 
+described, as follows.
+
+First suppose that $c_4\not=0$ and $c_6\not=0$; equivalently,
+$j\not=1728$ and $j\not=0$ (respectively).  Then the twists of $E$ are
+all quadratic, in that they become isomorphic to $E$ over a quadratic
+extension of $\Q$.  For each integer $d$ (square-free, not 0 or 1),
+there is a twisted curve $E*d$ with invariants $d^2c_4$ and $d^3c_6$,
+which is isomorphic to $E$ over $\Q(\sqrt{d})$.  If $E$ has a model of
+the form $y^2=f(x)$ with $f(x)$ cubic, then $E*d$ has equation
+$dy^2=f(x)$.  A minimal model for $E*d$ may be found easily by the
+Laska--Kraus--Connell algorithm.  The conductor of $E*d$ is only
+divisible by primes dividing $ND$, where $D$ is the discriminant of
+$\Q(\sqrt{d})$.  The simplest case is when $\gcd(D,N)=1$; then $E*d$
+has conductor $ND^2$.  More generally, if $D^2\ndiv N$ then $E*d$ has
+conductor $\lcm(N,D^2)$, but if $D^2\div N$ then the conductor may be
+smaller; for example, $(E*d)*d$ is isomorphic to $E$, so has conductor
+$N$ again.
+
+Twisting commutes with isogenies, in the sense that if two curves $E$,
+$F$ are $l$-isogenous then so are their twists $E*d$, $F*d$.  If $E$
+has no complex multiplication (see below), then the structure of the
+isogeny class of $E$ is a function of $j(E)$ alone.
+
+The trace of Frobenius of $E*d$ at a prime $p$ not dividing $N$ is
+$\chi(p)a_p$, where $\chi$ is the quadratic character associated to
+$\Q(\sqrt{d})$ and $a_p$ is the trace of Frobenius of $E$.  Thus if
+$E$ is modular, attached to the newform $f$, then $E*d$ is also
+modular and attached to the twisted form $f\otimes\chi$, in the
+notation of Chapter 2.
+
+When $j=0$ (or equivalently $c_4=0$), $E$ has an equation of the form
+$y^2=x^3+k$ with $k\in\Z$ non-zero and free of sixth powers.  Such
+curves have complex multiplication by $\Z[(1+\sqrt{-3})/2]$.  Two such
+curves with parameters $k$, $k'$ are isomorphic over
+$\Q(\root6\of{k/k'})$.
+
+Similarly, when $j=1728$ (or equivalently $c_6=0$), $E$ has an
+equation of the form $y^2=x^3+kx$ with $k\in\Z$ non-zero and free of
+fourth powers.  Such curves have complex multiplication by
+$\Z[\sqrt{-1}]$.  Two such curves with parameters $k$, $k'$ are
+isomorphic over $\Q(\root4\of{k/k'})$.
+
+\subhead Complex multiplication \endsubhead
+
+Each of the 13 imaginary quadratic orders $\OO$ of class number~1 has
+a rational value of $j(\OO)=j(\omega_1/\omega_2)$, where
+$\OO=\Z\omega_1+\Z\omega_2$. Elliptic curves $E$ with $j(E)=j(\OO)$
+have complex multiplication: their ring of endomorphisms defined over
+$\C$ is isomorphic to $\OO$.  In all other cases the endomorphism ring
+of an elliptic curve defined over $\Q$ is isomorphic to $\Z$, since an
+elliptic curve with complex multiplication by an order of class number
+$h>1$ has a $j$-invariant which is not rational, but algebraic of
+degree $h$ over $\Q$.
+
+We give here a table of triples $(D,j,N)$ where $j=j(\OO)$ for an order 
+of discriminant $D$, and $N$ is the smallest conductor of an elliptic 
+curve defined over $\Q$ with this $j$-invariant.  All but the last three 
+values ($D=-43$, $-67$, $-163$) have $N<1000$ and so occur in the tables.
+
+\bigskip
+\vbox{\offinterlineskip
+\halign to \hsize{\tabskip 0pt
+\strut#&\vrule#\tabskip 0pt plus 1fil&\hfil$#$\hfil&\vrule#&%
+\hfil$#$\hfil&\vrule#&\hfil$#$\hfil&\vrule#&\hfil$#$\hfil&\vrule#&\hfil$#$\hfil&\vrule#&\hfil$#$\hfil&\vrule#&\hfil$#$\hfil&\vrule#&\hfil$#$\hfil&\vrule#&%
+\hfil$#$\hfil&\vrule#&\hfil$#$\hfil&\vrule#&\hfil$#$\hfil&\vrule#&\hfil$#$\hfil&\vrule#&\hfil$#$\hfil&\vrule#&\hfil$#$\hfil&%
+\tabskip0pt\vrule#\cr
+\noalign{\hrule}
+\omit&height2pt&&&&&&&&&&&&&&&&&&&&&&&&&&&&\cr
+&&D&&-4&&-16&&-8&&-3&&-12&&-27&&-7&&-28&&-11&&-19&&-43&&-67&&-163&\cr
+\omit&height2pt&&&&&&&&&&&&&&&&&&&&&&&&&&&&\cr
+\noalign{\hrule}
+\omit&height2pt&&&&&&&&&&&&&&&&&&&&&&&&&&&&\cr
+&&j&&12^3&&66^3&&20^3&&0&&2\cdot30^3&&-3\cdot160^3&&-15^3&&255^3&&-32^3&&-96^3&&-960^3&&-5280^3&&-640320^3&\cr
+\omit&height2pt&&&&&&&&&&&&&&&&&&&&&&&&&&&&\cr
+\noalign{\hrule}
+\omit&height2pt&&&&&&&&&&&&&&&&&&&&&&&&&&&&\cr
+&&N&&32&&32&&256&&27&&36&&27&&49&&49&&121&&361&&43^2&&67^2&&163^2&\cr
+\omit&height2pt&&&&&&&&&&&&&&&&&&&&&&&&&&&&\cr
+\noalign{\hrule}
+}
+}
+\bigskip
+
+If $E$ has complex multiplication by the order $\OO$ of discriminant $D$, 
+then the twist $E*D$ is isogenous to $E$, though not usually isomorphic 
+to $E$ (over $\Q$).  Indeed, the only cases where $E$ is isomorphic to 
+$E*D$ are $D=-4$ and $D=-16$ with $j(E)=1728$: the curves $y^2=x^3+16kx$ 
+and $y^2+256kx$ are twists of, and isomorphic to, $y^2=x^3+kx$.  Since 
+curves are isogenous if and only if they have the same $L$-series 
+by Faltings's Theorem (see \cite{\Faltings}),  this implies that $E$ has 
+complex multiplication if and only if $a_p=\chi(p)a_p$ for all primes 
+$p$, where $\chi$ is the quadratic character as above.  Thus $a_p=0$ for 
+half the primes $p$, namely those for which $\chi(p)=-1$.  This gives an 
+alternative way of recognizing a curve with complex multiplication, from 
+its traces of Frobenius. This is particularly convenient in the case of 
+modular curves, where we compute the $a_p$ first, and will always know 
+when a newform $f$, and hence the associated curve $E_f$, has complex 
+multiplication.  For, in such a case, we must have $D^2\div N$ and 
+$f=f\otimes\chi$, which we may easily check from the tables.
+
+
+\enddocument

@@ -1,0 +1,18 @@
+Summary list of errata for "Algorithms for modular elliptic curves" 
+
+		-- TABLES --
+
+
+1. All tables: N=702 omitted, comprising 16 newforms/strong Weil
+curves and 24 curves in all.
+
+2. Table 4: 600E--I omitted (5 lines).
+
+3. Table 3: 100A entries wrong (1 line).
+
+4. Tables 1, 2: 160 has wrong Antwerp letters. 
+
+5. Table 1: 916B1, no isogenies (wrongly listed as 3-isogenous to itself).
+
+See file addenda.doc for details (tex version in addenda.tex)
+

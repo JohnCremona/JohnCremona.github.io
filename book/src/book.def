@@ -1,0 +1,262 @@
+%
+% Macro definitions for Book   Last changed 14/8/96
+%
+\documentstyle{amsppt}   % Needed if not preloaded
+%
+\magnification=\magstep 1
+
+\vsize =  10.0 truein %\voffset -1.00 truein 
+\hsize =   6.8 truein \hoffset -0.15 truein 
+
+%
+% Page numbers with wider spacing (openup 2pt)
+%
+%\newcount\chaponepages   \chaponepages   =   7
+%\newcount\chaptwopages   \chaptwopages   =  51
+%\newcount\appendixpages  \appendixpages  =  11
+%\newcount\chapthreepages \chapthreepages =  49
+%\newcount\chapfourpages  \chapfourpages  =   5
+%\newcount\tabonepages    \tabonepages    = 146
+%\newcount\tabtwopages    \tabtwopages    =   9
+%\newcount\tabthreepages  \tabthreepages  =  49
+%\newcount\tabfourpages   \tabfourpages   =  49
+%\newcount\tabfivepages   \tabfivepages   =  12
+
+%
+% Page numbers with default spacing (no openup)
+%
+\newcount\chaponepages   \chaponepages   =   6
+\newcount\chaptwopages   \chaptwopages   =  45
+\newcount\appendixpages  \appendixpages  =  10
+\newcount\chapthreepages \chapthreepages =  42
+\newcount\chapfourpages  \chapfourpages  =   5
+\newcount\tabonepages    \tabonepages    = 146
+\newcount\tabtwopages    \tabtwopages    =   9
+\newcount\tabthreepages  \tabthreepages  =  49
+\newcount\tabfourpages   \tabfourpages   =  49
+\newcount\tabfivepages   \tabfivepages   =  12
+
+
+%\overfullrule 0pt
+%
+\Monograph
+%
+% Alterations to the style:
+%
+\catcode`\@=11
+%
+% (1) Fix to get rid of that logo on the first page:
+%
+%   \def\logo@{\baselineskip2pc}
+\nologo
+%
+% (2) Don't like the indentation of \proclaims:
+%
+   \let\varindent@\noindent
+%
+%
+% (3) References in normal size
+%
+   \let\refsfont@\tenpoint
+%
+\catcode`\@=\active
+%
+\define\Z{\Bbb Z}
+\define\N{\Bbb N}
+\define\Q{\Bbb Q}
+\define\R{\Bbb R}
+\define\C{\Bbb C}
+\define\TT{\Bbb T}
+\redefine\H{\hbox{$\Cal H$}}
+\redefine\S{\hbox{$\Cal S$}}
+\redefine\T{\hbox{$\Cal T$}}
+\define\F{\hbox{$\Cal F$}}
+\define\OO{\frak O} 
+\define\SL{\hbox{\rm SL}}
+\define\PSL{\hbox{\rm PSL}}
+\define\GL{\hbox{\rm GL}}
+\define\PGL{\hbox{\rm PGL}}
+\define\knl{\hbox{\rm ker}}
+\define\rk{\hbox{\rm rank}}
+\define\tor{\text{tors}}
+\define\disc{\text{disc}}
+\define\ord{\hbox{\rm ord}}
+\define\sgn{\hbox{\rm sign}}
+\def\lcm{\hbox{\rm lcm}}
+\def\agm{\hbox{\rm AGM}}
+\def\Vol{\hbox{\rm Vol}}
+\def\s{\sigma}
+\def\t{\tau}
+\def\w{\omega}
+\define\eps{\varepsilon}
+\define\BSD{Birch--Swin\-ner\-ton-Dyer}
+\define\TS{Tate--Sha\-fa\-re\-vich}
+\define\CM{complex multiplication}
+\def\W{Weier\-strass}
+\define\rp{\Omega_0}
+\define\RP{\Omega}
+\define\IP{\Omega_{\text{im}}}
+\redefine\Re{\hbox{\rm Re}}
+\redefine\Im{\hbox{\rm Im}}
+\font\cyr=wncyr10
+\define\Sha{\hbox{\cyr X}}
+\def\G#1(#2){\Gamma_{#1}(#2)}
+\define\mat(#1,#2;#3,#4){\pmatrix#1&#2\\#3&#4\endpmatrix}
+\def\detmat#1#2#3#4{\left|\matrix#1&#2\\#3&#4\endmatrix\right|}
+\redefine\div{\mid}
+\define\ndiv{\nmid}
+\define\<#1>{\left<#1\right>}
+\def\slash#1{\left|#1\right.}
+\def\fchi{f\otimes\chi}
+\def\canht{\hat{h}}   % Canonical height
+%
+%  References
+%
+\newcount\refno  \refno=0
+\def\newref#1{\advance\refno by1 \xdef#1{\the\refno}}
+%
+\newref\AtkinL
+\newref\Antwerp   %ed. by Birch and Kuyk so ordered under B.!
+\newref\BirchSD
+\newref\BrumerK
+\newref\BuhlerG
+\newref\BuhlerGZ
+\newref\Carayol
+\newref\Cassels  %New book
+\newref\Cohenbook % !!!NEW!!! 
+\newref\Connell
+\newref\Cox
+\newref\JECa      % Compositio
+\newref\JECb      % Compositio addendum
+\newref\gammaone  % Gamma_1(N) paper
+\newref\bsdiqf    % Joint paper with Elise
+\newref\JCsha     % !!!NEW!!! 1993 paper on analytic order of Sha
+\newref\JCdegphi  % !!!NEW!!! 1995 paper on computing deg(phi)
+\newref\JCperiods % !!!NEW!!! 1996 paper on computing periods quickly
+\newref\JCPS % !!!NEW!!! 1996 paper with Pascale
+\newref\JCinvariants % !!!NEW!!! 1996 paper on invariants
+\newref\Edixhoven % !!!NEW!!! 
+\newref\Faltings
+\newref\Ferm      % !!!NEW!!! High rank curves
+\newref\Luiz      % !!!NEW!!! Luiz Figueiredo's thesis
+\newref\GrossZagiera %Heegner points paper (early version)
+\newref\GrossZagierb %Heegner points paper (full version)
+%
+%\newref\HaradaLang %% not referred to in 2nd edn.
+%
+\newref\Husemoller
+\newref\Knapp     % !!!NEW!!! 
+\newref\Kolyvagin
+\newref\Kraus
+\newref\Langa     % Elliptic functions book
+\newref\Langb     % Modular forms book
+\newref\Langc     % Elliptic curves: Diophantine analysis book
+\newref\Laska
+\newref\Laskabook 
+%
+%\newref\Livne  %% not referred to in 2nd edn.
+%
+\newref\Lutz
+\newref\Manin
+\newref\Mazur
+\newref\MazurTa
+\newref\MazurTb
+\newref\MazurSD
+\newref\Merel     % !!!NEW!!! 
+\newref\Mestre
+\newref\Murty
+\newref\Nagao     % !!!NEW!!! Nagao's rank 21 curve
+\newref\Nag
+\newref\Neron
+\newref\Pincha  % RGEP's thesis
+\newref\Pinchb  % preprint, given a passing ref in Intro.
+\newref\PZass   %Pohst and Zassenhaus' book
+%
+%\newref\Scholl %% not referred to in 2nd edn.
+%
+\newref\Schoof
+\newref\PSthesis % !!!NEW!!! Pascale's thesis
+\newref\Serre   %Isogeny paper
+\newref\SerreNotes
+\newref\Shimura
+\newref\SSthesis % !!!NEW!!!  Samir's thesis
+\newref\SSpaper  % !!!NEW!!!  Samir's paper
+\newref\Silvera %Elliptic curves book I
+\newref\Silverb %Computing heights paper
+\newref\Silverc %Bounding  heights paper
+\newref\Silverd %Elliptic curves book II           % !!!NEW!!! 
+\newref\Silvere %2nd computing heights paper       % !!!NEW!!! 
+\newref\Nigeletal % NPS+SS+JRM paper on 4-descents % !!!NEW!!! 
+\newref\SDBirch
+\newref\Tate     % Tate's algorithm in Antwerp IV
+\newref\Tateht   % Tate's height paper
+\newref\Tingley
+\newref\Velu
+\newref\Zagier
+\newref\Zimmer % !!!NEW!!!
+%
+\def\und#1{{\it #1\/}}
+\define\xtext#1{\noalign{\hbox{#1}}}
+\def\part#1{\par\noindent{\rm(#1)\quad}}  % For parts of Theorems, etc.
+%
+\newcount\subsecno  \subsecno=0
+\def\newsubsec#1{\advance\subsecno by1 
+              \xdef#1{\chapno.\the\secno.\the\subsecno}
+             }
+%
+\newcount\secno  \secno=0
+\def\newsec#1{\advance\secno by1 
+              \xdef#1{\chapno.\the\secno}
+              \subsecno=0
+             }
+%
+\newcount\eqno  \eqno=0
+\def\neweq#1{\advance\eqno by1 
+             \xdef#1{\sec.\the\eqno}
+            }
+%
+\newcount\propno \propno=0
+\def\newprop#1{\advance\propno by1 
+               \xdef#1{\sec.\the\propno}
+              }
+%
+\def\beginsection#1{\xdef\sec{#1}
+                    \eqno=0
+                    \propno=0
+                    \subsecno=0
+                   }
+%
+\def\beginsubsection#1{\xdef\subsec{#1}}
+%
+%
+% DEFs FOR ALGORITHMS
+%
+\def\beginalg#1{\bigskip\goodbreak\hrule\medskip
+                \leftline{\bf #1}
+                \medskip\hrule\medskip\nobreak
+                \tt    
+               } 
+\def\endalg{\par\nobreak\medskip\hrule\bigskip%\goodbreak
+            \rm
+           }
+\def\D{$\Delta$} 
+\newcount\lineno
+\def\nline{\global\advance\lineno by1 %
+           \tabalign\hfill\the\lineno.\quad& %
+          }
+\settabs 17\columns
+\def\comm#1{\leftline{(\it #1)}}
+\def\pow#1{$^{\text{\tt #1}}$}
+\def\2{\pow2}
+\def\3{\pow3}
+\def\4{\pow4}
+\def\5{\pow5}
+\def\6{\pow6}
+\def\DIV{$\mid$}
+\def\NDIV{$\nmid$}
+\def\={$\equiv$}
+\def\NEQ{$\not=$}
+\def\NEQUIV{$\not\equiv$}
+%
+
+\endinput

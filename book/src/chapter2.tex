@@ -1,0 +1,3394 @@
+% ALGORITHMS FOR MODULAR ELLIPTIC CURVES       Last change: 10/96
+%
+% CHAPTER 2  MODULAR SYMBOL ALGORITHMS
+%
+% Use AmSTeX 2.0
+%
+\input book.def
+\advance\pageno by\chaponepages
+%
+\topmatter
+%
+\title\chapter{2} Modular symbol algorithms \endtitle
+%
+\endtopmatter
+%
+\document
+%\openup 2pt 
+%\raggedbottom % for drafts only
+%
+\def\chapno{2}
+\newsec{\Homol}   % 2.1 Modular Symbols and Homology
+   \newsubsec{\upperhalf}    % 2.1.1
+   \newsubsec{\dualcusphom}  % 2.1.2
+   \newsubsec{\realstruc}    % 2.1.3
+   \newsubsec{\modsyms}      % 2.1.4
+   \newsubsec{\ratstruc}     % 2.1.5
+   \newsubsec{\triangles}    % 2.1.6
+\newsec{\Msymb}   % 2.2 M-symbols and $\Gamma_0(N)$ 
+\newsec{\Convert} % 2.3 Conversion between modular symbols and M-symbols
+\newsec{\Hecke}   % 2.4 Action of Hecke and other operators
+\newsec{\Hplus}   % 2.5 Working in $H^+(N)$
+\newsec{\Mcurves} % 2.6 Modular forms and modular elliptic curves
+\newsec{\Split}   % 2.7 Splitting off one-dimensional eigenspaces
+\newsec{\Ratio}   % 2.8 Evaluation of $L(f,1)/\RP(f)$
+\newsec{\Ap}      % 2.9 Computing Fourier coefficients
+\newsec{\PerI}    % 2.10 Computing periods I
+\newsec{\PerII}   % 2.11 Computing periods II: Indirect method
+\newsec{\PerIII}  % 2.12 Computing periods III: Evaluation of the sums
+\newsec{\Lfr}     % 2.13 Computing $L^{(r)}(f,1)$
+\newsec{\Eqns}    % 2.14 Obtaining equations for the curves
+\newsec{\Degphi}  % 2.1  Computing the degree
+   \newsubsec{\modparams}    % 2.15.1
+   \newsubsec{\cosetreps}    % 2.15.2
+   \newsubsec{\gammazero}    % 2.15.3
+
+
+%
+% CHAPTER 2 SECTION 0 (INTRODUCTION)
+%
+In this chapter we describe the modular symbol method in
+detail. First, in Sections \Homol\ to~\Hplus, we describe the use of
+modular symbols and M-symbols to compute the homology space
+$H_1(X_0(N),\Q)$ and the action of the Hecke algebra, for an arbitrary
+positive integer~$N$.  At this stage it is already possible to
+identify rational newforms $f$, and obtain some information about the
+modular elliptic curves $E_f$ attached to them: these are introduced
+in Section \Mcurves. To obtain equations for the curves $E_f$ we
+compute their period lattices: the methods used for this stage occupy
+most of the remaining sections of the chapter.  The final section
+\Degphi\ shows how to compute the degree of the associated map
+$\varphi:X_0(N)\to E_f$.
+
+To illustrate the methods, we also give some worked examples in an
+Appendix to the chapter.
+
+%
+% CHAPTER 2 SECTION 1
+%
+\beginsection{\Homol}
+\head\Homol\ Modular Symbols and Homology\endhead
+
+\goodbreak
+\beginsubsection{\upperhalf}
+\subhead \upperhalf. The upper half-plane, the modular group and cusp forms 
+\endsubhead
+\nobreak
+
+Let $\H$ denote the upper half-plane $$ \H = \{z=x+iy\in\C\mid y>0 \},
+$$ and $\H^* = \H\cup\Q\cup\{\infty\}$ the extended upper half-plane,
+obtained by including the cusps $\Q\cup\{\infty\}$. The group
+$\PSL_2(\R)$ acts on $\H^*$ via linear fractional transformations: 
+$$
+   \mat(a,b;c,d)\colon\quad z \mapsto \frac{az+b}{cz+d}; 
+$$ 
+these are the isometries of the hyperbolic geometry on $\H$, for which
+geodesics are either half-lines perpendicular to the real axis $\R$,
+or semicircles perpendicular to $\R$.
+
+The modular group $\Gamma=\PSL_2(\Z)$ is a discrete subgroup of
+$\PSL_2(\R)$ (in the topology induced from $\SL(2,\R)\subset M_2(\R)
+\cong \R^4$), and acts discontinuously on $\H$, in the sense that for
+each $z\in\H$ the orbit $\Gamma.z$ is discrete.   Note that the cusps
+$\Q\cup\{\infty\}$ form a complete $\Gamma$-orbit.
+
+The elements $S=\mat(0,-1;1,0)\colon\quad z\mapsto -1/z$ (of order~2) and
+$T=\mat(1,1;0,1)\colon\quad z\mapsto z+1$ (of infinite order) generate
+$\Gamma$.  This fact, and the related fact that a fundamental region
+for the action of $\Gamma$ on $\H$ is given by the set $\F$ defined by
+\neweq{\fregion}
+$$ 
+    \F=\{z=x+iy\in\H\mid |x|\le\frac12, |z|\ge1\}, \tag{\fregion}
+$$ 
+are standard and will not be proved here.  Both results depend
+essentially on the fact that $\Z$ is Euclidean.
+
+Let $G$ be a subgroup of $\Gamma$ of finite index $e$.  Then $G$ also
+acts discretely on $\H$.  A fundamental region for $G$ on $\H$ is
+given by $\cup M_i.\F$, where the $M_i$ (for $1\le i\le e$)
+are right coset representatives for $G$ in $\Gamma$.
+
+Let $X_G=G\backslash\H^*$ denote the quotient space; this may be given
+the structure of a compact Riemann surface.  Around most points the
+local parameter is just $z$, but more care is needed about the
+``parabolic points'' or cusps, and the ``elliptic points'' which have
+non-trivial stabilizers in the $\Gamma$-action.  These elliptic points
+for $G$ (if any) are in the $\Gamma$-orbits of $i$ (stabilized by $S$ of
+order~2), and of $\rho=(1+\sqrt{-3})/2$ (stabilized by $TS$ of order
+3).  See the books of Lang \cite\Langb, Shimura \cite\Shimura\, or
+Knapp \cite\Knapp\ for details of the Riemann surface construction.
+
+Let $g$ denote the genus of the surface $X_G$; as a real
+manifold\footnote{Strictly speaking, $X_G$ is not a manifold unless
+$G$ has no elements of finite order, because of the branching over the
+elliptic points.  However this will make no difference in practice and
+we may safely ignore it.}, $X_G$ is a $g$-holed torus.  We will be
+concerned with the explicit computation of the 1-homology
+$H_1(X_G,\Z)$, which is a free $\Z$-module of rank~$2g$.  (See
+Subsection~\dualcusphom\ below for a brief review of homology).  This homology
+will be expressed in terms of ``modular symbols'', defined below.  We
+must also explain the connection between homology, modular forms, and
+elliptic curves.  First we review the definition of cusp forms.
+
+The space of {\it cusp forms of weight\/}~$2$ for $G$ will be denoted
+by $S_2(G)$ .  These cusp forms are holomorphic functions $f(z)$ for
+$z\in\H$ which satisfy
+
+\part{1} $f\slash M = f$ for all $M\in G$, where
+$$
+  \left(f\slash{\mat(a,b;c,d)}\right)(z) = (cz+d)^{-2}f\left(\frac{az+b}{cz+d}\right).
+$$
+Thus, since $(cz+d)^{-2}=(d/dz)(M(z))$ for
+$M=\mat(a,b;c,d)$, we have, for all $M\in G$,
+$$
+   f(M(z))d(M(z)) = f(z)dz.
+$$
+
+\part{2} $f(z)$ behaves nicely at the cusps.  The significance of this
+condition is that, by (1), a cusp form of weight~2 for $G$ is the
+pull-back of a (holomorphic) differential on the Riemann surface
+$G\backslash\H$, of which $X_G$ is the compactification after adding
+the (finitely many) $G$-inequivalent cusps, and we want this
+differential to be holomorphic on the whole of $X_G$.  In future we
+will identify cusp forms of weight~2 for $G$ with holomorphic
+differentials on $X_G$.   From standard Riemann surface theory, we
+then know that $S_2(G)$ is a complex vector space of dimension~$g$.
+
+We can make explicit the condition that $f(z)dz$ is holomorphic at the
+cusp $\infty$ (for the other cusps, see one of the references on the
+theory of modular forms).  The stabilizer of $\infty$ in $\Gamma$ is
+the infinite cyclic subgroup generated by $T$; if $h$ is the least
+positive integer such that $T^h\in G$, then clearly we have 
+$$
+  \hbox{Stab}(\infty) \cap G = \left<T^h\right>,
+$$
+and every $f\in S_2(G)$ has a Fourier expansion of the form
+\neweq{\fourier}
+$$
+  f(z) = \sum_{n=1}^{\infty}a_ne^{2\pi inz/h} \tag{\fourier}
+$$
+with coefficients $a_n\in\C$.  The integer $h$ is called the {\it
+width\/} of the cusp $\infty$; for $G=\G0(N)$, the case we will
+be most interested in, we have $h=1$, since $T\in\G0(N)$.
+
+\goodbreak
+\beginsubsection{\dualcusphom}
+\subhead \dualcusphom. The duality between cusp forms and homology \endsubhead
+\nobreak
+
+The basis for our method is the explicit computation of the homology
+(specifically, the rational 1-homology) of the Riemann surface $X_G$.
+This is useful for various reasons.  On the one hand, this gives us a
+very explicit vector space on which Hecke operators act, which is
+isomorphic (or more strictly, dual) to the space of cusp forms.  Thus
+by computing homology and the Hecke action on it, we are indirectly
+also able to obtain information about the space of cusp forms.  The
+Fourier coefficients of the cusp forms are determined by their Hecke
+eigenvalues (see Section~\Mcurves), so we obtain these indirectly as
+eigenvalues of Hecke operators acting on homology.  Secondly, in order
+to actually compute the elliptic curves attached to these cusp forms,
+we need to know their periods, which are obtained by integrating the
+corresponding differentials around closed paths on the surface $X_G$;
+since two paths give the same period (for all forms) if and only if
+they are homologous (essentially by Cauchy's Theorem on $X_G$), it is
+clear that to determine the whole period lattice we will also require
+an explicit knowledge of the homology of $X_G$.
+
+The integral homology $H_1(X_G,\Z)$ is most easily defined
+geometrically: it is the abelian group obtained by taking as
+generators all closed paths on $X_G$, and factoring out by the
+relation that two closed paths are equivalent (or {\it homologous\/})
+if one can be continuously deformed into the other.  If the genus of
+the surface $X_G$ is $g$, this gives a free abelian group of rank
+$2g$: roughly speaking, the surface is a $g$-holed torus, and there
+are two generating loops around each hole.  To determine this homology
+group in practice, one triangulates the surface, so that every path is
+homologous to a path along the edges of the triangulation.  Now the
+generators are the directed edges of the triangulation, modulo
+relations given by the sum of the edges around each triangle being
+homologous to zero.  A typical element of $H_1(X_G,\Z)$ will then be
+given as a $\Z$-linear combination of these directed edges.  In
+Subsection~\triangles\ below, we will make this very explicit: there
+will be one edge of the triangulation for each coset of $G$ in
+$\Gamma$, and the triangle relations will be expressed algebraically
+in terms of the coset action of $\Gamma$.  This description will
+entirely algebraicize the situation, in a way which is then easy to
+implement on a computer.
+
+For any other ring $R$, the homology with coefficients in $R$ is
+obtained simply by tensoring with $R$: $$ H_1(X_G,R) =
+H_1(X_G,\Z)\otimes_{\Z}R.  $$ Explicitly, one just takes $R$-linear
+combinations of the $2g$ generators of the $\Z$-module $H_1(X_G,\Z)$
+(``extension of scalars''); the result is then an $R$-module.  In what
+follows we will only need to take $R=\Q$, $R=\R$, and $R=\C$.
+
+Let $H_1(X_G,\R) = H_1(X_G,\Z)\otimes_{\Z}\R$, which is a real
+vector space of dimension $2g$.  Abstractly, this space is obtained by
+formal extension of scalars from $H_1(X_G,\Z)$; but we can be more
+concrete, if we introduce the notion of modular symbols.
+
+\newprop{\modsymbasics}
+First let $\alpha$, $\beta\in\H^*$ be points equivalent under the
+action of $G$, so that $\beta=M(\alpha)$ for some $M\in G$.  Any
+smooth path (for instance, a geodesic path) from $\alpha$ to $\beta$
+in $\H^*$ projects to a closed path in the quotient space $X_G$, and
+hence determines an integral homology class in $H_1(X_G,\Z)$, which
+depends only on $\alpha$ and $\beta$ and not on the path chosen,
+because $\H^*$ is simply connected.  (In fact, the class depends only
+on $M$: see (5) in Proposition~\modsymbasics\ below). We denote this
+homology class by the {\it modular symbol\/} $\{\alpha,\beta\}_G$, or
+simply $\{\alpha,\beta\}$ when the group $G$ is clear from the
+context.
+
+Conversely, every integral homology class $\gamma\in H_1(X_G,\Z)$ can
+be represented by such a modular symbol $\{\alpha,\beta\}$.  Also, if
+$f\in S_2(G)$ then the integral 
+$$ 
+  \int_{\gamma}2\pi if(z)dz = 2\pi i\int_{\alpha}^{\beta}f(z)dz 
+$$ 
+is well-defined, since $f(z)$ is holomorphic, and will be denoted
+either as $\left<\gamma,f\right>$ or as $I_f(\alpha,\beta)$.  The
+(complex) value of such an integral is called a {\it period\/} of the
+cusp form $f$, or of the associated differential $2\pi if(z)dz$.
+ 
+Let $f_1$, $f_2$, $\ldots$, $f_g$ be a fixed basis for $S_2(G)$, so
+that the differentials $2\pi if_j(z)dz$ are a basis for the
+holomorphic differentials on $X_G$.  Also let $\gamma_1$, $\gamma_2$,
+$\ldots$, $\gamma_{2g}$ be a fixed $\Z$-basis for the integral
+homology $H_1(X_G,\Z)$.  Then we may form the $2g\times g$ complex 
+{\it period matrix}
+$$
+  \Omega = \left(\omega_{jk}\right) = \left(\left<\gamma_j,f_k\right>\right).
+$$
+By standard Riemann surface theory, the $2g$ rows of $\Omega$ are linearly
+independent over $\R$, and so their $\Z$-span is a lattice (discrete subgroup)
+$\Lambda$ of rank $2g$ in $\C^g$.  The quotient $J(G)=\C^g/\Lambda$ is
+the Jacobian of $X_G$; it is an abelian variety of dimension $g$.
+
+The symbols $\{\alpha,\beta\}$ give $\C$-linear functionals $S_2(G)
+\to\C$ via $f\mapsto I_f(\alpha,\beta)$.  We may identify
+$H_1(X_G,\R)$ with the space of all $\C$-linear functionals on
+$S_2(G)$ as follows: given an element $\gamma\in H_1(X_G,\R)$, we can
+write $\gamma$ uniquely in the form
+$$
+  \gamma = \sum_{j=1}^{2g}c_j\gamma_j
+$$
+with coefficients $c_j\in\R$.  Define $\left<\gamma,f\right> =
+\sum_{j=1}^{2g}c_j\left<\gamma_j,f\right>$.  Then the corresponding
+functional is $f \mapsto \left<\gamma,f\right>$.  Conversely, given a
+functional $\omega\colon S_2(G)\to\C$, the vector
+$(\omega(f_1),\omega(f_2),\ldots,\omega(f_g))\in\C^g$ may be expressed
+uniquely as an $\R$-linear combination of the rows of $\Omega$, so
+there exist real scalars $c_j$ ($1\le j\le 2g$) such that $$ \omega(f)
+= \sum_{j=1}^{2g}c_j\left<\gamma_j,f\right> $$ for all $f\in S_2(G)$;
+then $\omega(f)=\left<\gamma,f\right>$ where
+$\gamma=\sum_{j=1}^{2g}c_j\gamma_j \in H_1(X_G,\R)$.
+
+In particular, let $\alpha$, $\beta\in\H^*$ be arbitrary (not
+necessarily in the same $G$-orbit); then the functional $f\mapsto
+I_f(\alpha,\beta)$ corresponds to a unique element
+$\gamma=\sum_{j=1}^{2g}c_j\gamma_j\in H_1(X_G,\R)$, and we {\it
+define\/} the modular symbol $\{\alpha,\beta\}_G\in H_1(X_G,\R)$ to be
+this element.  Clearly this definition agrees with the earlier one in
+the special case where $\beta=M(\alpha)$ for some $M\in G$; indeed,
+this case holds if and only if all $c_j\in\Z$.
+
+By the {\it field of definition\/} of an element $\gamma\in
+H_1(X_G,\R)$ we mean the field generated over $\Q$ by its coefficients
+$c_j$ (with respect to the $\Z$-basis for the integral homology, as
+above).  For example, $\gamma$ is rational (has field of definition
+$\Q$) if and only if $\gamma\in H_1(X_G,\Q)$.
+
+We now have an $\R$-bilinear pairing
+\neweq{\pairingC}
+$$
+         S_2(G) \times H_1(X_G,\R) \longrightarrow \C \tag{\pairingC}
+$$
+given by 
+$$
+    (f,\gamma) \mapsto  \<\gamma,f>=\int_\gamma 2\pi if(z)dz
+$$
+which gives an exact duality between the two spaces on the left if we
+view $S_2(G)$ as a real vector space of dimension $2g$ by restriction
+of scalars from $\C$ to~$\R$.  
+
+To interpret this as a duality over $\C$, we can give $H_1(X_G,\R)$
+the structure of a vector space over $\C$ (of dimension $g$) as
+follows.  Given $\gamma\in H_1(X_G,\R)$ and $c\in\C$, we define
+$c\gamma$ to be that element of $H_1(X_G,\R)$ which satisfies
+$\left<c\gamma,f\right> = \left<\gamma,cf\right>$ for all $f\in
+S_2(G)$; in other words, $c\gamma$ is the element corresponding to the
+functional $f\mapsto c\left<\gamma,f\right>$.  Now the map $(f,\gamma)
+\mapsto  \<\gamma,f>$ is $\C$-bilinear, and the dual pairing
+(\pairingC) between homology and cusp forms is an exact duality over
+$\C$.
+
+\beginsubsection{\realstruc}
+\subhead \realstruc. Real structure \endsubhead
+
+For suitable groups $G$ we can restrict the duality described above to
+a duality between real vector spaces of dimension~$g$.  This has
+important implications for explicit computations, where a halving of
+the dimension (from $2g$ to $g$) gives a significant saving of effort.
+
+Let $J=\mat(-1,0;0,1)$.  We say that a subgroup $G$ of $\Gamma$ is
+{\it of real type\/} if $J$ normalizes $G$.  Explicitly, let
+$M=\mat(a,b;c,d)\in G$; then $J^{-1}M J = \mat(a,-b;-c,d) = M^*$, say,
+and $G$ is of real type when $M\in G\iff M^*\in G$.  This will be
+true, in particular, for the congruence subgroups $\G0(N)$ and
+$\G1(N)$ of most interest to us.
+
+For $z\in\H$ set $z^* = -\overline{z}$.  Then a trivial calculation
+shows that $w=M(z) \iff w^*=M^*(z^*)$; it follows that, for
+$G$ of real type, the map $z\mapsto z^*$ induces a well-defined map on
+the quotient $X_G$, and hence also on homology, via $\{\alpha,\beta\}
+\mapsto \{\alpha^*,\beta^*\}$.  Clearly this is an $\R$-linear
+involution on $H_1(X_G,\R)$.  Hence we obtain a decomposition into
+$+1$ and $-1$ eigenspaces for $*$:
+$$
+  H_1(X_G,\R) = H_1^+(X_G,\R) \oplus H_1^-(X_G,\R).
+$$
+
+\remark{Remark} The involution $*$ also acts on the integral homology
+$H_1(X_G,\Z)$, and we may set $H_1^{\pm}(X_G,\Z) = H_1^{\pm}(X_G,\R)
+\cap H_1(X_G,\Z)$.  However the direct sum $H_1^{+}(X_G,\Z)
+\oplus H_1^{-}(X_G,\Z)$ will in general have finite index in
+$H_1(X_G,\Z)$.
+\endremark
+
+We now define dually an involution, also denoted $*$, on the space
+$S_2(G)$ where $G$ is of real type.  For a holomorphic function $f$ on
+$\H$, we set $f^*(z) = \overline{f(z^*)}$.  Then $f^*$ is also
+holomorphic on $\H$, and the following facts are easily verified:
+
+\part{1} If $f$ has Fourier expansion $f(z)=\sum a_nq^n$ (where
+$q=\exp(2\pi iz/h)$ as in (\fourier) above), then $f^*(z) =
+\sum\overline{a_n}q^n$.  In other words, the Fourier coefficients of
+$f^*$ are the conjugates of those of $f$.
+
+\part{2} For $M\in\Gamma$, we have $f^*\mid M = (f\mid M^*)^*$.
+
+\part{3} $\<\gamma^*,f^*> = \overline{\<\gamma,f>}$ for all $f$, $\gamma$.
+
+As a formal consequence of fact (2), we immediately see that, for
+$G$ of real type, the map $f\mapsto f^*$ is an $\R$-linear map from
+$S_2(G)$ to itself, which is an involution.  Denote by $S_2(G)_{\R}$
+the $\R$-subspace of $S_2(G)$ fixed by this involution, which by fact
+(1) consists of those cusp forms with real Fourier coefficients.  
+Then $\dim_{\R}(S_2(G)_{\R})=g$, and $S_2(G)_{\R}$ spans $S_2(G)$ over
+$\C$. 
+
+For nonzero $f\in S_2(G)_{\R}$ we have (from fact (3)):
+$$
+  \<\gamma,f>\in\R \iff \gamma\in H_1^+(X_G,\R),
+$$
+and also
+$$
+  \<\gamma,f>\in i\R \iff \gamma\in H_1^-(X_G,\R).
+$$
+Moreover, multiplication by $i$ on $H_1(X_G,\R)$ interchanges the
+``real'' and ``pure imaginary'' eigenspaces $H_1^{\pm}(X_G,\R)$ since 
+$$
+  \align
+  \gamma\in H_1^+ &\iff \<\gamma,f>\in\R \qquad\forall f\in S_2(G)_{\R}\\
+                  &\iff \<i\gamma,f>\in i\R \qquad\forall f\in S_2(G)_{\R}\\
+                  &\iff i\gamma \in H_1^-.
+  \endalign
+$$
+It follows that $\dim H_1^+(X_G,\R) = \dim H_1^-(X_G,\R) = g$.
+
+Also, since the period $\<\gamma,f>$ is real for $\gamma\in H_1^+$ and
+$f\in S_2(G)_{\R}$, the duality over $\C$ we had earlier now restricts
+to a duality over $\R$: \neweq{\pairingR}
+$$
+         S_2(G)_{\R} \times H_1^+(X_G,\R) \longrightarrow \R. \tag{\pairingR}
+$$
+It follows that the real vector spaces $S_2(G)_{\R}$ and
+$H_1^+(X_G,\R)$ of dimension~$g$ are dual to each other.  We will
+exploit this duality (which also respects the action of Hecke and
+other operators, see below), as we will compute $H_1(X_G,\R)$
+explicitly in order to gain information about the cusp forms in
+$S_2(G)$.  Also, this duality is crucial in the definition of modular
+elliptic curves.
+
+\beginsubsection{\modsyms}
+\subhead \modsyms. Modular symbol formalism \endsubhead
+
+We will need the following simple properties of the modular symbols
+$\{\alpha,\beta\}$.
+
+\proclaim{Proposition \modsymbasics}
+Let $\alpha, \beta, \gamma\in\H^*$, and let $M$, $M_1$, $M_2\in G$.  Then
+\part{1} $\{\alpha,\alpha\}=0$;
+\part{2} $\{\alpha,\beta\} + \{\beta,\alpha\} = 0$;
+\part{3} $\{\alpha,\beta\} + \{\beta,\gamma\} + \{\gamma,\alpha\} = 0$;
+\part{4} $\{M\alpha,M\beta\}_G = \{\alpha,\beta\}_G$;
+\part{5} $\{\alpha,M\alpha\}_G = \{\beta,M\beta\}_G$;
+\part{6} $\{\alpha,M_1M_2\alpha\}_G = \{\alpha,M_1\alpha\}_G +
+\{\alpha,M_2\alpha\}_G$; 
+\part{7} $\{\alpha,M\alpha\}_G \in H_1(X_G,\Z)$.
+
+\endproclaim
+
+\demo{Proof} Only (5) and (6) are not quite obvious. For (5), write  
+$\{\alpha,M\alpha\}=\{\alpha,\beta\}+\{\beta,M\beta\}+\{M\beta,M\alpha\}$,
+using (2) and (3); now the first and third terms cancel by (4).  For (6), we
+have $\{\alpha,M_1M_2\alpha\} = \{\alpha,M_1\alpha\} +
+\{M_1\alpha,M_1M_2\alpha\} = \{\alpha,M_1\alpha\} +
+\{\alpha,M_2\alpha\}$ using (4).
+\qed
+\enddemo
+
+\newprop{\homhom}
+\proclaim{Corollary \homhom}The map $M\mapsto\{\alpha,M\alpha\}_G$ is
+a surjective group homomorphism $G\to H_1(X_G,\Z)$, which is independent of
+$\alpha\in\H^*$.
+\endproclaim
+
+The kernel of this homomorphism contains all commutators and elliptic
+elements (since the latter have finite order, and the image is a
+torsion-free abelian group), and also all parabolic elements: for if
+$M\in G$ is parabolic, it is a conjugate of $T$ and hence fixes some
+$\alpha\in\Q\cup\{\infty\}$, so $M\mapsto\{\alpha,M\alpha\}=0$.  In
+fact, the kernel is generated by these elements, but we will not prove
+that here.
+
+\beginsubsection{\ratstruc}
+\subhead \ratstruc. Rational structure and the Manin-Drinfeld Theorem \endsubhead
+
+We have seen that every element $\gamma$ of $H_1(X_G,\Z)$ has the form
+$\{\alpha,M\alpha\}$ with $M\in G$ and $\alpha\in\H^*$ arbitrary;
+usually we take $\alpha$ to be a cusp, so that $\gamma$ is a path
+between $G$-equivalent cusps.  It is not clear in general what is the
+field of definition of a modular symbol $\{\alpha,\beta\}_G$ for which
+$\alpha$ and $\beta$ are both cusps.  However, when $G$ is a
+congruence subgroup, this is answered by the Manin-Drinfeld Theorem.
+
+A {\it congruence subgroup\/} of $\Gamma$ is a subgroup $G$ such that
+membership of $G$ is determined by means of congruence conditions on
+the entries of a matrix in $\Gamma$.  A moment's thought shows that
+this is equivalent to the condition that for some positive integer
+$N$, $G$ contains the {\it principal congruence subgroup\/}
+$\Gamma(N)$, which is defined to be the subgroup of $\Gamma$
+consisting of matrices congruent to the identity modulo~$N$.  The
+least such $N$ is called the {\it level\/} of $G$.
+
+The most important congruence subgroups are $\Gamma(N)$ itself;
+$$
+   \G0(N) = \left\{\mat(a,b;c,d)\in\Gamma\mid c\equiv0\pmod{N}\right\};
+$$
+and
+$$
+   \G1(N) = \left\{\mat(a,b;c,d)\in\Gamma\mid c\equiv0, a\equiv1 \pmod{N}\right\}.
+$$
+
+We can now state the Manin-Drinfeld Theorem.
+
+\newprop{\ManinDrinfeld}
+\proclaim{Theorem \ManinDrinfeld} (Manin, Drinfeld) Let $G$ be a
+congruence subgroup of the modular group $\Gamma$.  Then for all pairs
+of cusps $\alpha$, $\beta\in\H^*$ we have
+$$
+   \{\alpha,\beta\}_G\in H_1(X_G,\Q).
+$$
+\endproclaim
+
+In particular, the modular symbol $\{0,\infty\}_G$ is rational; the
+denominator of this element is very important in many ways.
+
+Thus the rational homology $H_1(X_G,\Q)$ is generated by paths between
+cusps (since it is generated by the integral homology), and conversely
+every path between cusps is rational.  We will see later how to use this
+fact to develop an algorithm for computing the rational homology.
+
+The proof of the Manin-Drinfeld Theorem involves the use of Hecke
+operators: see the Remark in Section~\Ap\ for a sketch of this
+argument in the case of $\G0(N)$.  Using Hecke operators, we can
+also prove that the space of cusp forms $S_2(G)$ has a $\Q$-structure,
+namely a basis consisting of forms with rational Fourier coefficients
+(when $G$ is a congruence subgroup).  This is related to the fact that
+the modular curve $X_G$, which as a Riemann surface is certainly an
+algebraic curve over $\C$, can in fact be given the structure of an
+algebraic curve over the field of algebraic numbers $\overline\Q$ (and
+even over the $N$th cyclotomic field, if $G$ has level $N$).  This
+rational structure is crucial to the construction of modular elliptic
+curves, to ensure that we obtain elliptic curves defined over $\Q$.
+For further details, see the books of Lang \cite\Langb\ and Knapp
+\cite\Knapp.
+
+The duality between cusp forms and homology does not descend entirely
+to $\Q$, however, because even if $f\in S_2(G)$ has rational Fourier
+coefficients and $\gamma\in H_1(X_G,\Q)$, the period $\<\gamma,f>$
+will not be rational.  Rationality questions for periods of modular
+forms have been studied extensively, notably by Manin, but we will not
+go into this further here.
+
+\beginsubsection{\triangles}
+\subhead \triangles. Triangulations and homology \endsubhead
+
+From now on we will assume that $G$ is a congruence subgroup, so that
+the rational homology of $X_G$ is precisely the homology generated by
+paths between cusps.
+
+We will compute the homology of $X_G$ by first triangulating the upper
+half-plane $\H^*$, using a tessellation of hyperbolic triangles, and
+then passing to the quotient.  This will give us a very explicit
+triangulation of the surface $X_G$, using which we can write down
+explicit generators and relations for its 1-homology.
+
+For $M\in\Gamma$ let $(M)$ denote $\{M(0),M(\infty)\}$, viewed as a
+path in $\H^*$; this is the image under $M$ of the imaginary axis
+$\{0,\infty\}$.  These geodesic paths form the oriented edges of a
+triangulation of $\H^*$ whose vertices are the cusps
+$\Q\cup\{\infty\}$. Explicitly, there is an edge from $\infty$ to $n$
+for all $n\in\Z$, and an edge between rational numbers $a/c$ and $b/d$
+such that $ad-bc=1$.  The triangles of the triangulation are images
+under $M\in\Gamma$ of the basic triangle $\T$ with vertices at 0, 1
+and $\infty$ and edges $(I)$, $(TS)$, $((TS)^2)$.  We denote by $\<M>$
+the image of this triangle under $M$, which has vertices $M(0)$,
+$M(1)$ and $M(\infty)$ and edges $(M)$, $(MTS)$ and $(M(TS)^2)$.  This
+representation of the triangles is unique except for the relation
+$$
+   \<M> = \<MTS> = \<M(TS)^2>.
+$$
+Also, triangles $\<M>$ and $\<MS>$ meet along the edge
+$(M)$, since $(MS)=-(M)$ (the negative sign indicating
+reverse orientation).
+
+We will use the symbol $(M)_G$ to denote the image of the path $(M)$
+in the quotient $X_G$, and also its image in the rational homology.
+The geometric observations of the previous paragraph now give us the
+following 2- and 3-term relations between these symbols:\neweq\Mrels
+$$
+  \aligned
+   (M)_G + (MTS)_G + (M(TS)^2)_G &= 0 \\
+   (M)_G + (MS)_G  &= 0. \\
+  \endaligned\tag\Mrels
+$$
+We also clearly have the relations 
+\neweq{\leftinvar}
+$$
+   (M'M)_G=(M)_G   \tag\leftinvar
+$$ 
+for all $M'\in G$, so we may use as generators of the rational homology
+the finite set of symbols $(M_i)_G$, ($1\le i\le e$), where as before
+$M_1$, $\ldots$, $M_e$ are a set of right coset
+representatives for $G$ in $\Gamma$.
+
+Let $C(G)$ be the $\Q$-vector space with basis the formal symbols
+$(M)_G$ for each $M$ in $\Gamma$, identified by the relations
+(\leftinvar), so that $\dim(C(G)) = e = [\Gamma:G]$.  
+
+Let $B(G)$ be the subspace of $C(G)$ spanned by all elements of the
+form
+$$
+  \align
+    (M)_G+(MS)_G&, \\
+    (M)_G+(MTS)_G+(M(TS)^2)_G&. \\
+  \endalign
+$$
+
+Let $C_0(G)$ be the $\Q$-vector space spanned by the $G$-cusps
+$[\alpha]_G$ for $\alpha\in\Q\cup\{\infty\}$ (so that
+$[\alpha]_G=[\beta]_G \iff \beta=M(\alpha)$ for some $M\in G$).
+Define the boundary map $\delta\colon C(G) \to C_0(G)$ by
+$$
+    \delta((M)_G) = [M(\infty)]_G - [M(0)]_G
+$$
+and set $Z(G)=\ker(\delta)$.  Note that $B(G)\subseteq Z(G)$, by a
+trivial calculation using the facts that $S$ transposes $0$ and
+$\infty$ while $TS$ cycles $0$, $1$ and $\infty$.  
+
+Finally we define $H(G)=Z(G)/B(G)$.  The crucial result, due in this
+form to Manin \cite{\Manin, Theorem 1.9}, is that this formal
+construction does in fact give us the rational homology of $X_G$:
+
+\newprop{\ManinThm}
+\proclaim{Theorem \ManinThm}  $H(G)$ is isomorphic to $H_1(X_G,\Q)$, 
+the isomorphism being induced by
+$$
+  (M)_G \mapsto \{M(0),M(\infty)\}_G.
+$$
+\endproclaim
+
+We may thus use the symbol $(M)_G$ either as an abstract symbol
+obeying certain relations, or to denote an element of $H_1(X_G,\Q)$,
+without confusion.   In future, as the subgroup $G$ will be fixed, we
+will omit the subscript on these symbols and blur the distinction
+between $(M)$ as a path in the upper half-plane and $(M)_G$
+as representing an element of the rational 1-homology of $X_G$.
+
+Note that the form of the relations between the generating symbols
+$(M)$ does not depend at all on the specific group $G$.  In
+particular we do not have to consider explicitly the shape of a
+fundamental region for the action of $G$ on $\H^*$, or how the edges
+of such a region are identified.  This represents a major
+simplification compared with earlier approaches, such as that used by
+Tingley \cite{\Tingley}.  In order to develop this result into an
+explicit algorithm for computing homology, we need to have a specific
+set of right coset representatives for the subgroup $G$ of $\Gamma$,
+and also to have a test for $G$-equivalence of cusps.  These are
+purely algebraic problems which can easily be solved for
+arithmetically defined subgroups $G$ such as congruence subgroups.
+Observe that from this point on, we do not have to do any geometry at
+all. 
+
+One final remark before we specialize to the case $G=\G0(N)$:
+every path between cusps may be expressed as a finite sum of paths of
+the form $(M)$ with $M\in\Gamma$.
+Writing $\{\alpha,\beta\} = \{0,\beta\}-\{0,\alpha\}$, it suffices to do
+this for modular symbols of the form $\{0,\alpha\}$.  Let \neweq\cfconv
+$$
+    \frac{p_{-2}}{q_{-2}} = \frac01,
+    \frac{p_{-1}}{q_{-1}} = \frac10,
+    \frac{p_0}1 = \frac{p_0}{q_0},
+    \frac{p_1}{q_1},  \frac{p_2}{q_2},  \ldots,
+    \frac{p_k}{q_k}=\alpha
+\tag\cfconv
+$$
+denote the continued fraction convergents of the rational number $\alpha$.
+Then, as is well-known,
+$$
+   p_jq_{j-1}-p_{j-1}q_j = (-1)^{j-1} \qquad\text{for $-1\le j\le k$}.
+$$
+Hence \neweq\cfexpa
+$$
+  \{0,\alpha\}
+= \sum_{j=-1}^{k}\left\{\frac{p_{j-1}}{q_{j-1}},\frac{p_j}{q_j}\right\}
+= \sum_{j=-1}^{k}\left\{M_j(0),M_j(\infty)\right\}
+= \sum_{j=-1}^{k}(M_j)
+\tag\cfexpa
+$$
+where $M_j = \mat( {(-1)^{j-1}p_j} , {p_{j-1}} ;
+                        {(-1)^{j-1}q_j} , {q_{j-1}} )  $.
+
+%
+% CHAPTER 2 SECTION 2
+%
+\beginsection{\Msymb}
+\head\Msymb\ M-symbols and $\G0(N)$ \endhead
+
+We now specialize to the case $G=\G0(N)$:
+$$
+   \G0(N) = \left\{\mat(a,b;c,d)\in\Gamma\mid c\equiv0\pmod{N}\right\}.
+$$
+The index of $\G0(N)$ in $\Gamma$ is given (see \cite{\Shimura,
+Proposition 1.43}) by
+$$
+    [\Gamma:\G0(N)] = N\prod_{p\mid N}\left(1+p^{-1}\right).
+$$
+
+Define $H(N)=H(\G0(N))$ and $X_0(N)=X_{\G0(N)}$.  After
+Theorem~\ManinThm, we will identify $H(N)$ with $H_1(X_0(N),\Q)$ by
+identifying $(M)$ with $\{M(0),M(\infty)\}$.
+
+The next lemma is used to determine right coset representatives for 
+$\G0(N)$ in $\Gamma$.
+
+\newprop{\Cosets}
+\proclaim{Proposition \Cosets}For $j=1,2$ let
+$M_j=\mat(a_j,b_j;c_j,d_j)\in\Gamma$. The following are equivalent.
+\part{1} The right cosets $\G0(N)M_1$ and $\G0(N)M_2$ are equal;
+\part{2} $c_1d_2\equiv c_2d_1\pmod{N}$;
+\part{3} There exists $u$ with $\gcd(u,N)=1$ such that $c_1\equiv u c_2$ and 
+$d_1\equiv u d_2\pmod{N}$.
+\endproclaim
+
+\demo{Proof}We have 
+$$
+  M_1M_2^{-1}=\mat(a_1d_2-b_1c_2,{}*{};c_1d_2-d_1c_2,a_2d_1-b_2c_1),
+$$
+which is in $\G0(N)$ if and only if $c_1d_2-d_1c_2\equiv0\pmod{N}$.
+Thus (1) and (2) are equivalent.
+Also, if (1) holds, then from $\det(M_1M_2^{-1})=1$, we
+deduce also that $\gcd(u,N)=1$, where $u=a_2d_1-b_2c_1$.
+Now
+$$\align
+ uc_2   &= a_2d_1c_2-b_2c_1c_2\\
+        &\equiv a_2d_2c_1-b_2c_2c_1
+                \qquad\text{since $d_1c_2\equiv d_2c_1\pmod{N}$}\\
+        &= c_1\phantom{a_2d_2-b_2c_2c_1} 
+                \qquad\text{since $a_2d_2-b_2c_2=1$}
+\endalign
+$$
+and $ud_2\equiv d_1$ similarly.  Conversely, if $c_1\equiv u c_2$ and 
+$d_1\equiv u d_2\pmod{N}$ with $\gcd(u,N)=1$, then the congruence in
+(2) follows easily. \qed
+\enddemo
+
+On the set of ordered pairs $(c,d)\in\Z^2$ such that $\gcd(c,d,N)=1$
+we now define the relation $\sim$, where \neweq{\symbeq}
+$$
+  (c_1,d_1) \sim (c_2,d_2) \iff c_1d_2\equiv c_2d_1 \pmod{N}. \tag\symbeq
+$$
+By Proposition \Cosets, this is an equivalence relation.
+The equivalence class of $(c,d)$ will be denoted $(c:d)$, and such symbols
+will be called M-symbols (after Manin, who introduced them in \cite{\Manin}).   
+The set of these M-symbols modulo $N$ is $P^1(N) 
+= P^1(\Z/N\Z)$, the projective line over the ring of integers modulo $N$.   
+
+Notice that in an M-symbol $(c:d)$, the integers $c$ and~$d$ are only
+determined modulo $N$, and that we can always choose them such that
+$\gcd(c,d)=1$.
+
+Proposition \Cosets\ now implies the following.
+\newprop{\bij}
+\proclaim{Proposition \bij}There exist bijections
+$$
+  P^1(N) \longleftrightarrow [\Gamma:\G0(N)]
+         \longleftrightarrow \{(M):M\in[\Gamma:\G0(N)]\}
+$$
+given by \neweq{\smat}
+$$
+(c:d) \leftrightarrow M=\mat(a,b;c,d) 
+      \leftrightarrow (M)=\{b/d,a/c\}  \tag \smat
+$$
+where $a,b\in\Z$ are chosen so that $ad-bc=1$. \qed 
+\endproclaim
+
+Note that a different choice of $a,b$ in (\smat)
+has the effect of multiplying $M$ on the left by a power of $T$ which does 
+not change the right coset of $M$, or the symbol $(M)$, since 
+$T\in\G0(N)$ for all $N$.
+
+The right coset action of $\Gamma$ on $[\Gamma:\G0(N)]$ induces an action on 
+$P^1(N)$: \neweq{\cosetaction}
+$$
+  (c:d)\mat(p,q;r,s) = (cp+dr : cq+ds).                \tag \cosetaction
+$$
+In particular, we have\neweq{\sact}
+$$
+   (c:d)S = (d:-c) \qquad\text{and}\qquad (c:d)T = (c:c+d).  \tag\sact
+$$
+
+The boundary map $\delta$ now takes the form \neweq{\sdelmap}
+$$
+   \delta\colon\quad (c:d) \mapsto [a/c] - [b/d].          \tag \sdelmap
+$$
+
+In order to compute $\ker(\delta)$, we must be able to determine when two cusps
+are $\G0(N)$-equivalent.  This is achieved by the following result.
+
+\newprop{\Cuspeq}\def\a{\alpha}
+\proclaim{Proposition \Cuspeq}For $j=1,2$ let $\a_j=p_j/q_j$ be cusps written in 
+lowest terms.  The following are equivalent:
+\part{1} $\a_2=M(\a_1)$ for some $M\in\G0(N)$;
+\part{2} $q_2\equiv u q_1\pmod{N}$ and $up_2\equiv p_1\pmod{\gcd(q_1,N)}$, 
+with $\gcd(u,N)=1$.
+\part{3} $s_1q_2\equiv s_2q_1 \pmod{\gcd(q_1q_2,N)}$, where $s_j$ satisfies 
+$p_js_j\equiv1\pmod{q_j}$.
+\endproclaim
+\demo{Proof} $(1) \implies (2)$:
+Let $M=\mat(a,b;Nc,d)\in\G0(N)$;   Then $p_2/q_2=(ap_1+bq_1)/(Ncp_1+dq_1)$,
+with both fractions in lowest terms.  Equating numerators and denominators 
+(up to sign) gives (2), with $u=\pm d$, since $ad\equiv1\pmod{N}$.
+
+$(2) \implies (1)$:
+Here we use Proposition \Cosets.   Assume (2), and write 
+$p_1s_1'-q_1r_1'=p_2s_2-q_2r_2=1$ with $s_1',r_1',s_2,r_2\in\Z$.
+Then $p_1s_1'\equiv1\pmod{q_1}$ and $p_2s_2\equiv1\pmod{q_2}$.  Also
+$\gcd(q_1,N)=\gcd(q_2,N)=N_0$, say, since $q_2\equiv u q_1\pmod{N}$.   
+Now $up_2\equiv p_1\pmod{N_0}$ implies $us_1'\equiv s_2\pmod{N_0}$, 
+so we may find $x\in\Z$ such that $uxq_1\equiv us_1'- s_2\pmod{N}$.
+Set $s_1=s_1'-xq_1$ and $r_1=r_1'-xp_1$.   Then $p_1s_1-q_1r_1=1$ and now
+$us_1\equiv s_2\pmod{N}$.   By Proposition \Cosets, there exists $M\in\G0(N)$ 
+such that $\mat(p_2,r_2;q_2,s_2)=M\mat(p_1,r_1;q_1,s_1)$, and so 
+$M(p_1/q_1)=p_2/q_2$ as required.
+
+$(1) \iff (3)$: As before, solve the equations $p_js_j-q_jr_j=1$ for
+$j=1,2$.  Set $M_j=\mat(p_j,r_j;q_j,s_j)$, so that
+$M_j(\infty)=\alpha_j$, and $M_2M_1^{-1}(\alpha_1) =\alpha_2$.  This
+matrix is in $\G0(N)$ if and only if $q_2s_1-q_1s_2
+\equiv0\pmod{N}$.  The most general such matrix is obtained by
+replacing $s_1$ by $s_1'=s_1+xq_1$, and it follows that $\alpha_1$ and
+$\alpha_2$ are equivalent if and only if we can solve for $x\in\Z$ the
+congruence
+$$
+  0 \equiv q_2s_1'-q_1s_2 \equiv q_2s_1-q_1s_2+xq_1q_2 \pmod{N},
+$$
+which is if and only if the congruence in (3) holds.
+\qed
+\enddemo
+
+Henceforth, we can therefore assume that $H(N)$ is given explicitly in
+terms of M-symbols.  Certain symbols will be generators, and each
+M-symbol $(c:d)$ will be expressed as a $\Q$-linear combination of
+these generating symbols, by means of the 2-term relations
+\neweq{\mtwoterm}
+$$
+  (c:d) + (-d:c) = 0                           \tag \mtwoterm
+$$
+and 3-term relations \neweq{\mthreeterm}
+$$
+  (c:d) + (c+d:-c) + (d:-c-d) = 0.             \tag \mthreeterm
+$$
+These are just the relations~(\Mrels) expressed in terms of M-symbols,
+using (\sact).
+
+\subhead Implementation
+\endsubhead
+We make a list of inequivalent M-symbols as follows:  first, list the symbols
+$(c:1)$ for $0\le c<N$; then the symbols $(1:d)$ for $0\le d<N$ and
+$\gcd(d,N)>1$; and finally a pairwise inequivalent set of symbols $(c:d)$
+with $c|N$, $c\ne1,N$, $\gcd(c,d)=1$ and $\gcd(d,N)>1$. (The latter symbols
+do not arise when $N$ is a prime power.)   
+
+To speed up the looking up of M-symbols in the list, we have found it 
+extremely worthwhile to prepare at the start of the program a collection 
+of lookup tables, containing for example a table of inverses modulo $N$.  We 
+also used a simple ``hashing'' system, so that given any particular symbol 
+$(c:d)$ we could quickly determine to which symbol in our standard list it is 
+equivalent. While this preparation of look-up tables may seem rather 
+trivial, in practice it has had a dramatic effect, speeding up the mass 
+computation of Hecke eigen\-values $a_p$ (see Section \Ap) by a factor of up 
+to 50. 
+
+Using the 2-term relations
+(\mtwoterm) we may identify the M-symbols in pairs, up to sign.   This
+immediately halves the number of generators needed.   Then the 3-term
+relations (\mthreeterm) are computed, each M-symbol being replaced by plus or
+minus one of the current generators, and the resulting equations solved
+using integer Gaussian elimination.   At the end of this stage we have a
+list of $r$ (say) ``free generators'' from the list of M-symbols, and a
+table expressing each of the M-symbols in the list as a $\Q$-linear
+combination of the generators. In practice, we store $\Z$-linear
+combinations, keeping a common denominator $d_1$ separately; however, by
+judicious choice of the order of elimination of symbols, in practice this
+denominator is very frequently 1.
+
+Next we compute the boundary map $\delta$ on each of the free
+generators, using (\sdelmap).  We have a procedure based on
+Proposition~\Cuspeq\ to test cusp equivalence.  Hence we do not have
+to compute in advance a complete list of inequivalent cusps.  Instead,
+we keep a cumulative list: each cusp we come across is checked for
+equivalence with those in the list already, and is added to the list
+if it represents a new equivalence class.  We found this simpler to
+implement than using a standard set of pairwise inequivalent cusps, as
+in \cite{\Manin, Corollary~2.6}.
+
+We thus compute a matrix with integer entries for the linear map $\delta$, 
+and by a second step of Gaussian elimination can compute a basis for its 
+kernel, which by definition is $H(N)$.   This basis is stored as a list of 
+$2g$ integer vectors in $\Z^r$ over a second common denominator $d_2$. 
+(Here $g$ is the genus of $X_0(N)$, so that $\dim H(N)=2g$.) We may arrange 
+(by reducing the basis suitably) that whenever a linear combination of 
+M-symbols (represented as a vector in $\Z^r$) is in $\ker(\delta)$,  then 
+its coefficients with respect to the basis are given by (a subset of) $2g$ 
+components of these vectors, divided by the cumulative common denominator 
+$d_1d_2$.
+
+From now on we will regard elements of $H(N)$ as being given by 
+vectors in $\Z^{2g}$ in this way.
+
+%
+% CHAPTER 2 SECTION 3
+%
+\beginsection{\Convert}
+\head\Convert\ Conversion between modular symbols and M-symbols\endhead
+
+As noted above, each M-symbol $(c:d)$ has a representative with
+$\gcd(c,d)=1$, and corresponds to the right coset representative
+$M=\mat(a,b;c,d)$ in $\Gamma$, where $ad-bc=1$.   The isomorphism of
+Theorem \ManinThm\ thus becomes \neweq{\miso}
+$$
+  (c:d) \mapsto \{b/d,a/c\}.                           \tag \miso
+$$
+The modular symbol on the right of (\miso) is independent of the choice of
+$a$ and $b$ with $ad-bc=1$, since $\mat(1,1;0,1)\in\Gamma_0(N)$ for all
+$N$, and so
+$$
+  \{\alpha,\beta\}_{\Gamma_0(N)} = \{\alpha+k,\beta+l\}_{\Gamma_0(N)}
+$$
+for all $k$, $l$ in $\Z$ and $\alpha$, $\beta$ in $\H^*$.
+
+Conversely each modular symbol $\{\alpha,\beta\}$ with $\alpha$ and
+$\beta$ in $\Q\cup\{\infty\}$ can be expressed, using continued
+fractions, as a sum of modular symbols of the special form
+$(M)=\{M(0),M(\infty)\}$ with $M\in\Gamma$, hence as a sum of
+M-symbols $(c:d)$, and finally as a linear combination of the
+generating M-symbols.
+
+Using the notation introduced above in Subsection \triangles, if
+$q_0=1$, $q_1$, $\ldots$, $q_k$ are the denominators of the continued
+fraction convergents to the rational number $\alpha$ as in (\cfconv),
+in terms of M-symbols we have \neweq\cfexpb
+$$
+   \{0,\alpha\} =  \sum_{j=1}^{k}((-1)^{j-1}q_j : q_{j-1}) \tag\cfexpb
+$$
+since the first two terms in (\cfexpa) cancel out.  Note that it is
+only the denominators of the continued fraction convergents which are
+used.
+
+
+%
+% CHAPTER 2 SECTION 4
+%
+\beginsection{\Hecke}
+\head\Hecke\ Action of Hecke and other operators\endhead
+
+For each prime $p$ not dividing $N$, the Hecke operator $T_p$
+acts on modular symbols $\{\alpha,\beta\}$ via \neweq{\mhecke}
+$$
+\aligned
+  T_p\colon\quad \{\alpha,\beta\} &\mapsto \left[\mat(p,0;0,1)
+                     + \sum_{r \mod p}\mat(1,r;0,p)\right]\{\alpha,\beta\} \\
+                                  &= \{p\alpha,p\beta\} +
+          \sum_{r \mod p}\left\{\frac{\alpha+r}{p},\frac{\beta+r}{p}\right\}.
+\endaligned\tag \mhecke
+$$
+This action induces a linear map from $H(N)$ to itself, provided that $p$
+does not divide $N$, which we again denote by $T_p$.
+
+There are also Hecke operators, which we also denote $T_p$, acting on the
+space $S_2(N)=S_2(\G0(N))$ of cusp forms of weight~2 for $\G0(N)$.  
+First recall that $2\times2$ matrices $M=\mat(a,b;c,d)$ with $ad-bc>0$ act on
+functions $f(z)$ on the right via
+$$
+f\mapsto f\slash{M}\qquad\text{where}\qquad
+(f\slash{M})(z)=\frac{ad-bc}{(cz+d)^2}\,f\left(\frac{az+b}{cz+d}\right). 
+$$
+A form of weight~2 for some group $G$ will satisfy $f\slash{M}=f$ for
+all $M\in G$.  This action extends by linearity to an action by formal
+linear combinations of matrices.  The Hecke operator $T_p$ is defined
+by
+$$
+f\slash{T_p} = f\slash{\left[{\mat(p,0;0,1)} + \sum_{r=0}^{p-1}{\mat(1,r;0,p)}\right]},
+$$
+so that
+$$
+  \left(f\slash{T_p}\right)(z) = p\;f(pz) + \frac{1}{p}\;\sum_{r=0}^{p-1}f\left(\frac{z+r}{p}\right).
+$$
+A standard result is that $T_p$ does act on $S_2(N)$, provided that
+$p\ndiv N$.  (There are similar operators $U_p$ for primes $p$
+dividing $N$, but we will not need these).
+
+These matrix actions on $S_2(N)$ and $H(N)$ are compatible, in the sense that
+they respect the duality between cusp forms and homology:
+$$
+  \<\{\alpha,\beta\},f\slash{M}> = \<\{M\alpha,M\beta\},f>,
+$$
+since
+$$
+\frac{d}{dz}\hskip-3pt\left(\frac{az+b}{cz+d}\right)=\frac{ad-bc}{(cz+d)^2},
+$$
+and so 
+$$
+  \int_{\alpha}^{\beta}\left(f\slash{M}\right)(z)dz
+= \int_{\alpha}^{\beta}\frac{ad-bc}{(cz+d)^2}f(M(z))dz
+= \int_{M\alpha}^{M\beta}f(w)dw.
+$$
+Thus, in particular,
+$$
+  \<\{\alpha,\beta\},f\slash{T_p}> = \<T_p\{\alpha,\beta\},f>.
+$$
+
+Secondly, for each prime $q$ dividing $N$ there is an involution
+operator $W_q$ acting on $H(N)$ and $S_2(N)$.  We recall the
+definition.  Let $q^\alpha$ be the exact power of $q$ dividing $N$,
+and let $x,y,z,w$ be any integers satisfying
+$q^{\alpha}xw-(N/q^{\alpha})yz=1$.  Then the matrix
+$W_q=\mat(q^{\alpha}x,y;Nz,q^{\alpha}w)$ has determinant $q^{\alpha}$
+and normalizes $\Gamma_0(N)$ (modular scalar matrices).  Thus $W_q$
+induces an action on $H(N)$ and $S_2(N)$, which is an involution since
+$W_q^2\in\Gamma_0(N)$ (modulo scalars), and is independent of the
+values $x,y,z,w$ chosen.  The product of all the $W_q$ for $q$
+dividing $N$ is the Fricke involution $W_N$, coming from the
+transformation $z\mapsto-1/Nz$, with matrix $\mat(0,-1;N,0)$.
+
+The operators $T_p$ for primes $p$ not dividing $N$ and $W_q$ for
+primes $q$ dividing $N$ together generate a commutative $\Q$-algebra,
+called the Hecke algebra and denoted $\TT$.  Moreover, each operator is
+self-adjoint with respect to the so-called Petersson inner product on
+$S_2(N)$, and so there exist bases for $S_2(N)$ consisting of
+simultaneous eigenforms for all the $T_p$ and $W_q$, with real
+eigenvalues. (See \cite{\AtkinL, Theorem~2} or \cite{\Langb,
+Corollary~2 to Theorem~4.2}.) Similarly, the action of $\TT$ on
+$H(N)\otimes\R$ can also be diagonalized.
+
+Finally, recall from Subsection \realstruc\ that the transformation
+$z\mapsto z^*=-\overline{z}$ on $\H$ commutes with the action of
+$\Gamma_0(N)$ and hence also induces an involution on $H(N)$ which we
+denote $*$.  This operator commutes with all the $T_p$ and $W_q$,
+which thus preserve the eigen\-spaces $H^+(N)$ and $H^-(N)$.
+Moreover, $H^+(N)$ and $H^-(N)$ are isomorphic as modules for the
+Hecke algebra $\TT$.  It follows that in order to compute eigenvalues
+of Hecke operators, we can restrict our attention to $H^+(N)$.  This
+has some practical significance, as we elaborate in the next section.
+
+\subhead Implementation \endsubhead 
+To compute the matrices giving the action of each of these operators
+on $H(N)$ we may proceed as follows.  We convert each of the generating
+M-symbols to a modular symbol as in Section \Convert.  To compute a
+$T_p$, we apply (\mhecke) to each, reconvert each term on the right of
+(\mhecke) to a sum of M-symbols using (\cfexpb), and hence express it
+as a $\Z^{2g}$-vector giving it as a linear combination of the
+generating M-symbols.  This gives one column of the $2g\times 2g$
+matrix. Similarly with $W_q$ and $W_N$.  Computing the matrix of $*$
+is easier, as we can work directly with the M-symbols, on which $*$
+acts via $(c:d)\mapsto(-c:d)$.  These integer matrices are in fact
+$d_1d_2$ times the actual operator matrices (where $d_1$ and $d_2$ are
+the denominators which may have arisen earlier as a result of the
+Gaussian elimination steps).  Obviously this must be taken into
+account when we look for eigenvalues later; however, for simplicity of
+exposition we will assume from now on that this denominator $d_1d_2$
+is 1.  We use the convention that the space is represented by column
+vectors, with operator matrices acting on the left.
+
+\subhead Heilbronn matrices \endsubhead 
+There is an alternative approach to computing the $T_p$, based on
+so-called {\it Heilbronn matrices\/} of level~$p$.  These were
+described by Mazur in \cite\Mazur, and their application to give an
+algorithm for computing the Hecke action on homology  in terms of
+M-symbols was given by Merel in his paper \cite\Merel.  We will
+describe our own version of this method, which is easy to implement;
+our approach differs slightly from, and is a little simpler than, that
+of Merel's paper \cite\Merel.  
+
+Since with this method one acts directly on the M-symbols, one avoids
+the conversion to and from modular symbols.  This makes the method
+faster in practice, particularly as we may precompute the Heilbronn
+matrices for all the small primes $p$ (say $p<30$) for which we need
+to compute the matrix of $T_p$ in order to split off one-dimensional
+eigenspaces from $H(N)$.
+
+From the definition in (\mhecke), the action of $T_p$ is expressed as
+the sum of the actions on modular symbols, on the left, of $p+1$
+matrices of determinant~$p$, namely $\mat(p,0;0,1)$ and
+$\mat(1,r;0,p)$ for $r$ modulo~$p$.  The following result shows how
+each of these acts on M-symbols directly, via an action on the right.
+
+\newprop\heilprop
+\proclaim{Proposition \heilprop}Let $p$ be a prime not dividing $N$
+and $(c:d)$ an M-symbol for $N$.  The action on $(c:d)$ of the $p+1$
+matrices appearing in {\rm(\mhecke)} is as follows.
+\part{1}
+$$
+   \mat(p,0;0,1)(c:d) = (c:pd) = (c:d)\mat(1,0;0,p).
+$$
+\part{2}For $r\in\Z$,  let $M_i\in\Gamma$ for $0\le i\le k$ be the
+matrices constructed from the continued fraction convergents to $r/p$
+as in {\rm(\cfexpa)}, so that
+$$
+   M_0(0)=\infty,\quad 
+   M_1(0)=M_0(\infty),\quad\ldots,\quad 
+   M_k(0)=M_{k-1}(\infty),\quad
+   M_k(\infty)=\frac{r}{p}.
+$$
+Set $M_i'=\mat(p,-r;0,1)M_iS$ for $0\le i\le k$.  Then
+$$
+   \mat(1,r;0,p)(c:d) = \sum_{i=0}^{k}(c:d)M_i'.
+$$
+\endproclaim
+
+\demo{Proof}In each case we first solve $ad-bc=1$ for integers $a,b$
+and apply the appropriate matrix to the modular symbol $\{b/d,a/c\}$. 
+
+\part{1}Since $p\ndiv N$ we may assume by the Chinese Remainder
+Theorem that $c$ is a multiple of $p$, say $c=pc'$.  Now
+$M=\mat(a,pb;c',d)=\mat(p,0;0,1)\mat(a,b;c,d)\mat(p,0;0,1)^{-1}\in\Gamma$,
+and
+$$
+   (c:d)\mat(1,0;0,p) = (c:pd) = (c':d) = (M) =
+\left\{\frac{pb}{d},\frac{a}{c'}\right\} = \mat(p,0;0,1)\left\{\frac{b}{d},\frac{a}{c}\right\}.
+$$
+\part{2}By construction of the $M_i$, we have
+$$
+   \sum_{i=0}^{k}(M_i) =
+   \sum_{i=0}^{k}\left\{M_i(0),M_i(\infty)\right\} = 
+   \left\{\infty,\frac{r}{p}\right\}.
+$$
+Given an M-symbol $(c:d)$, we will show how to choose $a$ and $b$ which
+satisfy $ad-bc=1$ and also 
+$$
+   M = \mat(1,r;0,p)\mat(a,b;c,d)\mat(1,r;0,p)^{-1} \in\Gamma.
+$$
+Then
+$$
+ \sum_{i=0}^{k}(MM_iS) = M\left\{\frac{r}{p},\infty\right\}
+                       = \left(M\mat(1,r;0,p)\right)
+                       = \left(\mat(1,r;0,p)\mat(a,b;c,d)\right)
+                 = \mat(1,r;0,p)\left\{\frac{b}{d},\frac{a}{c}\right\}.
+$$
+Now we show that suitable values of $a$ and $b$ exist.  Replacing $d$
+by~$d+N$ if necessary, we may assume that $cr\not\equiv d\pmod{p}$.
+Given an arbitrary solution to $ad-bc=1$, solve for~$t$ the congruence
+$$
+  (cr-d)t \equiv  (b+dr)-r(a+cr)  \pmod{p}.
+$$
+Replacing $(a,b)$ by $(a+ct, b+dt)$ we then still have $ad-bc=1$ and now
+$$
+  (b+dr)-r(a+cr)  = pb'
+$$
+with $b'\in\Z$, and a simple calculation shows that
+$M=\mat(a+rc,b';pc,d-rc)$ has the desired properties.  
+
+Since the bottom row of $MM_iS$ is $(pc:d-rc)M_iS =
+(c:d)\mat(p,-r;0,1)M_iS = (c:d)M_i'$, the result follows.
+\qed\enddemo
+
+Hence for each prime $p$ there exists a finite set $R_p$ of matrices
+in $M_2(\Z)$ with determinant~$p$, called the Heilbronn matrices of
+level~$p$, such that the Hecke operator $T_p$ acts on M-symbols via
+$$
+    (c:d) \mapsto \sum_{M\in R_p} (c:d)M.
+$$
+The usual definition of the set $R_p$ (for an odd prime~$p$ not
+dividing~$N$) is as follows: $R_p$ is the set of matrices
+$\mat(x,-y;y',x')\in M_2(\Z)$ with determinant $xx'+yy'=p$, and either
+(i) $x>|y|>0$, $x'>|y'|>0$, and $yy'>0$; or (ii) $y=0$, and
+$|y'|<x'/2$; or (iii) $y'=0$, and $|y|<x/2$.  This description, while
+closer to the original definition by Heilbronn and used by both Mazur
+and Merel, is not so easy to use in practice.  One can show that the
+matrices in this definition may be constructed using the continued
+fraction expansions of $r/p$ for $r$ modulo~$p$, and this leads to the
+presentation we have given here.
+
+For example, for the first few primes we have
+$$\align
+R_2 &=
+\left\{\mat(1,0;0,2),\mat(2,0;0,1),\mat(2,1;0,1),\mat(1,0;1,2)\right\},\\
+R_3 &=
+\left\{\mat(1,0;0,3), \mat(3,1;0,1), \mat(1,0;1,3), \mat(3,0;0,1),
+       \mat(3,-1;0,1), \mat(-1,0;1,-3) \right\},\\
+\noalign{\text{and}}
+R_5 &=
+\left\{	\mat(1,0;0,5), \mat(5,2;0,1), \mat(2,1;1,3), \mat(1,0;3,5),
+	  \mat(5,1;0,1), \mat(1,0;1,5), \mat(5,0;0,1),\right.\\
+    &\qquad \left.  \mat(5,-1;0,1), \mat(-1,0;1,-5), \mat(5,-2;0,1), 
+       \mat(-2,1;1,-3), \mat(1,0;-3,5) \right\}.\\
+\endalign
+$$
+
+To compute the complete set $R_p$ for any prime~$p$ we may use the
+following algorithm.  Effectively, we are computing the continued
+fraction expansions of each rational $r/p$ with denominator $p$, and
+recording the matrices denoted $M_i'$ in the preceding Proposition.
+In line~3 of the algorithm, the loop is over a complete set of
+residues $r$ modulo~$p$, such as $-p/2\le r<p/2$.
+
+\beginalg{Algorithm for computing Heilbronn matrices}
+\+INPUT: &&&p (a prime).\cr
+\+OUTPUT:&&&the Heilbronn matrices of level p.\cr
+\smallskip\lineno=0
+\nline  BEGIN\cr
+\setbox0=\hbox{$\mat(\hbox{\tt1},\hbox{\tt0};\hbox{\tt0},\hbox{\tt
+p})$}
+\nline  OUTPUT \box0;\cr
+\nline  FOR r MODULO p DO \cr
+\nline  BEGIN \cr
+\nline  & x1=p; x2=-r; y1=0; y2=1; a=-p; b=r;\cr
+\setbox0=\hbox{$\mat(\hbox{\tt x1},\hbox{\tt x2};\hbox{\tt y1},\hbox{\tt
+y2})$}
+\nline  & OUTPUT \copy0;\cr
+\nline  & WHILE b\NEQ0 DO \cr
+\nline  & BEGIN\cr
+\nline  && q=nearest\_integer(a/b); \cr
+\nline  && c=a-b*q; a=-b; b=c; \cr
+\nline  && x3=q*x2-x1; x1=x2; x2=x3; \cr
+\nline  && y3=q*y2-y1; y1=y2; y2=y3; \cr
+\nline  && OUTPUT \box0\cr
+\nline  & END\cr
+\nline  END\cr
+\nline  END\cr
+\endalg
+
+For example, take $p=7$ and $r=3$.  The continued fraction convergents
+linking $\infty$ to $3/7$ are 
+$$
+  \infty, 0, \frac12, \frac37
+$$
+with associated unimodular matrices
+$$
+  M_0=\mat(0,1;-1,0),\quad
+  M_1=\mat(1,0;2,1),\quad\text{and}\quad
+  M_2=\mat(-3,1;-7,2).
+$$
+The matrices $M_i'$ constructed in Proposition~\heilprop\ are then
+$$
+  M_0'=\mat(7,-3;0,1),\quad
+  M_1'=\mat(-3,-1;1,-2),\quad\text{and}\quad
+  M_2'=\mat(1,0;2,7).
+$$
+These are (up to sign) the same as the matrices output by lines~3--14
+of the algorithm when $p=7$ and~$r=3$.
+
+
+%
+% CHAPTER 2 SECTION 5
+%
+\beginsection{\Hplus}
+\head\Hplus\ Working in $H^+(N)$\endhead
+
+Recall that $H^+(N)$ is the $+1$ eigenspace for the operator
+$*\colon z\mapsto-\overline{z}$ acting on $H(N)=H_1(X_0(N),\Q)$.
+We would like to work in $H^+(N)$ to compute the action of the Hecke
+algebra $\TT$, since there are obvious savings in computation time and storage
+space achieved by working in a space with half the dimension of $H(N)$.
+To do this, note that $H^+(N)\cong H(N)/H^-(N)$ (as vector spaces).   We
+can thus compute $H^+(N)$ in terms of M-symbols by including extra 2-term
+relations \neweq{\mextra}
+$$
+    (c:d) = (-c:d)                        \tag \mextra
+$$
+between the M-symbols.  We must also identify the cusp equivalence classes
+$[\alpha]$ and $[\alpha^*]=[-\alpha]$ for $\alpha\in\Q$.
+
+Effectively we are replacing $\Gamma_0(N)$ by the larger group
+$$
+  \widetilde{\Gamma_0(N)} = \left\{\mat(a,b;c,d)\mid a,b,c,d\in\Z,
+                                     ad-bc=\pm1, c\equiv0\pmod{N}\right\}
+  = \left<\Gamma_0(N),J\right>
+$$
+which still acts discretely on $\H^*$ via
+$$
+\mat(a,b;c,d)\colon\quad z\mapsto\cases
+\displaystyle\frac{az+b}{cz+d}&\text{if $ad-bc=+1$,}\\
+\displaystyle\frac{a\overline{z}+b}{c\overline{z}+d}&\text{if $ad-bc=-1$;}\\
+                            \endcases
+$$
+in particular, $J=\mat(-1,0;0,1)$ sends $z$ to $z^*=-\overline{z}$,
+giving the action of $*$.  Hence, in effect, $\widetilde{\Gamma_0(N)}
+=\left<\Gamma_0(N),*\right>$, and $H^+(N)\cong
+H_1(\widetilde{\Gamma_0(N)}\backslash\H^*,\Q)$.  (A similar procedure
+is possible for other subgroups $G$ of $\Gamma$ of real type.)  
+
+As a further saving, use of the extra relation (\mextra) enables us to
+cut out half the 3-term relations (\mthreeterm), as follows.  Using
+(\mextra) on the second and third terms of (\mthreeterm) yields
+$$
+  (c:d) + (c+d:c) + (d:c+d) = 0.
+$$
+Also, (\mextra) and (\mtwoterm) together imply
+$$
+  (d:c) = -(c:d).
+$$
+Hence relation (\mthreeterm) for $(d:c)$ now gives the same
+information as (\mthreeterm) for $(c:d)$, and can be omitted.
+Geometrically, the triangles which determine the 3-term relations have
+been identified in pairs by the action of the larger group, since the
+effect of the transformation $J$ is to fold the upper half-plane in
+two along the imaginary half-axis.
+
+\subhead Implementation
+\endsubhead
+We modify the procedure of Section \Msymb\ in three ways:
+taking the 2-term relations (\mtwoterm) and (\mextra) together we may identify
+M-symbols in sets of four (instead of two), up to sign, at the first stage
+of elimination.   Then in the second stage we have only half the number of
+3-term relations to consider, as noted above, and each can be expressed in
+terms of half the number of current generators: so we have half the number
+of equations in half the number of variables to solve, giving a four-fold
+saving in space and time.   Finally, in computing $\ker(\delta)$ we must
+use a wider notion of cusp equivalence, since for $\alpha,\beta\in\Q$,
+$$
+  \alpha\equiv\beta\pmod{\widetilde{\Gamma_0(N)}} \Longleftrightarrow
+  \alpha\equiv\pm\beta\pmod{\Gamma_0(N)}.
+$$
+
+Working in $H^+(N)$ is sufficient for the first stage of our
+algorithm, when we want to find certain cusp forms in $S_2(N)$, since
+$H^+(N) \otimes_{\Q} \C \cong S_2(N)$, both as vector spaces and as
+modules for the Hecke algebra $\TT$.  Hence eigenvectors in $H^+(N)$
+correspond to eigenforms in $S_2(N)$.  Since these eigenforms (or,
+more accurately, newforms---see the next section) have Fourier
+expansions in which the Fourier coefficients are determined by their
+Hecke eigenvalues, we can determine these coefficients indirectly by
+computing explicitly the action of the Hecke algebra $\TT$ on $H^+(N)$.
+
+%
+% CHAPTER 2 SECTION 6
+%
+\beginsection{\Mcurves}
+\head\Mcurves\ Modular forms and modular elliptic curves\endhead
+
+Let $S_2(N)$ denote, as above,  the space of cusp forms of weight 2 on 
+$\G0(N)$.  Forms $f(z)\in S_2(N)$ have Fourier expansions of the form
+$$
+  f(z) = \sum_{n=1}^{\infty}a(n,f)e^{2\pi inz},
+$$
+with coefficients $a(n,f)\in\C$.
+The corresponding differentials $2\pi if(z)dz$ are (the pullbacks of) 
+holomorphic differentials on the Riemann surface $X_0(N)$.   Hence $S_2(N)$ 
+is a complex vector space of dimension $g$, where $g$ is the genus of 
+$X_0(N)$, and $2g=\dim H(N)$.   Moreover, $S_2(N) = S_2(N)_{\Q} 
+\otimes_{\Q}\C$ where $S_2(N)_{\Q}$ is the subset of $S_2(N)$ 
+consisting of forms $f(z)$ with {\it rational\/} Fourier coefficients
+$a(n,f)$.  This rational structure on $S_2(N)$ is a consequence of the
+deep fact that $X_0(N)$ may be viewed as the complex points of an
+algebraic curve defined over $\Q$; it may also be proved using Hecke
+operators and the duality with homology.
+
+We are interested here in ``rational newforms'' $f$: that is, forms $f$
+which have rational Fourier coefficients $a(n,f)$, are simultaneous eigenforms
+for all the Hecke operators, and which are also ``newforms'' in the sense
+of Atkin and Lehner (see \cite{\AtkinL}).   We briefly recall the 
+definition.
+
+For each proper divisor $M$ of $N$ and each $g\in S_2(M)$, the forms 
+$g(Dz)$ for divisors $D$ of $N/M$ are in $S_2(N)$.  The subspace 
+$S_2^{\text{old}}(N)$ of $S_2(N)$ spanned by all such forms is called the 
+space of {\it oldforms\/}. There is also an inner product on $S_2(N)$, 
+called the Petersson inner product, with respect to which the Hecke 
+operators  are self-adjoint (Hermitian).  Define $S_2^{\text{new}}(N)$ to 
+be the orthogonal complement in $S_2(N)$  of $S_2^{\text{old}}(N)$ with 
+respect to the Petersson inner product. The restriction of the Hecke 
+algebra $\TT$ to $S_2^{\text{new}}(N)$ is semisimple; $S_2^{\text{new}}(N)$ 
+has a basis consisting of simultaneous eigenforms, and these eigenforms are 
+called {\it newforms\/}.   
+
+In general, newforms come in conjugate sets of $d\ge1$ forms with
+eigenvalues generating an algebraic number field of degree $d$.  The
+periods of such a set of conjugates $\{f\}$ form a lattice $\Lambda$
+of rank $2d$ in $\C^d$, and hence an abelian variety
+$A_f=\C^d/\Lambda$, which is defined over $\Q$.  Here we will only be
+interested in the case $d=1$, where the Hecke eigenvalues and hence
+Fourier coefficients of $f$ are rational (in fact integers, being
+eigenvalues of integral matrices and hence algebraic integers).  We
+will call such a form $f$ a {\it rational newform\/}.  Thus a rational
+newform $f$ has an associated period lattice $\Lambda_f$:
+$$
+\Lambda_f =
+\left\{  \<\{\alpha,\beta\},f>          \mid
+             \alpha,\beta\in\H^*,
+             \alpha\equiv\beta\pmod{\Gamma_0(N)}   \right\}
+$$
+which is a discrete rank~2 subgroup of $\C$.  Then $E_f =
+\C/\Lambda_f$ is an elliptic curve, the modular elliptic curve attached to
+$f$.   Moreover it is known that $E_f$ is defined over $\Q$, has conductor
+$N$, and has $L$-series $L(E_f,s)=\sum a(n,f)n^{-s}$ where
+$f=\sum a(n,f)\exp(2\pi inz)$.  (See \cite{\SDBirch}, \cite{\Shimura},
+and \cite\Carayol\ for proofs of these statements, and \cite\Knapp\ for
+a fuller discussion.) 
+
+The Fourier coefficients $a(n,f)$ of a newform $f(z)=\sum
+a(n,f)\exp(2\pi inz)$ are obtained from the Hecke eigenvalues of $f$
+as follows (see \cite{\AtkinL}).  Firstly, for a newform $f$ we always
+have $a(1,f)\not=0$, and we normalize so that $a(1,f)=1$.  Then:
+
+\smallskip
+
+If $p$ is a prime not dividing $N$, and $f\slash{T_p}=a_pf$, then $a(p,f)=a_p$.
+
+If $q$ is a prime dividing $N$, and $f\slash{W_q}=\eps_qf$ with $\eps_q=\pm1$,
+then \neweq{\aqwq} 
+$$
+  a(q,f) = \cases -\eps_q & \text{if $q^2\ndiv N$,}\\
+                  0       & \text{if $q^2|N$.}
+           \endcases                                   \tag \aqwq
+$$
+
+For prime powers, we have the recurrence relation \neweq{\aptp}
+$$
+  a(p^{r+1},f) = a(p,f)a(p^r,f) - \delta_N(p)pa(p^{r-1},f)  \qquad(r\ge1)
+                                                        \tag \aptp
+$$
+where
+$$
+  \delta_N(p) = \cases 1 & \text{if $p\ndiv N$,}\\
+                   0 & \text{if $p|N$.}
+            \endcases
+$$
+
+Finally, for composite indices we have multiplicativity: $a(mn,f)=a(m,f)a(n,f)$
+when $m$ and $n$ are relatively prime.
+
+
+With this background we may now make more precise what we mean by
+``computing the modular elliptic curves of conductor $N$''.   We do
+the following:
+\roster
+\item Compute the space $H^+(N)$ in terms of M-symbols and their relations.
+\item Compute the action of sufficient Hecke operators $W_q$ and $T_p$ on
+      $H^+(N)$ to determine the one-dimensional eigenspaces with rational
+      eigenvalues; by duality, we now know the rational newforms in $S_2(N)$.
+      Oldforms can be recognized, since in any systematic computation we will 
+      have already found them at some lower level $M$ dividing $N$.
+\item Find a $\Z$-basis for the period lattice $\Lambda_f$, for each
+      rational newform $f$, computing the generating periods to high precision.
+\item Given a $\Z$-basis for $\Lambda_f$, compute the coefficients of an
+      equation for the attached elliptic curve $E_f$.
+\item As well as the period lattice of the curves $E_f$, we can also
+compute the rational number $L(E_f,1)/\RP(E_f)$ (exactly) and the real
+value $L(E_f,1)$ (ap\-proxi\-mate\-ly).  Also, when $L(E_f,1)=0$ we
+can also determine the order of vanishing of $L(E_f,s)$ at $s=1$,
+giving the analytic rank $r$ of $E_f$, and the value of the derivative
+$L^{(r)}(E_f,1)$, which is important in view of the \BSD\ conjecture;
+we will discuss the latter computations in a later section.
+
+\endroster
+
+This is the program which we wish to carry out, and have in fact carried 
+out for all $N\le5077$.   In sections \Split--\Eqns\ we discuss steps 
+\therosteritem2--\therosteritem5 in more detail. 
+
+%
+% CHAPTER 2 SECTION 7
+%
+\beginsection{\Split}
+\head\Split\ Splitting off one-dimensional eigenspaces\endhead
+
+Having computed a representation of $H^+(N)$ in terms of M-symbols, we now 
+wish to identify the one-dimensional eigen\-spaces with rational integer 
+eigen\-values for all the Hecke operators.   For each eigenspace we will 
+later need a {\it dual\/} basis vector in order to compute the projection 
+of an arbitrary vector onto the eigenspace.   Explicitly, we identify 
+$H^+(N)$ with $\Q^g$ via our M-symbol basis, representing each cycle as a 
+column vector; each operator matrix acts on the left.  Elements of the 
+dual space will then be represented as row vectors. Projection onto a 
+one-dimensional eigenspace is then achieved by multiplying on the left by 
+the appropriate row vector, which is defined up to scalar multiple by its 
+being a simultaneous left eigenvector of each matrix.  In our 
+implementation, we do not distinguish between row and column vectors, and 
+our linear algebra routines are designed to give right eigenvectors, so 
+in practice all we do is find simultaneous eigenvectors for the 
+transposes of the operator matrices.  Projection (of a column vector) is 
+then achieved by taking the dot product with the appropriate dual (row) 
+vector. These remarks seem fairly trivial, but we need to be completely 
+explicit if we are to implement these ideas successfully.
+
+We wish to compute as few $T_p$ as possible at this stage, to save time; 
+we will have a much faster way of computing many Hecke eigen\-values 
+later (see Section \Ap), once the eigen\-spaces have been found.
+
+We also need to identify ``oldclasses'': these are also common eigen\-spaces
+for all the $T_p$ (though not for all the $W_q$, see below) but have
+dimension greater than 1.   In order to recognize and discard oldforms as
+early as possible, we can create a cumulative database of the number
+of newforms and the first few Hecke eigen\-values (including all 
+$W_q$-eigen\-values) of each newform at each level.   If we proceed
+systematically through the levels $N$ in order, we will thus always know
+about the newforms at levels $M$ dividing $N$ but less than $N$.   
+
+An alternative approach might be possible here, in which we use further
+operators at level $N$, such as the $U_q$ of \cite{\AtkinL}, to eliminate 
+all but newforms.   We have not devised such a scheme which works in full 
+generality; the advantage would be that each level could then be treated in 
+isolation, independently of lower levels, but this was not necessary in our 
+systematic investigations which resulted in the tables in this volume.
+
+Before starting to split $H^+(N)$ we have the following data: the number of
+rational newforms $g$ in $S_2(M)$ for proper divisors $M$ of $N$; and for 
+each such $g$, the $W_q$-eigenvalue $\eps_q$ for all primes $q$ dividing 
+$M$ and the $T_p$-eigenvalue $a_p$ for several primes $p$ not dividing $N$.   
+Each form $g$ generates an ``oldclass'' in $S_2(N)$: a subspace of forms 
+which have the same eigenvalue $a_p$ for all primes $p$ not dividing $N$.  
+A basis for this oldclass consists of the forms $g(Dz)$ for all positive 
+divisors $D$ of $N/M$; hence its dimension is $d(N/M)$, the number of positive 
+divisors of $N/M$.   The forms in the oldclass do not necessarily, however, 
+have the same $W_q$-eigenvalue for primes $q$ dividing $N$.  We now proceed
+to find these eigenvalues explicitly.
+
+To simplify the following exposition, observe that the $W_q$ operators may 
+be defined for {\it all\/} primes $q$, not just those dividing the level 
+$N$, using the matrices $W_q=\mat(q^\alpha x,y;Nz,q^\alpha w)$ of 
+determinant $q^\alpha$ where $q^\alpha\mid\mid N$; for if in fact $q\ndiv 
+N$, then $\alpha=0$, so that $W_q\in\G0(N)$ and $f\slash{W_q}=f$ for all 
+$f\in S_2(N)$.  Thus in such a case, $W_q$ reduces to the identity.
+
+We first consider the case where $N/M$ is a prime power.
+
+\newprop{\OldformsPP}
+\proclaim{Lemma \OldformsPP}Let $g$ be a newform in $S_2(M)$, let $l$ be a prime
+with $g\slash{W_l}=\eps g$, and let $N=q^\beta M$ where $q$ is also
+prime.  Thus $g$ determines an oldclass of dimension $\beta+1$,
+spanned by the forms $g_i(z)=q^i g(q^iz)\in S_2(N)$, for $0\le
+i\le\beta$.
+
+\part{1} If $l\not=q$, then $g_i\slash{W_l}=\eps g_i$ for all $i$;
+\part{2} If $l=q$, then $g_i\slash{W_q}=\eps g_{\beta-i}$.
+
+In case \therosteritem{1}, all members of the oldclass have the same 
+$W_q$-eigenvalue $\eps$ as $g$, so $\eps$ has multiplicity $\beta+1$ (as an 
+eigenvalue of $W_l$ acting on this oldclass).  In case \therosteritem{2}, the 
+$\eps$-eigenspace for $W_q$ has dimension $[(2+\beta)/2]$ (that is,
+$\frac12(\beta+1)$ if $\beta$ is odd, or $\frac12(\beta+2)$ if $\beta$ is even).
+\endproclaim
+
+\demo{Proof}Suppose $l^\alpha\mid\mid M$.  In case (1) we have 
+$l^\alpha\mid\mid N$ also.  Let $W_l^{(N)}=\mat(l^\alpha x,y;Nz,l^\alpha w)$, 
+with $\det W_l^{(N)} =l^\alpha$.   Then for $0\le i\le\beta$ we have
+$$
+  \mat(q^i,0;0,1) W_l^{(N)} = W_l^{(M)}\mat(q^i,0;0,1)
+$$
+where $W_l^{(M)}=\mat(l^\alpha x,q^iy;Mq^{\beta-i}z,l^\alpha w)$ also has
+determinant $l^\alpha$.   Hence
+$$\align
+  g_i\slash{W_l^{(N)}} &= g\slash{\mat(q^i,0;0,1) W_l^{(N)}}\\
+                     &= g\slash{W_l^{(M)}\mat(q^i,0;0,1)}\\
+                     &= \eps g\slash{\mat(q^i,0;0,1)}
+                     = \eps g_i.\\
+  \endalign
+$$
+
+In case (2), when $q=l$, we have $q^{\alpha+\beta}\mid\mid N$.
+Let $W_q^{(N)}=\mat(q^{\alpha+\beta}x,y;Nz,q^{\alpha+\beta}w)$ with $\det 
+W_q^{(N)}=q^{\alpha+\beta}$.  Then for $0\le i\le\beta$ we have
+$$
+  \mat(q^i,0;0,1) W_q^{(N)} = W_q^{(M)}\mat(q^{\beta-i},0;0,1)
+$$
+(modulo scalar matrices, which act trivially),
+where $W_q^{(M)}=\mat(q^{\alpha+i}x,y;Mz,q^{\alpha+\beta-i}w)$ has determinant 
+$q^\alpha$.  Hence $g_i\slash{W_q^{(N)}}=\eps g_{\beta-i}$ as required.  As a
+basis  for the $\eps$-eigenspace for $W_q^{(N)}$ we may take the forms 
+$g_i+g_{\beta-i}$ for $0\le i\le\beta/2$, and for the $(-\eps)$-eigenspace,
+$g_i-g_{\beta-i}$ for $0\le i<\beta/2$.  Hence the multiplicities are as 
+stated.
+\qed
+\enddemo
+
+Using this result we can easily extend to the general case by induction on 
+the number of prime divisors of $N/M$, giving the following result.
+
+\newprop{\Oldforms}
+\proclaim{Proposition \Oldforms}Let $g$ be a newform in $S_2(M)$ where 
+$M\mid N$.  Write $N/M=\prod_{i=1}^{k}q_i^{\beta_i}$, so that the oldclass 
+in $S_2(N)$ coming from $g$ has dimension $d(N/M)=\prod(1+\beta_i)$.
+\part{1}
+For every prime $q$ not dividing $N/M$, the $W_q$-eigenvalue of every form 
+in the oldclass is the same as that of $g$.
+\part{2}
+Suppose $g\slash{W_{q_i}} = \eps_i g$ for $1\le i\le k$.  Let \neweq{\olddims}
+$$
+  n_i^+ = \cases
+      \frac12(\beta_i+1) & \text{if $\beta_i$ is odd,} \\
+      \frac12(\beta_i+2) & \text{if $\beta_i$ is even and $\eps_i=+1$,}\\
+      \frac12\beta_i     & \text{if $\beta_i$ is even and $\eps_i=-1$,}
+          \endcases      \tag\olddims
+$$
+and put $n_i^- = 1+\beta_i-n_i^+$, so that $\prod(n_i^+ + n_i^-) = 
+\prod(\beta_i+1) = d(N/M)$.   If $(\delta_1,\delta_2,\ldots,\delta_k)$ is 
+any $k$-vector with each $\delta_i=\pm$, then the subspace of oldforms in 
+the oldclass on which $W_{q_i}$ has eigenvalue $\delta_i$ for $1\le i\le k$ 
+has dimension $\prod_{i=1}^k n_i^{\delta_i}$.
+\qed
+\endproclaim
+
+Hence we are able to compute from our database a complete set of 
+``sub-oldclasses''---that is, subspaces of oldclasses which have the same 
+eigen\-values for {\it all\/} the operators $T_p$ and $W_q$---with their 
+dimensions.
+
+Having thus computed a list of sub-oldclasses with their dimensions, 
+$W_q$-eigen\-values and first few $T_p$-eigen\-values, we now proceed to find 
+``new'' one-dimensional rational eigen\-spaces of $H^+(N)$ as follows. We 
+consider each prime in turn, starting with the $q$ which divide $N$, then 
+moving on to the $p$ which do not divide $N$, computing $W_q$ or $T_p$ as 
+appropriate.   For each, we consider all possible integer eigen\-values 
+($\eps_q = \pm1$ for $W_q$, and $a_p$ with $|a_p|<2\sqrt{p}$ for $T_p$) and 
+restrict all subsequent operations to each nonzero eigenspace in turn. At 
+any given stage we have a subspace of $H^+(N)$ on which all the operators 
+so far considered act as scalars.   Comparing with the oldform data we can 
+tell whether this subspace consists entirely of oldforms: if so, we discard
+it.   If not, and the subspace is one-dimensional, we have found a rational
+one-dimensional eigenspace corresponding to a newform. We then record a 
+basis vector and a list of the (prime--eigenvalue) pairs needed to isolate 
+this subspace. Otherwise we proceed recursively to the next prime and the 
+next operator.
+
+At the end of this stage of the computation in $H^+(N)$, we have found the
+number of rational one-dimensional ``new'' eigen\-spaces in $H^+(N)$, or
+equivalently, the number of rational newforms in $S_2(N)$.   For each we
+have a dual (integer) eigenvector, which we will use to compute a large
+number of Hecke eigen\-values in Section \Ap.
+
+\subhead Implementation \endsubhead
+In preparation for splitting off the one-dimensional eigen\-spaces of 
+$H^{+}(N)$ we compute the matrices of all the $W$-operators acting on 
+$H^{+}(N)$, and store their transposes.   We also collect from the 
+``oldform database'' information about the newforms at all levels $M$ 
+dividing and less than $N$.   For each oldclass we must compute the 
+eigenvalue multiplicities for each $W_q$ using the formula (\olddims) 
+above.
+
+The splitting itself is done recursively.   At the general stage, at depth
+$n$, we have the following data:
+
+$\bullet$ a particular subspace $S$ of $H^{+}(N)$ (initially the whole of
+$H^{+}(N)$);
+
+$\bullet$ a list of $n$ primes (starting with the $q$ dividing $N$, and
+initially empty);
+
+$\bullet$ a list of eigen\-values, one for each of the primes in the list.
+
+\noindent Here $S$ is precisely the subspace of $H^{+}(N)$ on which the
+first $n$ operators have the given eigen\-values.
+
+
+Given this data, the recursive procedure does the following:
+\roster
+\item check whether $S$ consists entirely of oldforms, by comparing the
+      list of eigen\-values which determine $S$ with those of each
+      ``suboldclass''; if so, terminate this branch;
+\item otherwise, if $\dim S=1$ then store the (single) basis vector for $S$
+      in a cumulative list and terminate;
+\item otherwise, take the next operator $T$ in sequence (computing and
+      storing its matrix if it has not been used before) and compute the
+      matrix $T_S$ of its restriction to $S$; for all
+      possible eigen\-values $a$ of $T$, compute the kernel of $T_S-aI$; if
+      non-trivial, pass the accumulated data, together with this kernel as
+      a new working subspace, to the procedure at the next depth.
+\endroster
+
+This procedure has been found to work extremely efficiently in
+practice.  The only practical difficulty is the possibility of
+overflow during Gaussian elimination; it was found that the early use
+of $W$-operators was an efficient way of avoiding this for as long as
+possible.  However, for larger values of $N$ we were forced to abandon
+single-precision integer arithmetic for the linear algebra at this
+stage, and instead use a modular method, working in $\Z/P\Z$ for some
+large prime $P$, instead of in $\Z$.  Alternatively, one could use
+multiprecision arithmetic, but this is likely to be slower.
+
+In all subsequent calculations in $H^{+}(N)$, we will be interested only in
+the one-dim\-ension\-al eigen\-spaces corresponding to rational newforms.  To
+enhance the speed we now change the main M-symbol lookup tables: each
+vector in the table is replaced by the vector of its projections onto each 
+of the subspaces, computed simply by taking the dot product with each dual 
+eigenvector.
+
+For each one-dimensional rational eigenspace found, we also compute the 
+eigenvalue $\eps_N$ of the Fricke involution $W_N$, which is the product of 
+all the $W_q$ involutions.   The significance of this is that $w=-\eps_N$ 
+is the sign of the functional equation of the $L$-series $L(f,s)$ attached to
+the  newform $f$ (see \cite{\SDBirch} and the next section).
+
+\vfill\eject        % OK for both line spacing options
+%
+% CHAPTER 2 SECTION 8
+%
+
+\goodbreak
+\beginsection{\Ratio}
+\head \Ratio\ $L(f,s)$ and the evaluation of $L(f,1)/\RP(f)$ \endhead
+\nobreak
+
+Attached to each newform $f$ in $S_2(N)$ there is an $L$-function $L(f,s)$,
+defined as follows via Mellin transform: \neweq{\Mellin}
+$$
+  L(f,s)=(2\pi)^s\Gamma(s)^{-1}\int_0^{i\infty}(-iz)^sf(z)\frac{dz}{z}.
+                                                           \tag\Mellin
+$$
+This gives an entire function of the complex variable $s$. Substitute the 
+Fourier expansion 
+$f(z)=\sum_{n=1}^{\infty}a(n,f)\exp(2\pi inz)$
+and integrate term by term; provided that $\hbox{Re}(s)>3/2$ (for convergence),
+we obtain a representation of $L(f,s)$ as a Dirichlet series: \neweq{\Dseries}
+$$
+   L(f,s) = \sum_{n=1}^{\infty}\frac{a(n,f)}{n^s}.  \tag\Dseries
+$$
+This $L$-function is one of the key links between the newform $f$ and the
+modular elliptic curve $E_f$ defined in Section \Mcurves\ by its periods.
+First of all, the multiplicative relations satisfied by the coefficients
+$a(n,f)$, given above in Section \Mcurves, are equivalent to the statement
+that the Dirichlet series in (\Dseries) has an Euler product expansion:
+\neweq{\Eprod}
+$$
+   \sum_{n=1}^{\infty}\frac{a(n,f)}{n^s} = 
+   \prod_{p\ndiv N}\left(1-a(p,f)p^{-s}+p^{1-2s}\right)^{-1}
+   \prod_{p\mid N}\left(1-a(p,f)p^{-s}\right)^{-1}.          \tag\Eprod
+$$
+This is exactly the form of the $L$-function of an elliptic curve of
+conductor $N$ defined over $\Q$, and in fact the fundamental result (see 
+\cite{\Carayol}, though partial results were known considerably earlier) is 
+that \neweq{\LfLE}
+$$
+    L(f,s)=L(E_f,s).  \tag\LfLE
+$$
+Thus (\Mellin) provides an analytic continuation to the entire plane
+of the $L$-function attached to the curve $E_f$, such as is
+conjectured to exist for all elliptic curves $E$ defined over $\Q$.
+
+Instead of the function $L(f,s)$ defined above by (\Mellin), it is
+sometimes convenient to use the variant with extra `infinite' Euler
+factors: \neweq{\Lambdadef}
+$$
+  \Lambda(f,s) = N^{s/2}(2\pi)^{-s}\Gamma(s)L(f,s) =
+                   \int_0^{\infty}f(iy/\sqrt{N})y^{s-1}dy.
+                                                              \tag\Lambdadef 
+$$
+Thus for $\hbox{Re}(s)>3/2$ we have
+$$
+   \Lambda(f,s) = N^{s/2}(2\pi)^{-s}\Gamma(s)
+                      \sum_{n=1}^{\infty}\frac{a(n,f)}{n^s}.
+$$
+
+The functions $L(f,s)$ and $\Lambda(f,s)$ also satisfy functional
+equations relating their values at $s$ and $2-s$.  For since $f$ is an
+eigenform for the Hecke algebra $\TT$, it is in particular an
+eigenform for the Fricke involution $W_N$. Suppose that
+$f\slash{W_N}=\eps_Nf$ with $\eps_N=\pm1$: that is,
+$f(-1/(Nz))=\eps_NNz^2f(z)$.  With $z=iy/\sqrt{N}$ this gives
+$f(i/y\sqrt{N})=-\eps_Ny^2f(iy/\sqrt{N})$.  Hence the substitution of
+$1/y$ for $y$ in (\Lambdadef) yields the functional equation
+\neweq{\FE}
+$$
+  \Lambda(f,2-s) = -\eps_N \Lambda(f,s)    \tag\FE
+$$
+(note the change of sign).  In view of (\LfLE), this gives a functional
+equation for $L(E_f,s)$ too, of the form conjectured for all elliptic curves
+over $\Q$.
+
+From (\FE), we deduce that $L(f,1)=\Lambda(f,1)=0$ when $\eps_N=+1$; more
+generally,  $L(f,s)$ has a zero of odd order when $\eps_N=+1$, and a zero of
+even order  (or no zero) when $\eps_N=-1$.   The significance of this is that
+the \BSD\  conjectures predict that the order of the zero of $L(E,s)$ is equal
+to the  rank of $E(\Q)$, for an elliptic curve $E$ defined over $\Q$.  Thus we
+will  be able to compare this order with the rank of the modular curves $E_f$, 
+once we have found their equations explicitly.  
+
+The \BSD\ conjectures also predict the value of $L(E,1)/\RP(E)$, 
+which in the case of our modular curve $E=E_f$ is $L(f,1)/\RP(f)$, where 
+$\RP(f)$ is a certain period of $f$. We now discuss the relationship 
+between $L(f,1)$ and the periods of $f$ (by which we 
+will always mean the periods of the differential $2\pi if(z)dz$).  
+ 
+Substituting $s=1$ into the Mellin transform formula (\Mellin), we obtain
+\neweq\Mellinone
+$$
+ L(f,1) = -2\pi i\int_0^{i\infty}f(z)dz = - \,\<\{0,\infty\},f>.
+\tag\Mellinone
+$$
+The modular symbol $\{0,\infty\}$ is in the rational homology, so that
+$L(f,1)$ is a rational multiple of some period of $f$.  To find the 
+rational factor, we use the trick of ``closing the path'' (see \cite{\Mazur, 
+page 286} or \cite{\Manin}).
+
+For each prime $p$ not dividing $N$ we have, by (\mhecke),
+$$
+   T_p(\{0,\infty\}) = \{0,\infty\} + \sum_{k=0}^{p-1}\{k/p,\infty\}
+                     = (1+p)\{0,\infty\} + \sum_{k=0}^{p-1}\{k/p,0\},
+$$
+and hence \neweq{\manina}
+$$
+  (1+p-T_p)\cdot\{0,\infty\} = \sum_{k=0}^{p-1}\{0,k/p\}.   \tag \manina
+$$
+Let $a_p$ be the $T_p$-eigen\-value of $f$, so that $T_pf=a_pf$.   
+Integrating the differential $2\pi if(z)dz$ along both sides of (\manina) 
+gives \neweq{\maninb}
+$$
+  (1+p-a_p)\cdot\<\{0,\infty\},f> = \sum_{k=0}^{p-1}\<\{0,k/p\},f>.
+                                                             \tag \maninb
+$$
+Since $p$ does not divide $N$, each modular symbol $\{0,k/p\}$ on the right of
+(\maninb) is {\it integral\/}: that is, in $H_1(X_0(N),\Z)$.   Thus the
+right-hand side of (\maninb) is a period of $f$.   It is even a real period,
+since
+$$
+  \overline{\<\{0,k/p\},f>} = \<\{0,-k/p\},f>
+                                      = \<\{0,(p-k)/p\},f>.
+$$
+Let $\rp(f)$ denote the least positive real period of $f$, and set
+$$
+  \RP(f)
+ = \cases 2\rp(f) & \text{if the period lattice of $f$ is rectangular,}\\
+           \rp(f) & \text{otherwise}.
+   \endcases
+$$
+Thus $\RP(f)/\rp(f)$ is the number of components of the real
+locus of the elliptic curve $E_f$.   Also note that in each case,
+$\RP(f)$ is twice the least real part of a period of $f$.   This is
+useful since, as we are working in $H^+(N)$, we can only (at this stage)
+determine the projection of the period lattice $\Lambda_f$ onto the real
+axis.
+
+In both cases, (\maninb) becomes \neweq{\maninratio}
+$$
+  \frac{L(f,1)}{\RP(f)} = \frac{n(p,f)}{2(1+p-a_p)},   \tag \maninratio
+$$
+where $n(p,f)$ is an integer.   Note that $1+p-a_p$ is non-zero, since, by
+well-known estimates, $|a_p| < 2\sqrt{p}$.
+
+Formula (\maninratio) is significant in several ways.   On the one hand, 
+let $E_f$ be the modular elliptic curve attached to $f$ as above.  Then 
+$L(E_f,1)=L(f,1)$, and $\rp(f)=\rp(E_f)$, the least positive real period of 
+$E_f$.   Thus, once we know $a_p$ and $n(p,f)$ for a single prime $p$, we 
+can evaluate the rational number $L(E_f,1)/\RP(E_f)$, whose value is 
+predicted by the \BSD\ conjecture for $E_f$.   In particular, we should 
+have $L(f,1)=0$ if and only if $E_f(\Q)$ is infinite.   In the tables we give 
+the value of $L(f,1)/\RP(f)$  for each rational newform $f$ computed, and 
+observe that the value is consistent with the \BSD\ conjecture in each 
+case.
+
+Secondly, having computed the right-hand side of (\maninratio) for a single 
+prime $p$, we may (if $L(f,1)\not=0$) use the fact that $n(p,f)/(1+p-a_p)$ 
+is independent of $p$ to compute the eigenvalue $a_p$ quickly for other 
+$p$, by computing $n(p,f)$.   This is discussed in the next section.
+
+%
+% CHAPTER 2 SECTION 9
+%
+\beginsection{\Ap}
+\head \sec\ Computing Fourier coefficients \endhead
+
+For each one-dimensional rational eigenspace of $H^+(N)$ we will need to
+know many Fourier coefficients $a(n,f)$ of the corresponding newform
+$f(z)=\sum a(n,f)\exp(2\pi inz)$.   These are obtained from the Hecke
+eigenvalues by the recurrence formulae given in Section \Mcurves.
+We already have the eigenvalue $\eps_q$ of each $W_q$ operator,
+and at least one eigenvalue $a_{p_0}$ for the smallest prime $p_0$ not
+dividing $N$, which we recorded as we found the one-dimensional 
+eigen\-spaces earlier.
+
+It remains to compute a large number of the Hecke eigenvalues $a_p$ for
+primes $p$ not dividing $N$.   
+If $L(f,1)\not=0$ then the most efficient method is to use
+(\maninratio). 
+First we compute $n(p_0,f)$ from the right-hand side of (\manina).
+(This integer is nonzero if and only if $L(f,1)\not=0$, by (\maninratio)).
+For other primes $p$ we then have
+$$
+   \frac{n(p,f)}{2(1+p-a_p)} = \frac{n(p_0,f)}{2(1+p_0-a_{p_0})},
+$$
+and hence
+$$
+   a_p = 1+p-\frac{n(p,f)(1+p_0-a_{p_0})}{n(p_0,f)}.
+$$
+
+The integers $n(p,f)$ may be computed by expressing the right-hand side of
+(\manina) as a linear combination of the M-symbols which generate $H^+(N)$,
+and then projecting onto the one-dimensional subspace corresponding to $f$:
+here we take the dot product with the dual eigenvector computed previously,
+normalized so that its components are relatively prime integers.  The
+integer this produces is then actually too big by a scaling factor $d_1d_2$, 
+where $d_1$ and $d_2$ are
+the denominators defined in Section \Msymb; this factor can be 
+ignored at this stage, where it cancels out in the computation of $a_p$,
+but must be included when we need the actual ratio $L(f,1)/\RP(f)$
+from (\maninratio).
+
+If $L(f,1)=0$ then a variation of this method may be used.   For
+$\alpha\in\Q$ we have  \neweq{\aptpx}
+$$
+  \aligned
+  (1+p-T_p)\{\alpha,\infty\}
+           &= \{\alpha,p\alpha\}
+             + \sum_{k=0}^{p-1}\left\{\alpha,\frac{\alpha+k}{p}\right\}\\
+    &= \{0,p\alpha\} + \sum_{k=0}^{p-1}\left\{0,\frac{\alpha+k}{p}\right\}
+                            - (p+1)\{0,\alpha\}.
+   \endaligned  \tag \aptpx
+$$
+If $p$ does not divide $N$ and $\alpha=n/d$ with $\gcd(d,N)=1$ then
+$[0]=[p\alpha]=[(\alpha+k)/p]$ for all $k$, so that the right-hand
+side of (\aptpx) lies in the integral homology $H_1(X_0(N),\Z)$.
+Hence we can express it as an integral linear combination of the
+generating M-symbols.  Projecting onto the rational one-dimensional
+subspace of $H^+(N)$ corresponding to $f$, we find that
+\neweq{\maninratiox}
+$$
+  \frac{\hbox{Re}\<\{\alpha,\infty\},f>}{\RP(f)}
+=
+  \frac{n(\alpha,p,f)}{2(1+p-a_p)}                         \tag \maninratiox
+$$
+for some integer $n(\alpha,p,f)$,
+where the left-hand side is independent of $p$.  Thus we can compute
+each $a_p$ from $n(\alpha,p,f)$, given $a_{p_0}$ and $n(\alpha,p_0,f)$,
+provided that the latter in nonzero.
+
+It is slightly simpler to use a modular symbol of the form $\{0,\alpha\}$
+here instead of $\{\alpha,\infty\}$, since (for suitable $\alpha$) this
+will be integral.   However the formula analogous to (\aptpx) has more terms
+of the form $\{0,\beta\}$ on the right, so this is slower in practice.
+
+\remark{Remark}
+Equation (\aptpx) and the remarks following it show that the modular
+symbol $\{\alpha,\infty\}$ lies in the rational homology
+$H_1(X_0(N),\Q)$ provided that the denominator of $\alpha$ is coprime
+to $N$.  More generally, for an arbitrary rational number $\alpha$,
+the right-hand side of (\aptpx) will be integral provided that
+$p\equiv1\pmod{N}$;  this proves that $\{\alpha,\infty\}\in
+H_1(X_0(N),\Q)$ in all cases, which is the Manin-Drinfeld Theorem
+(Theorem~\ManinDrinfeld) for $\Gamma_0(N)$.
+\endremark
+
+\subhead Implementation
+\endsubhead
+In practice we only use the first method if $L(f,1)\not=0$ for {\it all\/}
+the rational newforms $f$ in $S_2(N)$.   Otherwise we find a rational
+$\alpha$ such that $n(\alpha,p_0,f)\not=0$ for all $f$, where $p_0$ is the
+smallest prime not dividing $N$.
+
+We have already discussed computation of the
+integers $n(p,f)$.  The $n(\alpha,p,f)$ are computed similarly by expressing
+the right-hand side of (\aptpx) in terms of the generating M-symbols and
+projecting onto each eigenspace.   Note that the term $\{0,\alpha\}$ of
+(\aptpx) need only be computed once.
+
+The Hecke eigenvalues which we have computed are stored in a data file for
+use both in subsequent steps of the calculations at level $N$, and also as
+part of the cumulative database which will be accessed when levels which
+are multiples of $N$ are reached.
+
+The exact number of $a_p$ needed depends on $N$, and on the form $f$,
+and will not be known until the numerical calculation of periods is
+carried out in the next phase.  Our strategy here was first to compute
+$a_p$ for all $p$ up to some predetermined bound (we used all $p<1000$
+for $N\le 200$, $p<2000$ for $200<N\le400$, and $p<3000$ for $401<N\le
+1000$). We may also store extra information, so that if more
+eigenvalues are needed later, these can be computed without having to
+repeat the time-consuming steps described in Sections \Homol--\Split.
+Specifically, we may store the following: the M-symbols which generate
+$H^+(N)$; a table giving each M-symbol as a linear combination of
+these generators; a basis for $\ker(\delta)$; and a (dual) basis
+vector for each rational one-dimensional eigenspace.
+
+\subhead Recapitulation
+\endsubhead
+At this point we have completed the first
+phase of the computation at level $N$, in which we have been working in the
+space $H^{+}(N)$.   To summarize, we know
+\roster
+\item the number of rational newforms $f$ in $S_2(N)$; and, for each $f$,
+\item the sign $w$ of the functional equation for $L(f,s)$;
+\item the ratio $L(f,1)/\RP(f)$;
+\item all $W_q$-eigenvalues $\eps_q$ of $f$;
+\item a large number of $T_p$-eigenvalues $a_p$ of $f$.
+\endroster
+
+In particular, we know the number of modular elliptic curves $E_f$ of
+conductor $N$ (up to isogeny); for each curve, we know the sign of its
+functional equation and whether or not its $L$-series vanishes at
+$s=1$. 
+
+All computations carried out so far are exact and algebraic.  In
+addition, we can also in this first phase compute approximations to
+the value $L(f,1)$ (when it is non-zero) and to the period $\RP(f)$,
+though we do not know at this stage whether $\RP(f)/\rp(f)=1$ or ~$2$.
+In other words, we can compute the projection of the period lattice
+$\Lambda_f$ onto the real axis.  Of course, this is insufficient
+information from which to construct the curve $E_f$.
+
+In the second phase, which we describe in Sections \PerI--\Eqns, we
+compute the period lattice $\Lambda_f$ of each rational newform $f$,
+and hence obtain an (approximate) equation for the curve
+$\C/\Lambda_f$.
+
+These ``analytic'' quantities (periods) will necessarily be computed
+approximate\-ly, by summing certain infinite series whose coefficients
+involve the Fourier coefficients of $f$ (see below).  In order to
+achieve sufficient accuracy, we may have to compute many thousands of
+these Fourier coefficients, and it is therefore necessary to have
+efficient ways of doing this, such as the method described in this
+section. 
+
+
+%
+% CHAPTER 2 SECTION 10
+%
+\beginsection{\PerI}
+\head \sec\ Computing periods I \endhead
+
+In order to compute the full period lattice $\Lambda_f$ for each rational
+newform $f$ found earlier, we have to work in the full space $H(N)$.   By
+working in $H^+(N)$ we could only compute the real period $\rp(f)$.
+Although we could also compute the least imaginary period $\IP(f)$ by
+working similarly in $H^-(N)$ (which would be slightly faster), the lattice
+spanned by $\rp(f)$ and $\IP(f)$ may have index 2 in $\Lambda_f$.   Hence
+from now on we work in $H(N)$.
+
+We begin by computing $H(N)$ using M-symbols as in Section \Msymb\
+(omitting relations (\mextra)).  Let
+$\gamma_1$,~$\gamma_2$,\dots,~$\gamma_{2g}$ be a $\Z$-basis for
+$H_1(X_0(N),\Z)$ (and hence also a $\Q$-basis for $H(N)$).  Using this
+basis we will identify $H(N)$ with the space of rational column
+vectors, and dual vectors will be represented by row vectors.  Next we
+read from the data file (created during the first phase) the number of
+rational newforms and, for each, the eigenvalues $a_p$ and $\eps_q$.
+For each form $f$ we now compute two integer dual (row) eigenvectors
+with eigenvalues $a_p$ and $\eps_q$ for all $p$ and $q$: one, $v^+$,
+with eigenvalue $+1$ for the $*$ operator, and one, $v^-$, with
+eigenvalue $-1$.  This is much faster than repeating the splitting
+step described in Section \Split, since we already know the
+eigenvalues which determine each one-dimensional eigenspace.  As
+before, the eigenvectors $v^{\pm}$ we compute must be dual
+eigenvectors, since we will use them for projecting onto the
+eigenspaces in question.
+
+Let $\gamma^{\pm} \in H^{\pm}(N)$ (respectively) be eigenvectors with the
+same eigenvalues as $v^{\pm}$, such that
+$v^{+}\gamma^{+} = v^{-}\gamma^{-} = 1$.
+We view $\gamma^{\pm}$ as column vectors in $\Q^{2g}$ by expressing them as
+linear combinations of the basis $\gamma_1$,~$\gamma_2$, \dots,~$\gamma_{2g}$ 
+for $H(N)$.  Thus the product $v^{+}\gamma^{+}$ is the product of a row
+vector by a column vector: essentially a dot product.
+Set $x = \<\gamma^+,f>$ and
+$y=-i\<\gamma^-,f>$ (so that $x,y\in\R$).  We do not actually compute
+these vectors $\gamma^{\pm}$ in practice; they are only needed for this
+exposition, as they determine the real numbers $x$ and $y$.  Moreover,
+although the eigenvectors $v^{\pm}$ which we do use are only determined up
+to a scalar multiple, we shall see that this choice does not (as it
+should not) affect the specific period lattice we obtain.
+
+Let $\gamma=\sum_{j=1}^{2g}c_j\gamma_j$ be an arbitrary integral
+cycle in $H(N)$.   We identify $\gamma$ with the column vector with
+component $c_j$.  Then we have \neweq{\dota}
+$$
+ \<\gamma,f> = \<(v^{+}\gamma)\gamma^{+}+(v^{-}\gamma)\gamma^{-},f>
+             =   (v^{+}\gamma)x + (v^{-}\gamma)yi.
+                                                         \tag \dota
+$$
+The period lattice $\Lambda_f$ is the set of all such integral periods
+$\<\gamma,f>$.
+To determine a $\Z$-basis for $\Lambda_f$ we proceed as follows.   Write
+$v^{+} = (a_1,a_2,\ldots,a_{2g})$ and $v^{-} = (b_1,b_2,\ldots,b_{2g})$
+with $a_j, b_j \in\Z$.   Then as a special case of (\dota) we have
+$$
+  \<\gamma_j,f>=a_jx+b_jyi,
+$$
+since $v^{+}\gamma_j =a_j$ and $v^{-}\gamma_j =b_j$.
+Hence $\Lambda_f$ is spanned over $\Z$ by the $2g$ periods 
+$\<\gamma_j,f>=a_jx+b_jyi$.
+Let $\Lambda$ be the $\Z$-span in $\Z^2$ of the $2g$
+pairs $(a_j,b_j)$, and let $(\lambda_1,\mu_1)$, $(\lambda_2,\mu_2)$ be a
+$\Z$-basis for $\Lambda$.   Then we find that
+$$
+  \Lambda_f = \{ \<\gamma,f> \mid \gamma\in H(N) \}
+                 = \Z\omega_1+\Z\omega_2,
+$$
+where \neweq{\dotb}
+$$
+    \omega_j=\lambda_jx+\mu_jyi  \qquad(j=1,2).  \tag \dotb
+$$
+Thus $\omega_1$ and $\omega_2$ form a $\Z$-basis for $\Lambda_f$.
+
+We may compute $(\lambda_1,\mu_1)$ and $(\lambda_2,\mu_2)$ from
+$v^{+}$ and $v^{-}$ using the Euclidean algorithm in $\Z$.  In fact it
+is easy to see that there are only two possibilities, since $v^{\pm}$
+are determined within the subspace they generate by being the $+1$ and
+$-1$ eigenvectors for an involution.  Normalize $v^{\pm}$ so that each
+is primitive in $\Z^{2g}$; that is,
+$\gcd(a_1,\ldots,a_{2g})=\gcd(b_1,\ldots,b_{2g})=1$. In the first case
+(which we will call ``Type 1''), $v^+ \equiv v^-\pmod2$, and we may
+take $(\lambda_1,\mu_1)=(2,0)$ and $(\lambda_2,\mu_2)=(1,1)$, so that
+$\omega_1=2x$ and $\omega_2=x+yi$.  In this case $\RP(f)=\rp(f)$ and
+the elliptic curve has negative discriminant.
+
+In the second case (``Type 2''), when $v^+$ and $v^-$ are independent
+modulo~2, we will be able to take $(\lambda_1,\mu_1)=(1,0)$ and
+$(\lambda_2,\mu_2)=(0,1)$, so that $\omega_1=x$ and $\omega_2=yi$.  In
+this case the period lattice is rectangular, $\RP(f)=2\rp(f)$, and the
+elliptic curve has positive discriminant.
+
+It remains to compute the real numbers $x$ and $y$.  We describe two
+methods: the first computes periods directly, while the second
+computes them indirectly by computing $L(f\otimes\chi,1)$ for suitable
+quadratic characters $\chi$. The latter method is in certain cases
+more accurate (in that fewer $a_p$ are needed for the same accuracy)
+but cannot be used when $N$ is a perfect square, as we shall see
+below.
+
+Observe that the cycles $\gamma^{\pm}$ do not enter into the
+calculations directly, but are merely used to define $x$ and $y$.
+Also, if either $v^+$ or $v^-$ is replaced by a scalar multiple of
+itself, then $\gamma^+$ and $\gamma^-$ (and hence $x$ and $y$) are
+scaled down by the same amount, but $\lambda_j$ and $\mu_j$ are scaled
+up.  In particular, it is no loss of generality to assume that
+$v^{\pm}$ are primitive integer vectors.  Thus (\dotb) defines
+$\omega_1$ and $\omega_2$ unambiguously, as generators of the full
+period lattice of $f$.
+
+\subhead Direct method \endsubhead
+%
+The simplest method is essentially the same as that used by Tingley in
+\cite{\Tingley}.  Using a recent improvement (see \cite{\JCperiods}),
+this method can now be made to converge as well as the indirect method
+described later.
+
+From (\dota) it suffices to compute $\<\gamma,f>$ for a single cycle
+$\gamma$ such that $v^{+}\gamma$ and $v^{-}\gamma$ are both nonzero;
+then by taking real and imaginary parts we can solve (\dota) for $x$
+and $y$ and compute the periods $\omega_1$ and $\omega_2$ from
+(\dotb).  (In some cases it may be better in practice to use two
+different cycles, one for the real period and one for the imaginary
+period, but for simplicity we will assume that this is not the case.)
+
+We denote by $I_f(\alpha,\beta)$ the integral $ I_f(\alpha,\beta) =
+\int_{\alpha}^{\beta}2\pi i f(z)dz$, and set $I_f(\alpha) =
+I_f(\alpha,\infty)$.  Let $M\in\G0(N)$; since $f$ is holomorphic, the
+period integral $I_f(\alpha,M(\alpha))$ is independent of the
+basepoint $\alpha$, and can be expressed as
+$I_f(\alpha)-I_f(M(\alpha))$.  We will denote this period of $f$ by
+$P_f(M)$.  Note that any cycle $\gamma\in H(N)$ can be expressed as
+$\{\alpha,M(\alpha)\}$ for a suitable matrix $M\in\G0(N)$, and then
+$\<\gamma,f>=P_f(M)$.  The map $M\mapsto P_f(M)$ is (by
+Corollary~\homhom) a group homomorphism from $\G0(N)$ to the additive
+group of complex numbers, whose image is the period lattice
+$\Lambda_f$.
+
+Our basic tool for computing periods is the following easy result.
+
+\newprop\intformlemma
+\proclaim{Proposition \intformlemma}
+Let $z_0=x_0+iy_0 \in\H$, so that $y_0>0$.  Let $f$ be a cusp form of
+weight~$2$ with Fourier coefficients $a(n,f)$.  Then \neweq\intform
+$$
+  I_f(z_0) = \int_{z_0}^{\infty}2\pi if(z)dz 
+           = -\sum_{n=1}^{\infty}\frac{a(n,f)}{n}e^{2\pi inx_0}e^{-2\pi ny_0}. 
+\tag\intform
+$$
+\endproclaim
+
+\demo{Proof}
+Using the Fourier expansion $f(z)=\sum_{n=1}^{\infty}a(n,f)\exp({2\pi
+inz})$, we can integrate term-by-term over a vertical path from $z_0$
+to $\infty$ to obtain the result.  The term-by-term integration is
+justified since the series converges absolutely, since $|a(n,f)|\ll n$
+and $y_0>0$.  \qed
+\enddemo
+
+We can sum the series (\intform) to obtain an approximation to
+$I_f(z_0)$, provided that we have sufficiently many Fourier
+coefficients $a(n,f)$.  The important point to notice is that this
+series is a power series in $\exp({-2\pi y_0})$ (with bounded coefficients
+since $|a(n,f)|<n$ for all $n$), so will converge best when $y_0$ is
+large (or at least, not too small).
+
+Suppose we are given a matrix $M=\mat(a,b;cN,d)\in\G0(N)$, where
+$a,b,c,d\in\Z$, and we wish to compute the associated period $P_f(M) =
+I_f(\alpha)-I_f(M(\alpha))$ of $f$.  How should we choose $\alpha$?
+If $\alpha$ has large imaginary part, then $M(\alpha)$ will tend to
+have a small imaginary part; we would like to maximize both of these
+simultaneously.  The simplest solution, used by Tingley in his thesis
+\cite\Tingley\ for the original computations of modular elliptic
+curves\footnote{and also used in the first edition of this book}, is
+to choose 
+$$ 
+       \alpha = \frac{-d+i}{cN}, 
+\qquad\hbox{so that}\qquad
+       M(\alpha)=\frac{a+i}{cN}.
+$$
+Thus both $\alpha$ and $M(\alpha)$ have imaginary part $(cN)^{-1}$.
+(Note that, by replacing $M$ by $-M$ if necessary, we may assume that
+$c>0$; we are not interested in $M$ with $c=0$ since these are
+parabolic, and hence have zero period.)  Hence we obtain the
+following.
+
+\newprop{\directperiodsone}
+\proclaim{Proposition \directperiodsone}
+Let $f\in S_2(N)$.  Then, for all $M=\mat(a,b;cN,d)\in\G0(N)$, the
+period $P_f(M)$ is given by
+\neweq\dotseriesonea
+$$
+  P_f(M) = I_f(\alpha) - I_f(M(\alpha)), \tag\dotseriesonea
+$$
+where $\alpha\in\H$ is arbitrary.  Taking $\alpha=\frac{-d+i}{cN}$, we
+have:
+\neweq{\dotseriesoneb}
+$$\aligned
+  P_f(M)  &= I_f\left(\frac{-d+i}{cN}\right) - I_f\left(\frac{a+i}{cN}\right)\\
+          &= \sum_{n=1}^{\infty}\frac{a(n,f)}{n}e^{-2\pi n/cN}
+                 \left(e^{2\pi ina/cN} - e^{-2\pi ind/cN}\right).
+\endaligned\tag\dotseriesoneb
+$$
+\endproclaim
+
+To use this result, we take a rational number $b/d$ with denominator
+$d$ coprime to $N$, solve $ad-bcN=1$ for $a$ and~$c$, and set
+$M=\mat(a,b;cN,d)$.  The integral cycle $\gamma=\{0,b/d\}$ should have
+the properties that $v^{+}\gamma$ and $v^{-}\gamma$ are both nonzero;
+also, since $y_0=1/(Nc)$ with $c>0$ we should also choose $b/d$ so
+that $c$ is as small as possible, to speed convergence in the series
+(\dotseriesoneb).  This series converges adequately quickly for small
+$N$, but when $N$ increases we require too many terms in order to
+obtain the periods to sufficient precision.  (Not only does it take
+longer to sum the series when we use more terms, but more
+significantly, computing the coefficients $a(n,f)$ by modular symbols
+becomes more expensive as $n$ increases.)
+
+The series (\dotseriesoneb) is a power series in $\exp(-2\pi/cN)$ for
+some small positive integer $c$; at best we might hope to use $c=1$ and
+have a power series in $\exp(-2\pi/N)$.  We can improve this, however,
+to give a better formula which involves power series in
+$\exp(-2\pi/d\sqrt{N})$ for a small positive integer $d$.  This
+greatly improves the convergence of the series.
+
+In order to do this, we make use of the fact that the newform $f$ is
+an eigenform for the Fricke involution $W_N$, which for brevity we
+will here denote simply $W$.  Thus (as in Section \Ratio\ above) we
+have
+$$
+  f(z) = \eps\; (f\mid W)(z)
+$$
+where $\eps=\pm1$ is the Fricke eigenvalue.  By changing variables in
+the integrals, we see that \neweq\IfWeqn
+$$
+   I_f(W(\alpha),W(\beta)) = I_{f\mid W}(\alpha,\beta)
+                           = \eps\; I_f(\alpha,\beta).\tag\IfWeqn
+$$
+
+In particular, if $\beta=W(\alpha)$ we obtain $I_f(\alpha,W(\alpha)) =
+-\eps I_f(\alpha,W(\alpha))$, so that when $\eps=+1$ we have
+$I_f(\alpha,W(\alpha))=0$ for all $\alpha$.
+
+Assume we are in this case ($\eps=+1$).  Then in any period integral,
+we may replace an endpoint $\alpha$ with $W(\alpha)$ without affecting
+the value of the integral.  In particular, $$ P_f(M) =
+I_f(\alpha,M(\alpha)) = I_f(W(\alpha),M(\alpha)).  $$ Setting
+$\alpha=di/(\sqrt{N}-cNi)$ we find that 
+$$
+  M(\alpha)=\frac{b}{d}+\frac{i}{d\sqrt{N}} \qquad\hbox{and}\qquad
+  W(\alpha)=\frac{c}{d}+\frac{i}{d\sqrt{N}}, 
+$$ 
+which both have the same imaginary part $1/d\sqrt{N}$.  (We may assume
+that $d>0$, again by replacing $M$ by $-M$ if necessary.)  Hence
+$P_f(M)=I_f(W(\alpha))-I_f(M(\alpha)) =
+I_f(\frac{c}{d}+\frac{i}{d\sqrt{N}})-I_f(\frac{b}{d}+\frac{i}{d\sqrt{N}})$,
+where both integrals converge relatively well.
+
+When $\eps=-1$, we can obtain a slightly more complicated result which
+is just as good in practice.  Combining both cases gives the
+following.\newprop\directperiodstwo
+
+\proclaim{Proposition \directperiodstwo} 
+Let $f\in S_2(N)$, such that $f\mid W=\eps f$ with $\eps=\pm1$.  Then
+for all $M=\mat(a,b;cN,d)\in\G0(N)$ the period $P_f(M)$ is given by
+\neweq\dotseriestwoa
+$$
+  P_f(M) = (1-\eps)I_f(i/\sqrt{N}) + \eps I_f(W(\alpha)) - I_f(M(\alpha)),
+\tag\dotseriestwoa
+$$
+where $\alpha\in\H$ is arbitrary.  Taking
+$\alpha=M^{-1}(\frac{b}{d}+\frac{i}{d\sqrt{N}})$, so that
+$W(\alpha)=\frac{c}{d}+\frac{i}{d\sqrt{N}}$, we have\neweq\dotseriestwob
+$$\aligned
+  P_f(M) &= (1-\eps)I_f(i/\sqrt{N})
+ + \eps I_f\left(\frac{c}{d}+\frac{i}{d\sqrt{N}}\right) 
+ -      I_f\left(\frac{b}{d}+\frac{i}{d\sqrt{N}}\right) \\ 
+ &= \sum_{n=1}^{\infty}\frac{a(n,f)}{n} \left((\eps-1)e^{-2\pi
+n/\sqrt{N}} + e^{-2\pi n/d\sqrt{N}} \left(e^{2\pi inb/d}-\eps e^{2\pi inc/d}
+\right)\right).
+\endaligned\tag\dotseriestwob
+$$
+\endproclaim
+
+\demo{Proof} Using $W(i/\sqrt{N}) = i/\sqrt{N}$, we simply compute:
+$$\eqalignno{
+  I_f(\alpha,M(\alpha)) 
+   &= I_f(\alpha,i/\sqrt{N}) + I_f(i/\sqrt{N},W(\alpha)) + I_f(W(\alpha),M(\alpha))\cr
+   &= \eps I_f(W(\alpha),i/\sqrt{N}) + I_f(i/\sqrt{N},W(\alpha)) +
+I_f(W(\alpha),M(\alpha)) \cr
+   &= (1-\eps)(I_f(i/\sqrt{N})-I_f(W(\alpha))) +I_f(W(\alpha)) - I_f(M(\alpha))\cr
+   &= (1-\eps) I_f(i/\sqrt{N}) + \eps I_f(W(\alpha)) - I_f(M(\alpha))
+}
+$$
+which establishes (\dotseriestwoa).  Then (\dotseriestwob) follows
+from (\intform), using the value of $\alpha$ defined before. \qed
+\enddemo
+
+\def\lfonecalc{2.11.1} %%%needs manual checking -- forward reference!
+
+Note that the term $(1-\eps)I_f(i/\sqrt{N})$, which appears in
+(\dotseriestwoa), is equal to $-L(f,1)$, by (\lfonecalc) below.  Hence
+this term is zero unless the analytic rank of $f$ is zero.
+
+\medskip
+
+When we use this method for computing the periods, before proceeding to the
+next stage we store the following data:
+$$
+ \hbox{\tt type},M,v^+\gamma,v^-\gamma.
+$$
+Here $\hbox{\tt type}=1$ or~$2$ denotes the lattice type, $M$ is a
+matrix in $\G0(N)$ such that $\gamma=\{0,M(0)\}$, and the integers
+$v^+\gamma$ and~$v^-\gamma$ are nonzero.  Then we will be able to
+compute the periods from stored data quickly without having to
+recompute $H(N)$ or the eigenvectors $v^{\pm}$.  We compute the period
+$P_f(M)$ using (\dotseriestwob), set $x=\Re(P_f(M))/v^+\gamma$ and
+$y=\Im(P_f(M))/v^-\gamma$ from (\dota), and take the period lattice
+$\Lambda_f$ to be the lattice with $\Z$-basis $2x$, $x+yi$ (if type 1)
+or $x$, $yi$ (if type 2).  If we later find that we need greater
+accuracy here, then after computing more $a_p$, we can obtain more
+accurate values for the periods $\omega_1$ and $\omega_2$ very
+quickly, without having to repeat the expensive calculation in $H(N)$.
+
+%
+% CHAPTER 2 SECTION 11
+%
+
+\beginsection{\PerII}
+\head \PerII\ Computing periods II: Indirect method \endhead
+
+The idea here is to compute $\RP(f)$ indirectly by computing $L(f,1)$
+and dividing by the ratio $L(f,1)/\RP(f)$, which we know from (\maninratio).
+If $L(f,1)=0$, and in any case to find the imaginary period, we can use
+the technique of twisting by a quadratic character $\chi$, since the
+value $L(f\otimes\chi,1)$ is a rational multiple of a real or imaginary
+period of $f$ (depending on whether $\chi(-1)=+1$ or $-1$), and is 
+non-zero for suitable $\chi$.
+
+We are also interested in the value of $L(f,1)$ for its own sake, in relation
+to the \BSD\ conjecture for the modular curve $E_f$.   We will return to this,
+and the method of computing $L^{(r)}(f,1)$ for $r>0$, in Section \Lfr.
+
+If $L(f,1)\not=0$, then we may compute $L(f,1)$ accurately from
+(\Mellinone) as follows.  Let $\eps_N=\pm1$ be the eigenvalue of the
+Fricke involution $W_N$ on $f$.  Then in the notation of the
+previous section, using (\IfWeqn) and $W_N(i/\sqrt{N})=i/\sqrt{N}$:
+\neweq\lfonecalc
+$$
+  \aligned
+L(f,1) = -\int_{0}^{i\infty}2\pi if(z)dz
+       &= I_f(\infty,0)\\
+       &= I_f(\infty,i/\sqrt{N}) + I_f(i/\sqrt{N},0)\\
+       &= I_f(\infty,i/\sqrt{N}) + \eps_N I_f(i/\sqrt{N},\infty)\\
+       &= (\eps_N-1)I_f(i/\sqrt{N}).
+  \endaligned
+  \tag\lfonecalc
+$$
+Thus if $L(f,1)\not=0$, then necessarily $\eps_N=-1$, and in this case
+$L(f,1) = -2 I_f(i/\sqrt{N})$.  Using Proposition~\intformlemma\ then
+gives the following result.
+
+\newprop{\LfoneProp}
+\proclaim{Proposition \LfoneProp}
+If $f(z)=\sum_{n=1}^{\infty}a(n,f)\exp(2\pi inz)\in S_2(N)$ and
+$f\slash{W_N}=-f$ then \neweq{\Lfone}
+$$
+  L(f,1) = 2\sum_{n=1}^{\infty}\frac{a(n,f)}{n}\exp(-2\pi n/\sqrt{N}).
+                                                                \tag \Lfone
+$$
+\endproclaim
+
+\remark{Remark} If in (\lfonecalc) we split the range of integration at
+$Ai/\sqrt{N}$ for some positive real number~$A$ (instead of taking
+$A=1$) then we obtain the more general formula
+$$
+  L(f,1) = \sum_{n=1}^{\infty}\frac{a(n,f)}{n} 
+\left(\exp(-2\pi An/\sqrt{N})-\eps_N\exp(-2\pi n/A\sqrt{N})\right),
+$$
+where the right-hand side is independent of~$A$.  This can be useful
+in situations where we do not know the value of $\eps_N$, since we can
+evaluate this expression for two values of~$A$, say $A=1$ and~$A=1.1$, and
+check that the values obtained are approximately the same.  For only
+one of the two possible values of~$\eps_N$ will this happen.  This
+idea is due to H.~Cohen (see \cite{\Cohenbook, Section~7.5}).
+\endremark
+
+More generally, let $l$ be an odd prime not dividing $N$, and $\chi$ the
+quadratic character modulo~$l$.   Define
+$$
+  (\fchi)(z) = \sum_{n=1}^{\infty}\chi(n)a(n,f)\exp(2\pi inz)
+$$
+and
+$$
+  L(\fchi,s) = (2\pi)^s\Gamma(s)^{-1}\int_{0}^{i\infty}
+                                   (-iz)^s(\fchi)(z)\frac{dz}{z};
+$$
+then for $\Re(s)>3/2$ we can integrate term-by-term to obtain
+$$
+  L(\fchi,s) = \sum_{n=1}^{\infty}\chi(n)a(n,f)n^{-s}.
+$$
+Suppose, as above, that $f\slash{W_N}=\eps_Nf$.   Then $\fchi$ is in
+$S_2(Nl^2)$, and
+$$
+  (\fchi)\slash{W_{Nl^2}} = \chi(-N)\eps_N\fchi
+$$
+(special case of equation (14) in \cite{\SDBirch}).   Hence we can
+immediately generalize Proposition \LfoneProp\ to obtain the following.
+
+\newprop{\LfonechiProp}
+\proclaim{Proposition \LfonechiProp}
+Let $f$ be as above.   Let $l$ be an odd prime not dividing $N$.
+If $\chi(-N)=\eps_N$ then $L(\fchi,1)=0$, while if
+$\chi(-N)=-\eps_N$, then \neweq{\Lfchione}
+$$
+ L(\fchi,1)
+      = 2\sum_{n=1}^{\infty}\frac{\chi(n)a(n,f)}{n}\exp(-2\pi n/l\sqrt{N}).
+                                                               \tag \Lfchione
+$$
+\endproclaim
+
+The values $L(\fchi,1)$ are related to the periods of $f$ by a formula
+similar to (\maninratio).  Let $g(\chi)$ be the Gauss sum attached to
+$\chi$: if $l\equiv1\pmod4$ then $\chi(-1)=+1$ and $g(\chi)=\sqrt{l}$,
+while if $l\equiv3\pmod4$ then $\chi(-1)=-1$ and $g(\chi)=i\sqrt{l}$.
+If we set $l^*=\chi(-1)l$ then in all cases we have $g(\chi) =
+\sqrt{l^*}$.  By \cite{\SDBirch, equation(12)} we have
+$$
+  \fchi =
+   \frac{g(\chi)}{l}\sum_{k=0}^{l-1}\chi(-k)f\left|\mat(l,k;0,l)\right..
+$$
+Hence
+$$
+  \align
+L(\fchi,1)
+&=-\<\{0,\infty\},\fchi>\\
+&=-\frac{g(\chi)}{l}\sum\chi(-k)\<\{0,\infty\},f\left|\mat(l,k;0,l)>\right.\\
+&=-\frac{g(\chi)}{l}\sum\chi(-k)\<\left\{k/l,\infty\right\},f>\\
+&=\chi(-1)\frac{g(\chi)}{l}\<\gamma_l,f>\\
+&=\frac{1}{\sqrt{l^*}}\<\gamma_l,f>,
+  \endalign
+$$
+where
+$$
+  \gamma_l = \sum_{k=0}^{l-1}\chi(k)\left\{0,k/l\right\}.
+$$
+Here we have used the identity $\sum\chi(k)=0$.  Since $l$ does not
+divide $N$, the cycle $\gamma_l$ is in the integral homology.  
+Thus for each prime $l$ not dividing $2N$ we can define an integral
+period 
+$$
+     P(l,f) = \<\gamma_l,f>,
+$$
+and we have shown that
+$$
+    P(l,f) =  \sqrt{l^*} L(\fchi,1).
+$$
+Clearly $(\gamma_l)^*=\chi(-1)\gamma_l$, since $\{0,k/l\}^* =
+\{0,-k/l\}$. So, if $\chi(-1)=+1$, then $\gamma_l\in H^+(N)$, hence
+$P(l,f)$ is an integer multiple of the real period $\rp(f)$, and thus
+of the form $m^{+}(l,f)x$ for some integer $m^{+}(l,f)$ . So, provided
+that $m^{+}(l,f)\not=0$, we have
+\neweq{\xformula}
+$$
+ x = \sqrt{l}\;\frac{L(\fchi,1)}{m^{+}(l,f)}
+   = \frac{P(l,f)}{m^{+}(l,f)}.                   \tag \xformula
+$$
+In practice, if we express $\gamma_l$ as a linear combination of the
+basis cycles $\gamma_j$ and thus view it as a column vector, then
+$m^{+}(l,f) = v^{+}\gamma_l$.
+
+Similarly, if $\chi(-1)=-1$ then $\gamma_l\in H^{-}(N)$, and
+$P(l,f)=m^{-}(l,f)yi$, where $m^{-}(l,f)=v^{-}\gamma_l$ is an
+integer, so that if $m^{-}(l,f)\not=0$ then \neweq{\yformula}
+$$
+  y = \sqrt{l}\;\frac{L(\fchi,1)}{m^{-}(l,f)}
+    = \frac{P(l,f)}{im^{-}(l,f)}.                  \tag \yformula
+$$
+
+Assuming that $N$ is not a perfect square, we find the smallest primes
+$l^+\equiv1\pmod4$ and $l^-\equiv3\pmod4$ (not dividing $N$) such that
+$m^+ = m^+(l^+,f)$ and $m^-=m^-(l^-,f)$ are non-zero.  A necessary
+(but not sufficient) condition for this to be true is that for the
+associated quadratic characters, $\chi_1(-N)=\chi_2(-N)=-\eps_N$; for
+if $\chi(- N)=\eps_N$ then the sign of the functional equation for
+$L(\fchi,s)$ is $-1$, and hence $L(\fchi,1)=0$.  Suitable primes
+always exist, provided that $N$ is not a perfect square, by a theorem
+of Murty and Murty (see \cite\Murty).  We then compute $L(\fchi_j,1)$
+for $j=1,2$ from (\Lfchione), obtain $x$ and $y$ from (\xformula) and
+(\yformula), and finally substitute in (\dotb) as before to obtain the
+periods $\omega_1$ and $\omega_2$.
+
+If $N$ is a square, however, then $\chi(-N)=\chi(-1)$ for all primes
+$l$ not dividing $2N$; hence we will only be able to find the real
+period this way if $\eps_N=-1$, and only the imaginary period if
+$\eps_N=+1$.  Rather than seek a way round this difficulty we always
+use the ``direct'' method to compute the periods when $N$ is square.
+
+To assist convergence in (\Lfchione) we clearly want to choose $l$ as
+small as possible.  It is a simple matter to estimate the error
+obtained in truncating the series (\Lfchione) for $L(\fchi,1)$ at a
+certain point $n=n_{\max}$.  In practice we may use this to estimate
+the number of eigenvalues $a_p$ needed to obtain the desired accuracy.
+However, to save time, we did not in all cases compute this many
+$a_p$, if the computed values of $c_4$ and $c_6$ (see Section \Eqns)
+were close to integers, and when rounded led us to the coefficients of
+an elliptic curve of conductor $N$.
+
+
+Note that, apart from the numerical evaluation of the periods
+$P(l^{\pm},f)$ (using the series (\Lfchione) for $L(\fchi,1)$), all
+these computations are purely algebraic: we express the cycles
+$\gamma_l$ in terms of our homology basis using continued fractions,
+and take the dot products of the resulting column vectors with our
+dual eigenvectors $v^{\pm}$ to obtain the integers $m^{\pm}$.
+
+The result of this algebraic computation consists of the following
+data for each rational newform $f$: primes $l^{\pm}$ congruent
+respectively to $\pm1$ modulo~4; nonzero integers $m^{\pm}$; and the
+type (1 or 2) of the lattice.  As in the direct method, before
+proceeding we store the following data for each newform $f$:
+$$
+  \hbox{\tt type},l^+,m^+,l^-,m^-.
+$$
+To compute the lattice from this data set of five integers, we compute
+the periods $P(l^{\pm},f)$ using formula (\Lfchione), divide by
+$m^{\pm}$ respectively to obtain $x$ and $y$, and take $\Lambda_f$ to
+be the lattice with $\Z$-basis $2x$, $x+yi$ (if type 1) or $x$, $yi$
+(if type 2).  In practice we store just these five integers, and
+recompute the periods when we need them.  In particular, if at the
+first attempt we are unable to compute the integer invariants $c_4$,
+$c_6$ of the curve $E_f$ to sufficient precision to recognize them,
+then we will return to $H^+(N)$ in order to compute more Hecke
+eigenvalues, and then recompute the periods to greater precision
+without having to recompute $H(N)$.
+
+\subhead Tricks and shortcuts \endsubhead
+
+In fact, the data $l^+$ and $m^+$ can be computed earlier in the first
+$H^+(N)$ phase, since they only depend on the real projection of the
+period lattice.  Hence we can already compute the real period $x$ from
+the data we have from the first phase.  Moreover, it is easy to find a
+suitable prime $l^-$ once we know the Hecke eigenvalues of $f$, by
+numerically computing $P(l,f)$ for several primes $l\equiv-1\pmod4$
+until we find a value which is clearly non-zero.
+
+It follows that the only purpose of the extremely expensive second
+phase of the computation, working in $H(N)$, is to determine the
+integer factor $m^-$ and the type of the lattice.  An alternative
+approach, which we have used systematically for larger levels
+($N>3200$), is simply to guess the value of $m^-$ by trying each
+positive integer $m$ in turn.  For each $m\ge1$ we set $y=P(l^-,f)/m$
+and test the two possible lattices (one of each type).  If either
+lattice has approximate integer invariants $c_4$ and $c_6$, and the
+rounded integral values are valid invariants of an elliptic curve over
+$\Q$, and the resulting curve has conductor $N$, then we store for
+later use the successful value $m^-$ of $m$ and the type, and consider
+the curve $E_f'$ we have found as a possible candidate for the actual
+modular elliptic curve $E_f$.
+
+The curves $E_f$ and $E_f'$ are certainly isogenous; they even have
+the same real period.  In many cases, the curve $E_f'$ has no rational
+isogenies; in such a case we can conclude that $E_f=E_f'$ with no
+ambiguity.  In any case, we can compute the isogeny class of curves
+isogenous to $E_f'$ via rational isogenies, and the only loss is that
+we do not always know exactly which curve in the class is the ``strong
+Weil curve'' $E_f$.  (A further disadvantage is that we cannot compute
+the degree of the modular parametrization of $E_f$, as this requires
+knowledge of $H(N)$: see Section~\Degphi\ below.)
+
+The great advantage of this method is that in only a few seconds
+computation time, as soon as we have a rational newform, we can
+(almost always) write down an associated curve $E_f'$; before this was
+implemented, it could take many hours of computation time to determine
+$H(N)$, find the eigenvectors $v^{\pm}$, and hence determine the
+factor $m^-$ and the lattice type, before we could compute $E_f$.
+
+Finally we discuss some variants of the trick just described.
+
+\subhead 1 \endsubhead
+We may use the same trick to find $l^+$ and $m^+$ if we have not
+computed them earlier.  Then we are obtaining the period lattice and
+equation of the curve using only the Fourier coefficients of $f$ (i.e.
+the coefficients of the $L$-series of the curve); the sign of the
+functional equation; and the conductor $N$.  No modular symbol
+information at all is needed in this case.  In fact, one may even
+guess the sign of the functional equation if all one has is the
+$L$-series; see the remark after Proposition~\LfoneProp.
+
+\subhead 2 \endsubhead
+Let $l_1$ and $l_2$ be two primes ${}\equiv-1\pmod4$ for which $-N$
+has the correct quadratic character, so that $P(l_1,f)$ and $P(l_2,f)$
+are both not trivially zero.  We may compute the periods $P(l_j,f)$;
+assume that these are nonzero (or use different primes $l_j$).  We
+know that there exist nonzero integers $m_j$ such that
+$P(l_j,f)=m_jyi$ for $j=1,2$.  Therefore $P(l_2,f)/P(l_1,f)=m_2/m_1$,
+and we may compute a floating point approximation to this rational
+number.  In practice (provided we have many Fourier coefficients, and
+the primes $l_j$ are small) we will be able to recognize this rational
+number (say by using continued fractions).  Its denominator is a
+factor of the unknown integer $m_1$.  If we do this for several
+different values of $l_2$ (with the same $l_1$) then the least common
+multiple of the denominators may give us a nontrivial factor of $m_1$,
+and then in our search for the exact value we may restrict to
+multiples of this factor.  This is useful in practice.
+
+\subhead 3 \endsubhead
+Another possibility, which we have not implemented, is to compute
+$H^-(N)$ in order to determine $m^-$ exactly, as we do $m^+$ from
+$H^+(N)$.  This would be no harder than the original computation of
+$H^+(N)$, and in fact it would be easier to find the eigenvector
+corresponding to each newform $f$, since we already know its
+eigenvalues.  The result would be that we would have computed exactly
+all the data we need in a shorter time than would be required for
+computing $H(N)$, except for the type of the lattice.  Then the only
+ambiguity is that we would not know the type, and would have to try
+both types to see which results in a curve with integral coefficients.
+If both types succeeded (as does happen), we would only know the curve
+$E_f$ up to a 2-isogeny.
+
+%
+% CHAPTER 2 SECTION 12
+%
+
+\beginsection{\PerIII}
+\head \PerIII\ Computing periods III: Evaluation of the sums \endhead
+
+The results of the previous two sections express the periods of a rational
+newform $f(z)=\sum a(n,f)\exp(2\pi inz)$, and the value $L(f,1)$,
+in terms of various infinite series, each of the form $\sum a(n,f)c(n)$.
+In each case the factor $c(n)$ is a simple function of $n$, but the
+coefficient $a(n,f)$ must be computed more indirectly from the $a(p,f)$ for
+prime $p$ as in Section \Ap.
+
+\def\pmax{\text{\tt pmax}}
+\def\nmax{\text{\tt nmax}}
+
+In practice we will know $a(p,f)$ for the first few primes, say
+$p\le\pmax$.   An elegant and efficient recursive procedure for summing
+a series of the form $\sum a(n)c(n)$ over
+$$
+\{n : 1\le n\le\nmax,\text{ and }  p|n \Rightarrow p\le\pmax\},
+$$
+with $a(n)$ defined in a similar recursive manner, was described
+in \cite{\BuhlerG, pages 27--28}.   This method has the advantage of
+minimizing the number of multiplications involved and the number of $a(n)$
+which must be stored.   Also, if some $a(n)=0$ then there is a whole class
+of integers $m$ for which $a(m)=0$ that the procedure avoids automatically.
+Although in our program this part of the computation was not critical for
+either time or storage space, we found this algorithm to be very useful.
+It may also be applied in other similar situations for other kinds of
+modular forms: we have ourselves used it in \cite{\gammaone}, with cusp forms
+of weight~2 for $\G1(N)$, and also in our work over imaginary quadratic fields.
+
+To evaluate such a sum, assume that the array {\tt p[i]} hold the first 
+\pmax\ primes $p_i$, and that the array {\tt ap[i]} holds the 
+coefficients {\tt ap[i]}${}=a(p_i)$ for $p_i\le\pmax$. We can evaluate 
+the sum $a(n)c(n)$ over all $n\le\nmax$ all of whose prime divisors are 
+less than or equal to \pmax\ with the following pseudo-code.  
+
+\beginalg{Algorithm for recursively computing a multiplicative sum}
+\smallskip\lineno=0
+\nline  BEGIN\cr
+\nline  Sum = c(1);\cr
+\nline  FOR i WHILE p[i] ${}\le{}$ pmax DO \cr
+\nline  BEGIN \cr
+\nline  & add(p[i],i,ap[i],1)\cr
+\nline  END\cr
+\nline  END\cr
+%
+\smallskip
+\goodbreak
+\comm{Subroutine to add the terms dependent on $p$}
+\smallskip\lineno=0
+%
+\+  subroutine add(n,i,a,last\_a)\cr
+\nline  BEGIN\cr
+\nline  IF a=0 THEN j0 = i ELSE Sum = Sum + a*c(n); j0 = 1 FI;\cr
+\nline  FOR j FROM j0 TO i WHILE p[j]*n ${}\le{}$ nmax DO\cr
+\nline  BEGIN\cr
+\nline  &  next\_a = a*ap[j];\cr
+\nline  &  IF j=i AND (N $\not\equiv$ 0 (mod p[j])) THEN \cr
+\nline  && next\_a = next\_a - p[j]*last\_a \cr
+\nline  &  FI;\cr
+\nline  &  add(p[j]*n,j,next\_a,a)\cr
+\nline  END\cr
+\nline  END\cr
+\endalg
+
+\noindent
+Here the recursive function {\tt add(n,i,a,last\_a)} is always called under
+the following conditions: 
+(i) $p_i={}${\tt p[i]} is the smallest prime dividing $n={}${\tt n};
+(ii) {\tt a}${}=a(n)$; 
+(iii) {\tt last\_a}${}=a(n/p_i)$.   
+The procedure for $n$ calls itself with $pn$ in place of $n$, for all 
+primes $p\le p_i$, having first computed {\tt next\_a}${}=a(pn)$ using the 
+recurrence formulae from Section \Mcurves; 
+if $a(n)=0$ then only $p=p_i$ need be used, since then $a(pn)=a(p)a(n)=0$ 
+for all $p<p_i$.
+
+%
+% CHAPTER 2 SECTION 13
+%
+
+\beginsection{\Lfr}
+\head \Lfr\ Computing $L^{(r)}(f,1)$ \endhead
+
+In investigating the \BSD\ conjecture for the modular curves $E_f$ we
+will need to compute the numerical value of the $r$th derivative
+$L^{(r)}(E_f,1)=L^{(r)}(f,1)$, where $r$ is the order of $L(f,s)$ at
+$s=1$.  This integer $r$ is sometimes called the `analytic rank' of
+the curve $E_f$, since it is also, according the the \BSD\ conjecture,
+the rank of $E_f(\Q)$.  Following earlier work with examples of rank 0
+and 1, this computation was carried out by Buhler, Gross and Zagier in
+\cite{\BuhlerGZ}, for the curve of conductor 5077 and rank~3.  Their
+method works in general, and we describe it here.
+
+Recall the definition of $\Lambda(f,s)$ from Section \Ratio:
+$$
+  \Lambda(f,s) = N^{s/2}(2\pi)^{-s}\Gamma(s)L(f,s) =
+                   \int_0^{\infty}f(iy/\sqrt{N})y^{s-1}dy.
+                                                              \tag\Lambdadef 
+$$
+Let the $W_N$-eigenvalue of $f$ be $\eps$.  Using $f(-1/Nz)=\eps Nz^2f(z)$
+we obtain
+$$
+   \Lambda(f,s) = \int_1^{\infty}
+        f(iy/\sqrt{N}) \left(y^{s-1}-\eps y^{1-s}\right) dy
+$$
+(from which the functional equation (\FE) follows immediately). 
+Differentiating $k$ times with respect to $s$ gives
+$$
+ \Lambda^{(k)}(f,s) = \int_1^{\infty} f(iy/\sqrt{N}) (\log
+y)^k \left(y^{s-1}-\eps(-1)^ky^{1-s}\right) dy,
+$$
+so at $s=1$ we have
+$$
+ \Lambda^{(k)}(f,1) = (1-(-1)^k\eps) \int_1^{\infty}
+                         f(iy/\sqrt{N}) (\log y)^k dy.
+$$
+Trivially this gives $\Lambda^{(k)}(f,1) = 0$ if $\eps=(-1)^k$.  In
+particular, since $\Lambda^{(r)}(f,1) \not= 0$, by definition of $r$, we must
+have $(-1)^r=-\eps$ so that $r$ is even if and only if $\eps=-1$.  Hence
+setting $k=r$, we have \neweq{\tempeq}
+$$\align
+ \Lambda^{(r)}(f,1) &= 2 \int_1^{\infty} f(iy/\sqrt{N}) (\log
+y)^r dy \cr
+                    &= 2\sum_{n=1}^{\infty}a(n,f) \int_1^{\infty} \exp(-2\pi
+ny/\sqrt{N})(\log y)^r dy.\tag\tempeq \cr 
+\endalign
+$$
+If $r=0$, of course,  we recover the formula
+$$
+  \Lambda(f,1)= \frac{\sqrt{N}}{\pi}\sum_{n=1}^{\infty} \frac{a(n,f)}{n}\exp(-2\pi n/\sqrt{N})
+$$
+which agrees with (\Lfone) since $\Lambda(f,1)=(\sqrt{N}/2\pi)L(f,1)$.  Now
+assume that $r\ge1$.  Integrating (\tempeq) by parts gives 
+$$
+ \Lambda^{(r)}(f,1) = \frac{r\sqrt{N}}{\pi}\sum_{n=1}^{\infty}\frac{a(n,f)}{n}
+\int_1^{\infty} \exp(-2\pi ny/\sqrt{N})(\log y)^{r-1} \frac{dy}{y}.
+$$
+Since $\Lambda(f,s)$ vanishes to order $r$ at $s=1$ we have
+$L^{(r)}(f,1)=(2\pi/\sqrt{N})\Lambda^{(r)}(f,1)$, and hence the following
+result. \newprop{\Lrfseries}
+
+\proclaim{Proposition \Lrfseries}Let $f$ be a newform in $S_2(N)$ with
+$W_N$-eigenvalue $\eps$, and suppose that the order of $L(f,s)$ at $s=1$ is
+at least $r$, where $\eps=(-1)^{r-1}$.  Then \neweq{\Lfrserieseq}
+$$
+   L^{(r)}(f,1) = 2r!\sum_{n=1}^{\infty} 
+ \frac{a(n,f)}{n} G_r\kern-3pt\left(\frac{2\pi n}{\sqrt{N}}\right)
+                                                             \tag\Lfrserieseq
+$$
+where
+$$
+G_r(x) = \frac{1}{(r-1)!}\int_1^{\infty}e^{-xy}(\log y)^{r-1}\frac{dy}{y}.
+$$
+\endproclaim
+
+In order to evaluate the series in (\Lfrserieseq) we may use the summation
+procedure of the preceding section, provided that we are able to compute the
+function $G_r(x)$.  When $r=1$, $G_1(x)$ is the exponential integral
+$\int_1^{\infty}e^{-xy}dy/y$, which may be evaluated for small $x$ (say $x<3$)
+by the power series\neweq\Gseries
+$$
+   G_1(x) =
+\left(\log\frac{1}{x}-\gamma\right)-\sum_{n=1}^{\infty}\frac{(-x)^n}{n\cdot n!}
+\tag\Gseries
+$$ 
+where $\gamma$ is Euler's constant $0.577\ldots$.  For larger $x$ (say
+$x>2$) it is better to use the continued fraction expansion
+$$
+   G_1(x) = \cfrac e^{-x} \\ 
+               x+\cfrac1  \\  
+               1+\cfrac1  \\ 
+               x+\cfrac2  \\
+               1+\cfrac2  \\ 
+               x+\cfrac3  \\
+               1+\cfrac\ldots \endcfrac.
+$$
+
+To generalize the series (\Gseries) for $G_1(x)$, we observe that the
+functions $G_r(x)$ satisfy the functional equations
+$G_r'(x)=(-1/x)G_{r-1}(x)$, with $G_0(x)=e^{-x}$.  It follows that
+$$
+  G_r(x) = P_r\kern-3pt\left(\log\frac{1}{x}\right) +
+\sum_{n=1}^{\infty}\frac{(-1)^{n-r}}{n^r\cdot n!}x^n
+$$
+where $P_r(t)$ is a polynomial of degree $r$ satisfying $P_r'(t)=P_{r-1}(t)$
+and $P_0(t)=0$.  From our earlier expression for $G_1(x)$ we see that
+$P_1(t)=t-\gamma$.   In general $P_r(t)=Q_r(t-\gamma)$ where
+$$\align
+Q_1(t) &= t; \cr
+Q_2(t) &= \frac{1}{2}t^2 + \frac{\pi^2}{12};   \cr
+Q_3(t) &= \frac{1}{6}t^3 + \frac{\pi^2}{12}t - \frac{\zeta(3)}{3};   \cr
+Q_4(t) &= \frac{1}{24}t^4 + \frac{\pi^2}{24}t^2 - \frac{\zeta(3)}{3}t +
+\frac{\pi^4}{160};  \cr 
+Q_5(t) &= \frac{1}{120}t^5 + \frac{\pi^2}{72}t^3 - \frac{\zeta(3)}{6}t^2 +
+\frac{\pi^4}{160}t - \frac{\zeta(5)}{5} - \frac{\zeta(3)\pi^2}{36}. \cr
+\endalign
+$$
+
+
+For $N<5077$ we always found that $r\le2$, and determining the value
+of $r$ in such cases is easy.  Certainly $r=0$ if and only if
+$L(f,1)\not=0$, which can be determined algebraically by
+(\maninratio).  When $L(f,1)=0$ and $\eps=+1$ we know that $r$ is odd;
+by computing $L'(f,1)$ to sufficient precision using (\Lfrserieseq) we
+could verify that $L'(f,1)\not=0$, so that $r=1$.  Similarly, when
+$L(f,1)=0$ and $\eps=-1$, we know that $r$ is even and at least~2, and
+we could check that $r=2$ by computing $L''(f,1)$ to sufficient
+precision to be certain that $L''(f,1)\not=0$.
+
+In higher rank cases we have the problem of deciding whether
+$L^{(k)}(f,1)=0$, since no approximate calculation can by itself
+determine this.  The first case where this occurs is for $N=5077$, the
+rank~3 case considered in \cite{\BuhlerGZ}.  Here one finds that
+$L'(f,1)=0$ to 13 decimal places using (\Lfrserieseq) with 250 terms;
+then it is possible to conclude that $L'(f,1)=0$ exactly, by applying
+the theorem of Gross and Zagier concerning modular elliptic curves of
+rank~1 (see
+\cite{\GrossZagiera} or
+\cite{\GrossZagierb}) which relates the value of $L'(f,1)$ to the height of a
+certain Heegner point on $E_f$.  In this case no point on $E_f$ has
+sufficiently small positive height, and one can therefore deduce that
+$L'(f,1)=0$, so that $r\ge3$.  Finally the value of $L^{(3)}(f,1)$ can
+be computed numerically and hence shown to be non-zero (approximately
+$1.73$ in this case).  See \cite{\BuhlerGZ} for more details.  Using
+more recent work of Kolyvagin (see \cite{\Kolyvagin}) this argument
+can be simplified, since it is now known that when $L(f,s)$ has a
+simple zero at $s=1$, the curve $E_f$ has rank exactly~1.  But in this
+case $E_f$ has rank~3 (computed via two-descent, though finding three
+independent points of infinite order is easy and shows that the rank
+is at least~3), so again the analytic rank must be at least~3, and is
+therefore exactly~3 as before.
+
+The results of Kolyvagin in \cite{\Kolyvagin} imply that when $L(f,s)$
+has a zero of order $r=0$ or~1 at $s=1$ then\footnote{In fact,
+Kolyvagin's result in the rank~0 case was conditional on a certain
+technical hypothesis, which was later proved independently by Murty
+and Murty and by Bump, Friedberg and Hoffstein.  See \cite{\Murty}.
+The analogous hypothesis in the rank~1 case was already known as a
+consequence of a theorem of Waldspurger.  The rank~0 result was
+previously proved in the case of complex multiplication by Coates and
+Wiles.}  the rank of $E_f$ is exactly~$r$.  For the tables we also
+verified that the rank of $E_f(\Q)$ was~$r$ directly in almost all
+cases (the exceptions being curves where the coefficients were so
+large that the two-descent algorithm, described in the next chapter,
+would have taken too long to run).  These results apply to all but 18
+of the rational newforms $f$ we found at levels up to 1000.  The
+remaining cases all had $r=2$ (determined as above) and we verified
+that the rank of $E_f(\Q)$ was~2 in each case.   For a summary of the
+ranks found in the extended computations to $N=5077$, see Chapter IV.
+
+%
+% CHAPTER 2 SECTION 14
+%
+
+\beginsection{\Eqns}
+\head \Eqns\ Obtaining equations for the curves \endhead
+
+So far we have described how to compute, to a certain precision, the
+periods $\omega_1$ and $\omega_2$ which generate the period lattice
+$\Lambda_f$ of the modular curve $E_f = \C/\Lambda_f$ attached to each
+rational newform $f$ in $S_2(N)$.   Now we turn to the question of finding
+an equation for $E_f$.
+
+Set $\tau=\omega_1/\omega_2$.  Interchanging $\omega_1$ and $\omega_2$
+if necessary, we may assume that $\Im(\tau)>0$.  By applying the
+well-known algorithm for moving a point in the upper half-plane $\H$
+into the usual fundamental region for $\SL(2,\Z)$ we may assume that
+$|\Re(\tau)|\le1/2$ and $|\tau|\ge1$, so that
+$\Im(\tau)\ge\sqrt{3}/2$.  One merely replaces $(\omega_1,\omega_2)$
+by $(\omega_1-n\omega_2,\omega_2)$ for suitable $n\in\Z$ and
+$(\omega_1,\omega_2)$ by $(-\omega_2,\omega_1)$ until both conditions
+are satisfied.  In practice one must be careful about rounding errors,
+as it is quite possible to have both $|\tau|<1$ and $|-1/\tau|<1$
+after rounding, which is liable to prevent the algorithm from
+terminating.
+
+Set $q=\exp(2\pi i\tau)$.  Then the lattice invariants $c_4 (=12g_2)$
+and $c_6 (=216g_3)$ are given by \neweq{\cfour}
+$$
+c_4 = \left(\frac{2\pi}{\omega_2}\right)^4
+      \left(1+240\sum_{n=1}^{\infty}\frac{n^3q^n}{1-q^n}\right)
+\quad\text{and}\quad
+c_6 = \left(\frac{2\pi}{\omega_2}\right)^6
+      \left(1-504\sum_{n=1}^{\infty}\frac{n^5q^n}{1-q^n}\right)
+                                                            \tag \cfour
+$$
+(see, for example, \cite{\Langa, p.47}).  Since $|q| =
+\exp(-2\pi\Im(\tau)) \le \exp(-\pi\sqrt{3}) < 0\cdot005$, these series
+converge extremely rapidly.  Thus, assuming that $\omega_1$ and
+$\omega_2$ are known to sufficient precision, we can compute $c_4$ and
+$c_6$ as precisely as required.
+
+Since $E_f$ is defined over $\Q$, the numbers $c_4$ and $c_6$ are
+rational, but there is no simple reason why they should be
+integral. Fortunately, a result of Edixhoven (see \cite\Edixhoven)
+states that in fact they are integral.  Hence, provided that we have
+computed the periods and then $c_4$ and $c_6$ to sufficient precision,
+we will be able to recognize the corresponding exact integer values.
+
+This only presents practical difficulties when $c_4$ and $c_6$ are
+large, since standard double precision arithmetic only yields around
+16 decimal places.  In several cases this means that we can recognize
+$c_4$, but the last digit or digits of $c_6$ are undetermined.  One
+obvious way round these difficulties is to use multiprecision
+arithmetic, though the resulting programs are slower,
+which can be an important consideration when large numbers of curves
+are being processed.  In these situations, we are helped by the fact
+that we know that $c_4$ and $c_6$ are the invariants of an elliptic
+curve of conductor $N$.  This implies the following congruence
+conditions (see \cite\Kraus, \cite\Connell\ or Section~3.2 below):
+
+\smallskip
+(1) $c_4^3-c_6^2 = 1728\Delta$, where $\Delta$ is a non-zero integer
+divisible by the primes dividing~$N$;
+
+(2) for primes $p\ge5$ which divide $N$, we have
+$p\div c_4 \iff p\div c_6 \iff p^2\div N$;
+
+(3) $c_6\not\equiv9\pmod{27}$;
+
+(4) either $c_6\equiv-1\pmod4$, or $c_4\equiv0\pmod{16}$ and
+$c_6\equiv0,8\pmod{32}$. 
+
+\smallskip
+\noindent
+Note that in condition (1) we should not assume that $\Delta$ is only
+divisible by the ``bad primes'' which divide $N$, since we do not know
+that $c_4$ and $c_6$ are the invariants of a minimal model. However,
+Edixhoven's result does bound the non-minimality, and in practice all
+the equations of curves we have constructed are minimal, verifying the
+conjecture (Manin's ``$c=1$'' conjecture) that this should always be
+the case.  Conditions (2)--(4) do assume minimality at the relevant
+primes.
+
+Since $c_4$ tends to be smaller than $c_6$, the common situation is
+that we know $c_4$, but may need to use the above congruence
+conditions to help us find $c_6$ in case it has more than 16 digits.
+
+Given integral invariants $c_4$, $c_6$ satisfying (1), (3) and (4)
+above, the coefficients of a standard Weierstrass equation for the
+curve may be obtained as follows (see Section~3.1), where all
+divisions are exact:
+
+$$\align
+  b_2 &= -c_6 \mod 12 \in \{-5,\ldots,6\};\\
+  b_4 &= (b_2^2-c_4)/24;\\
+  b_6 &= (-b_2^3+36b_2b_4-c_6)/216;\\
+\noalign{\smallskip}
+  a_1 &= b_2 \mod2\in\{0,1\};\\
+  a_3 &= b_6 \mod2\in\{0,1\};\\
+  a_2 &= (b_2-a_1)/4;\\
+  a_4 &= (b_4-a_1a_3)/2;\\
+  a_6 &= (b_6-a_3)/4.\\
+  \endalign
+$$
+
+Having the coefficients $[a_1,a_2,a_3,a_4,a_6]$ of a curve $E$, we may
+apply Tate's algorithm (see Section 3.2 below) to check that $E$ has
+conductor $N$.  We also check whether this model for $E$ is minimal.
+These conditions do hold for all the cases we have computed to date
+($N\le5077$).  We also verify in each case that the traces of
+Frobenius of $E_f$ and $E$ for all primes under 1000 agree in each
+case, and in nearly all cases (see the previous section) that the rank
+of $E$, computed via two-descent, agrees with the `analytic rank' of
+$E_f$.  Finally, we can compute all curves isogenous to $E$ over $\Q$:
+see Section~3.8 for one way to do this.  This final list of curves
+will, according to the Shimura--Taniyama--Weil conjectures, contain
+all elliptic curves defined over $\Q$ with conductor $N$ (up to
+isomorphism).  At the time of writing\footnote{October 1996} this has
+been proved (by Wiles and Taylor, following Ribet, Frey and others)
+provided that $N$ is divisible by neither 4 nor 25.
+
+Our computations do not give any verification of the
+Shimura--Taniyama--Weil conjecture, since if there did exist elliptic
+curves over $\Q$ which were not modular, then we would simply not find
+them.  We could only verify the conjecture if we had an independent
+method for listing all curves of conductor $N$, up to isogeny.  For
+example, this has been done
+
+$\bullet$ when $N$ is a power of 2 (Ogg) or of the form $2^a3^b$
+(Coghlan, see
+\cite{\Antwerp, Table 4});
+
+$\bullet$ when $N=11$ (by Agrawal, Coates, Hunt and Van der Poorten,
+using the theory of Baker; and independently by Serre, using a variant of 
+Faltings's method based on quartic fields \cite{\SerreNotes});
+
+$\bullet$ for certain prime values of $N$ (see \cite{\BrumerK}).
+
+\noindent Our results are compatible with those of Brumer and Kramer
+in \cite{\BrumerK} for curves of prime conductor under 1000.
+
+The algorithms we used to study these curves $E$ further will be the
+subject of the next chapter.
+
+
+%
+% CHAPTER 2 SECTION 15
+%
+
+\beginsection{\Degphi}
+\head \Degphi\ Computing the degree of a modular parametrization \endhead
+
+The modular elliptic curves we have shown how to construct in this
+chapter can be para\-met\-riz\-ed by modular functions for the
+subgroup $\G0(N)$ of the modular group $\Gamma=\PSL(2,\Z)$.
+Equivalently, there is a non-constant map $\varphi$ from the modular
+curve $X_0(N)$ to $E$.  In the paper \cite\JCdegphi, we presented a
+method of computing the degree of such a map $\varphi$ for arbitrary
+$N$.  Our method is derived from a method of Zagier in \cite{\Zagier};
+by using those ideas, together with the modular symbol and M-symbol
+techniques which have been used above, we are able to derive an
+explicit formula for $\deg(\varphi)$ which is in general much simpler
+to implement than Zagier's, for arbitrary subgroups of finite index in
+$\Gamma$.  To implement this formula one needs to have explicit coset
+representatives for the subgroup, but it is not necessary to determine
+an explicit fundamental domain for its action on the upper half-plane
+$\H$.  In particular, it is simple to implement for $\G0(N)$ for
+arbitrary $N$, in contrast with Zagier's formula which is only
+completely explicit for $N$ prime.
+
+In this section we present the algorithm described in \cite\JCdegphi.
+For more details and proofs, see \cite\JCdegphi.  Worked examples are
+given in the appendix to this chapter, and results for $N\le1000$ may
+be found in Chapter IV.
+
+\goodbreak
+\beginsubsection{\modparams}
+\subhead \modparams. Modular Parametrizations
+\endsubhead
+\nobreak
+
+Let $G$ be a congruence subgroup of the modular group
+$\Gamma=\PSL(2,\Z)$.  The quotient $X=X_{G}=G\backslash\H^*$ is a
+Riemann surface, and an algebraic curve defined over a number field,
+and is called a modular curve.
+
+An elliptic curve $E$ defined over $\Q$ is called a modular elliptic
+curve if there is a non-constant map $\varphi\colon X_G\to E$ for some
+modular curve $X_G$.  The pull-back of the (unique up to scalar
+multiplication) holomorphic differential on $E$ is then of the form
+$2\pi if(z)dz$, where $f\in S_2(G)$.  According to the
+Shimura--Taniyama--Weil conjecture, this should be the case for every
+elliptic curve defined over $\Q$, with $G=\G0(N)$, where $N$ is the
+conductor of $E$.  Moreover, the cusp form $f$ should be a newform in
+the usual sense.
+
+We will suppose that we are given a cusp form $f\in S_2(G)$.  Since
+the differential $f(z)dz$ is holomorphic, the function
+$$ 
+  z_0 \mapsto I_f(z_0) = 2\pi i\int_{z_0}^{\infty}f(z)dz
+$$ 
+is well-defined for $z_0\in\H^*$ (independent of the path from
+$z_0$ to $\infty$).  Also, for $M\in G$, the function
+$$
+ M \mapsto P_f(M)=I_f(z_0)-I_f(M(z_0))=2\pi i\int_{z_0}^{M(z_0)}f(z)dz 
+$$ 
+is independent of $z_0$, and defines a function $P_f\colon G \to\C$
+which is a group homomorphism.  The image $\Lambda_f$ of this map
+will, under suitable hypotheses on $f$ which we will assume to hold,
+be a lattice of rank~2 in $\C$, so that $E_f=\C/\Lambda_f$ is an
+elliptic curve.  Hence $I_f$ induces a map
+$$
+  \aligned
+ \varphi\colon X=G\backslash\H^* &\to     E_f=\C/\Lambda_f \\
+                         z\mod G &\mapsto I_f(z)\mod\Lambda_f.  
+  \endaligned
+$$
+
+The period map $P_f\colon G\to\Lambda_f$ is surjective (by definition)
+and its kernel contains all elliptic and parabolic elements of $G$.
+We may write $\Lambda_f=\Z\w_1+\Z\w_2$ with $\Im(\w_2/\w_1)>0$.  Then
+$$
+   P_f(M) = n_1(M)\w_1 + n_2(M)\w_2
+$$
+where $n_1, n_2\colon G\to\Z$ are homomorphisms.  These functions are
+explicitly computable in terms of modular symbols as seen in earlier
+sections.  Alternatively, given sufficiently many Fourier coefficients
+of the cusp form $f(z)$ we may evaluate the period integrals $I_f(z)$
+(using the formula (\dotseriestwob), for example) to sufficient
+precision that (assuming that the fundamental periods $\w_1$ and
+$\w_2$ are also known to some precision) one can determine the integer
+values of $n_1(M)$ and $n_2(M)$ for any given $M\in G$.  The latter
+approach is used in \cite{\Zagier}.  The advantage of the modular
+symbol approach is that exact values are obtained directly, and
+that it is not necessary to compute (or even know) any Fourier
+coefficients of $f$.  On the other hand, it becomes computationally
+infeasible to carry out the modular symbol computations when the index
+of $G$ in $\Gamma$ is too large, whereas the approximate approach can
+still be used, provided that one has an explicit equation for the
+curve $E$ to hand, from which one can compute the periods and the
+Fourier coefficients in terms of traces of Frobenius (assuming that
+$E$ is modular and defined over $\Q$).  This method was used, for
+example, to compute $\deg(\varphi)$ for the curve of rank~3 with
+conductor~5077, in
+\cite{\Zagier}; we verified the value obtained (namely 1984) using our
+modular symbol implementation.
+
+The special case we are particularly interested in is where
+$G=\G0(N)$ and $f(z)$ is a normalized newform for $\G0(N)$.  Then
+the periods of $2\pi if(z)$ do form a suitable lattice $\Lambda_f$,
+and the modular elliptic curve $E_f=\C/\Lambda_f$ is defined over $\Q$
+and has conductor $N$.
+
+In order to compute the degree of the map $\varphi\colon X\to E_f$, the
+idea used in \cite{\Zagier} is to compute the Petersson norm
+$||f||$ in two ways.  The first way involves $\deg(\varphi)$
+explicitly, while the second expresses it as a sum of terms involving
+periods, which can be evaluated as above.
+
+\newprop\Peter
+\proclaim{Proposition \Peter}
+Let $f(z)$ be a cusp form of weight~$2$ for $G$ as above, and
+$\varphi\colon X\to E_f$ the associated modular parametrization.  Then
+$$
+  4\pi^2||f||^2 = \deg(\varphi)\Vol(E_f).
+$$
+\endproclaim
+
+\remark{Remark} In terms of the fundamental periods $\w_1$, $\w_2$ of
+$E_f$, the volume is given by $\Vol(E_f) =
+\left|\Im\left(\overline{\w_1}\w_2\right)\right|$.  More generally, if
+$\w$, $\w'\in\Lambda_f$, with $\w=n_1(\w)\w_1+n_2(\w)\w_2$ and
+$\w'=n_1(\w')\w_1+n_2(\w')\w_2$, then (up to sign) we have
+$$
+  \Im\left(\overline{\w}\w'\right) = \Vol(E_f) \cdot 
+\left|\matrix
+              n_1(\w) & n_1(\w')    \\
+              n_2(\w) & n_2(\w')    \endmatrix\right|.
+$$
+\endremark
+
+\goodbreak
+\beginsubsection{\cosetreps}
+\subhead \cosetreps. Coset representatives and Fundamental Domains
+\endsubhead
+\nobreak
+
+\newprop\orbitslemma 
+\newprop\parabolic
+\newprop\degphiA
+
+Let $S=\mat(0,-1;1,0)$ and $T=\mat(1,1;0,1)$ be the usual generators
+for $\Gamma$, so that $S$ has order~2 and $TS$ has order~3.  Let $\F$
+be the usual fundamental domain for $\Gamma$ defined above in
+(\fregion), and $\T$ the ``ideal triangle'' with vertices at 0, 1
+and~$\infty$.  Recall from Section~\Homol\ that $\<M>$ denotes the
+transform of $\T$ by $M$ for $M\in\Gamma$, which is the ideal triangle
+with vertices at the cusps $M(0)$, $M(1)$ and $M(\infty)$.  These
+triangles form a triangulation of the upper half-plane $\H$, whose
+vertices are precisely the cusps $\Q\cup\{\infty\}$.  Recall that
+$$
+  \<M> = \<M TS> = \<M(TS)^2>
+$$
+but that otherwise the triangles are distinct.  The triangle $\<M>$
+has three (oriented) edges; these are the modular symbols $(M)$,
+$(MTS)$ and $(M(TS)^2)$.
+
+Assume, for simplicity, that $G$ has no non-trivial elements of
+finite order, {\it i.e.}, no conjugates of either $S$ or $TS$.  (This
+assumption is merely for ease of exposition; in fact, it is easy to
+see that elliptic elements of $G$ contribute nothing to the formula
+in Theorem \degphiA\ below in any case.)  Choose, once and
+for all, a set $\S$ of right coset representatives for $G$ in $\Gamma$,
+such that $M\in\S\Rightarrow MTS\in\S$; this is possible since, by
+hypothesis, $G$ contains no conjugates of $TS$.
+
+Let $\S'$ be a subset of $\S$ which contains exactly one of each
+triple $M$, $MTS$, $M(TS)^2$, so that $\S = \S' \cup \S'TS \cup
+\S'(TS)^2$. Then a fundamental domain for the action of $G$ on $\H$
+is given by
+$$
+  \F_{G} = \bigcup_{M\in\S'}\<M>.
+$$
+In general, this set need not be connected, but this does not matter
+for our purposes: it can be treated as a disjoint union of triangles,
+whose total boundary is the sum of the oriented edges $(M)$ for
+$M\in\S$.
+
+The key idea in the algebraic reformulation of Zagier's method is to
+make use of the coset action of $\Gamma$ on the set $\S$.  We now
+introduce notation for the actions of the generators $S$ and $T$.
+
+\subsubhead{Action of $S$}\endsubsubhead
+For each $M\in\S$ we set $MS=s(M)\s(M)$, where $s\colon\S\to G$
+is a function and $\s\colon\S\to\S$ is a permutation.  Since $S^2$ is
+the identity, the same is true of $\s$, and $s(\s(M))=s(M)^{-1}$.
+For brevity we will write $M^*=\s(M)$, so that $M^*{}^*=M$ for all
+$M\in\S$.   (This conflicts with an earlier use of the notation $M^*$
+in Section~\Homol, but this should not cause confusion.)
+
+Note that the triangles $\<M>$ and $\<MS>$ are adjacent in the
+triangulation of $\H$, since they share the common side
+$(M)=\{M(0),M(\infty)\} = -(MS)$.  However, since in general we do not
+have $MS\in\S$, in the fundamental domain $\F_{G}$ for $G$ it is the
+triangles $\<M>$ and $\<M^*>$ which are glued together by the element
+$s(M)\in G$ which takes $(M^*)$ to $-(M)$ (the orientation is
+reversed).
+
+\subsubhead{Action of $T$}\endsubsubhead
+Similarly, for $M\in\S$ we set $MT=t(M)\t(M)$ with $t(M)\in G$ and
+$\t(M)\in\S$.  The permutation $\t$ of $\S$ plays a vital part in what
+follows.  The following lemma will not be used
+later, but is included for its own interest as it explains the
+geometric significance of this algebraic permutation.
+
+\proclaim{Lemma \orbitslemma} 
+\part{a} Two elements $M$ and $M'$ of $\S$ are in the
+same $\t$-orbit if and only if the cusps $M(\infty)$ and $M'(\infty)$
+are $G$-equivalent; hence the number of $\t$-orbits on $\S$ is the
+number of $G$-equivalence classes of cusps.
+\part{b} The length of the $\t$-orbit containing $M\in\S$ is the width
+of the cusp $M(\infty)$ of $G$.
+\endproclaim
+
+\demo{Proof} (a) $M$ and $M'$ are in the same $\t$-orbit if and
+only if $M_0 = M'T^jM^{-1} \in G$ for some $j$, which is if and only
+if $M_0M(\infty)=M'(\infty)$, since the stabilizer of $\infty$ in
+$\Gamma$ is the subgroup generated by $T$.
+
+(b) The length of the orbit of $M$ is the least $k>0$ such that
+$MT^kM^{-1} = \left(M TM^{-1}\right)^k \in\ G$, which is the width of
+the cusp $M(\infty)$, since the stabilizer of $M(\infty)$ in $\Gamma$
+is generated by $M TM^{-1}$.
+\qed\enddemo
+
+
+Thus there is a one--one correspondence between the orbits of $\t$ on
+$\S$ and the classes of $G$-inequivalent cusps, with the length of
+each orbit being the width of the corresponding cusp.
+
+In each $\t$-orbit in $\S$, we choose an arbitrary base-point $M_1$,
+and set $M_{j+1}=\t(M_j)$ for $1\le j\le k$, where $k$ is the length
+of the orbit and $M_{k+1}=M_1$.  Thus $M_jT=t(M_j)M_{j+1}$, so
+that
+$$
+  M_1 T^j = t(M_1)t(M_2)\ldots t(M_j)M_{j+1}.
+$$
+In particular, $M_1 T^k=M_0M_1$, where $M_0 = t(M_1)t(M_2)\ldots
+t(M_k) \in G$.  Since $M_0$ is parabolic and $P_f$ is a homomorphism,
+we obtain the following.
+
+\proclaim{Lemma \parabolic}
+$$
+  \sum_{j=1}^{k}P_f(t(M_j)) = 0.
+$$
+\endproclaim
+
+Write $M\prec M'$ if $M$ and $M'$ are in the same $\t$-orbit in $\S$,
+and $M$ precedes $M'$ in the fixed ordering determined by choosing a
+base-point for each orbit.  In the notation above, $M\prec M'$ if and
+only if $M=M_i$ and $M'=M_j$ where $1\le i<j\le k$.
+
+We can now state the main results of this section.
+
+\proclaim{Theorem \degphiA}
+Let $f$ be a cusp form of weight~$2$ for $G$ with associated period
+function $P_f: G\to\C$.  Then (the square of) the Petersson norm of $f$
+is given by
+$$
+ ||f||^2 = \frac{1}{8\pi^2}\sum_{M\prec M'}\Im(P_f(t(M))\overline{P_f(t(M'))}).
+$$ 
+Here the sum is over all ordered pairs $M\prec M'$ in $\S$ which are
+in the same orbit of the permutation $\t$ of $\S$ induced by right
+multiplication by $T$.
+\endproclaim
+
+Combining this result with Proposition~\Peter, we immediately obtain
+our explicit formula for the degree of the modular parametrization.
+
+\newprop\degphiB
+\proclaim{Theorem \degphiB}
+With the above notation, 
+$$
+  \deg(\varphi)
+= 
+  \frac1{2\Vol(E_f)}\sum_{M\prec M'}\Im(\overline{P_f(t(M))}{P_f(t(M'))})
+=
+\frac12\sum_{M\prec M'}\left|\matrix
+n_1(t(M))&n_1(t(M'))\\n_2(t(M))&n_2(t(M'))\endmatrix\right|. 
+$$
+\endproclaim
+
+Hence to compute $\deg(\varphi)$, we only have to compute the right
+coset action of $T$ on an explicit set $\S$ of coset representatives
+for $G$ in $\Gamma$, and evaluate the integer-valued functions $n_1$
+and $n_2$ on each of the matrices $t(M)$ for $M\in\S$.  In the case of
+$\G0(N)$, these steps can easily be carried out using M-symbols, and
+we will give some further details below.
+
+\remark{Remarks}
+1. The formula given in Theorem \degphiB\ expresses $\deg(\varphi)$
+explicitly as a sum which can be grouped as a sum of terms, one term
+for each cusp, by collecting together the terms for each $\t$-orbit.
+It is not at all clear what significance, if any, can be given to the
+individual contributions of each cusp to the total.
+
+2. The form of our formula is identical to the one in \cite{\Zagier}.
+However, we stress that in \cite{\Zagier}, the analogue of our coset
+action $\tau$ is defined not algebraically, as here, but
+geometrically, as a permutation of the edges of a fundamental
+polygonal domain for $G$ (and dependent on the particular fundamental
+domain used).  Then it becomes necessary to have an explicit picture
+of such a fundamental domain, including explicit matrices which
+identify the edges of the domain in pairs.  This is only carried out
+explicitly in \cite{\Zagier} in the case $G=\G0(N)$ where $N$ is a
+prime.  In our formulation, the details are all algebraic rather than
+geometric, which makes the evaluation of the formula more practical to
+implement.  Also, we have the possibility of evaluating the functions
+$n_1$ and $n_2$ exactly using modular symbols, instead of using
+numerical evaluation of the periods, which reduces the computation of
+$\deg(\varphi)$ entirely to linear algebra and integer arithmetic.
+\endremark
+
+
+\goodbreak
+\beginsubsection{\gammazero}
+\subhead \gammazero. Implementation for  $\G0(N)$
+\endsubhead
+\nobreak
+
+We now discuss the case $G=\G0(N)$ in greater detail, using M-symbols
+to represent the coset representatives.  The right coset action of
+$\Gamma$ on $P^1(N)$ is given by (\sact), so we have
+$\s(c:d)=(c:d)S=(d:-c)$ and $\t(c:d)=(c:d)T=(c:c+d)$.
+
+\newprop\orblengthlemma
+\proclaim{Lemma \orblengthlemma}
+The length of the $\t$-orbit of $(c:d)$ is $N/\gcd(N,c^2)$.
+\endproclaim
+\demo{Proof}
+$\t^k(c:d)=(c:d) \iff (c:kc+d)=(c:d) \iff cd\equiv c(kc+d)\pmod{N}
+\iff kc^2\equiv0\pmod{N} \iff k\equiv0\pmod{N/\gcd(N,c^2)}$.
+\qed\enddemo
+
+In earlier sections, it was immaterial exactly which coset
+representatives were used, or in practice which pair $(c,d)\in\Z^2$
+was used to represent the M-symbol $(c:d)$.  For the application of
+Theorem~\degphiB, however, we must ensure that our set is closed under
+right multiplication by $TS$, where $(c:d)TS = (c+d:-c)$, unless
+$(c:d)$ is fixed by $TS$, which is if and only if
+$c^2+cd+d^2\equiv0\pmod{N}$.  Thus each M-symbol $(c:d)$ will be
+represented by a specific pair $(c,d)\in\Z^2$ with $\gcd(c,d)=1$, in
+such a way that our set $\S$ of representatives contains the pairs
+$(c+d,-c)$ and $(-d,c+d)$ whenever it contains $(c,d)$, unless $(c:d)$
+is fixed by $TS$.  (Even when working with pairs $(c,d)\in\Z^2$ we
+will identify $(c,d)$ and $(-c,-d)$.)
+
+Fixing these triples of pairs $(c,d)$ corresponds to fixing the
+triangles $\<M>$ which form a (possibly disconnected) fundamental
+domain for $\G0(N)$.  If $M=\mat(a,b;c,d)$, the pair $(c,d)$
+corresponds to the directed edge $\{M(0),M(\infty)\} = \{b/d,a/c\}$.
+For this reason, we will refer to the pairs $(c,d)$ as edges, and the
+triples of pairs as triangles.  Right multiplication by $TS$
+corresponds geometrically to moving round to the next edge of the
+triangle, while right multiplication by $S$ corresponds to moving
+across to the next triangle $\<M^*>$ adjacent to the current one.  The
+$\t$-action is given by composing these, taking $(c:d)$ (or edge
+$\{b/d,a/c\}$) to the symbol $(c:d)T=(c:c+d)$ with corresponding edge
+$\{(a+b)/(c+d),a/c\}$, up to translation by an element of $\G0(N)$.
+Note how in this operation the endpoint at the cusp $M(\infty)=a/c$ is
+fixed, in accordance with Lemma~\orbitslemma\ above.
+
+We may therefore proceed as follows.  For each orbit, start with a
+standard pair $(c,d)$, chosen in an M-symbol class $(c:d)$ not yet
+handled.  Apply $T$ to obtain the pair $(c,c+d)$.  If this pair is the
+standard representative for the class $(c:c+d)$, we need take no
+action and may continue with the orbit.  But if $(c,c+d)\equiv(r,s)$,
+say, with $(r,s)\in\S$, then we must record the ``gluing matrix''
+$$ 
+   M = \mat(a,a+b;c,c+d)\mat(p,q;r,s)^{-1} \in\Gamma_0(N), 
+$$ 
+where $ad-bc = ps-qr = 1$, whose period $P_f(M)$ will contribute to
+the partial sum for this orbit.  When this happens, we say that the
+orbit has a ``jump'' at this point.  Different choices for $a$, $b$,
+$p$ and~$q$ only change $M$ by parabolic elements, and so do not
+affect the period $P_f(M)$.  We continue until we return to the
+starting pair, and then move to another orbit, until all M-symbols
+have been used.  As checks on the computation we may use
+Lemmas~\orbitslemma\ and~\orblengthlemma: the length of the orbit
+starting at $(c,d)$ can be precomputed as $N/\gcd(N,c^2)$, and the
+number of orbits is the number of $\G0(N)$-inequivalent cusps.
+
+\medskip
+
+A worked example for the case $N=11$ is included in the appendix to
+this chapter.
+
+
+\enddocument

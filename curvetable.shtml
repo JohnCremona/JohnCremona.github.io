@@ -1,0 +1,14 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<link rel="stylesheet" href="curvetable.css" type="text/css">
+<TITLE>Elliptic Curves</TITLE>
+</HEAD>
+
+<h1>Table of elliptic curves</H1>
+
+<P align=center>
+<!--#include virtual="tdat.html" -->
+</P>
+
+</HTML>

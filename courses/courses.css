@@ -1,0 +1,8 @@
+BODY { font-family: Arial, Helvetica, sans-serif }
+H1 { text-align: center }
+TR.table_head { background-color: aqua }
+TR.level_head { background-color: yellow }
+TR.class_gap { background-color: silver ; line-height: 1pt}
+TR.curve { border-style:solid;    border-width:1 }
+TH { padding:5 }
+TD { padding:5 }
